@@ -1,0 +1,18 @@
+dist: trusty
+sudo: false
+
+jobs:
+  include:
+    - state: Angular tests
+      language: node_js
+      node_js:
+        - '13'
+      addons:
+        chrome: stable
+      script: make test-fe
+    - state: Spring tests
+      language: java
+      before-script: cd apsi-enrollment-be
+      script: gradle wrapper
+      script: chmod +x gradlew
+      script: ./gradlew build
