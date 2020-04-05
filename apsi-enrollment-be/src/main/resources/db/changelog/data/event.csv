@@ -1,0 +1,6 @@
+ID,NAME,DESCRIPTION,EVENT_TYPE,ATTENDEES_LIMIT,ORGANIZER_ID
+1,Bardzo ważny przedmiot,Wykład z bardzo ważnego przedmiotu,LECTURE,100,2
+2,Bardzo ważny przedmiot - grupa 1,Wykład z bardzo ważnego przedmiotu,PROJECT,50,2
+3,Bardzo ważny przedmiot - grupa 2,Wykład z bardzo ważnego przedmiotu,PROJECT,50,2
+4,Spotkanie Koła,Spotkanie koła na które każdy może przyjść,MEETING,'',1
+5,Kurs programowania,Kurs,COURSE,30,5

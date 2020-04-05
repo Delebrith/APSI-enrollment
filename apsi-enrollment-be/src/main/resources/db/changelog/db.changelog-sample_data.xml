@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+    <changeSet id="sample_data_1" author="pszwed">
+        <loadData tableName="user_"
+                  file="db/changelog/data/user.csv"/>
+        <loadData tableName="USER_ROLES"
+                  file="db/changelog/data/user_roles.csv"/>
+        <loadData tableName="EVENT"
+                  file="db/changelog/data/event.csv"/>
+        <loadData tableName="PLACE"
+                  file="db/changelog/data/place.csv"/>
+        <loadData tableName="MEETING"
+                  file="db/changelog/data/meeting.csv"/>
+        <loadData tableName="MEETING_SPEAKERS"
+                  file="db/changelog/data/meeting_speakers.csv"/>
+    </changeSet>
+
+</databaseChangeLog>

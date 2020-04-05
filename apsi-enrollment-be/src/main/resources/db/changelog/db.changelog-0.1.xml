@@ -35,11 +35,6 @@
     </changeSet>
 
     <changeSet id="2" author="pszwed">
-        <loadData tableName="user_"
-                  file="db/changelog/data/user.csv"/>
-    </changeSet>
-
-    <changeSet id="3" author="pszwed">
 
         <createTable tableName="USER_ROLES">
             <column name="USER_ID" type="int"/>
@@ -48,13 +43,9 @@
         <addForeignKeyConstraint baseTableName="USER_ROLES" baseColumnNames="USER_ID" constraintName="USER_ROLES_FK1"
                                  referencedTableName="USER_"
                                  referencedColumnNames="ID"/>
-
-        <loadData tableName="USER_ROLES"
-                  file="db/changelog/data/user_roles.csv"/>
-
     </changeSet>
 
-    <changeSet id="4" author="pszwed">
+    <changeSet id="3" author="pszwed">
 
         <createTable tableName="REFRESH_TOKEN">
             <column name="ID" type="bigint" autoIncrement="true" startWith="100">
@@ -68,6 +59,89 @@
         <addForeignKeyConstraint baseTableName="REFRESH_TOKEN" baseColumnNames="USER_ID" constraintName="REFRESH_TOKEN_FK1"
                                  referencedTableName="USER_"
                                  referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet id="4" author="pszwed">
+        <createTable tableName="EVENT">
+            <column name="ID" type="bigint" autoIncrement="true" startWith="100">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="NAME" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="varchar2(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EVENT_TYPE" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ATTENDEES_LIMIT" type="int"/>
+            <column name="ORGANIZER_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="EVENT" baseColumnNames="ORGANIZER_ID" constraintName="EVENT_FK_1"
+                                 referencedTableName="USER_"
+                                 referencedColumnNames="ID"/>
+
+        <createTable tableName="PLACE">
+            <column name="ID" type="bigint" autoIncrement="true" startWith="100">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="NAME" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BUILDING" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS" type="varchar2(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CAPACITY" type="int"/>
+        </createTable>
+
+        <createTable tableName="MEETING">
+            <column name="ID" type="bigint" autoIncrement="true" startWith="100">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="DESCRIPTION" type="varchar2(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="END" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLACE_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EVENT_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="MEETING" baseColumnNames="PLACE_ID" constraintName="MEETING_FK_1"
+                                 referencedTableName="PLACE"
+                                 referencedColumnNames="ID"/>
+        <addForeignKeyConstraint baseTableName="MEETING" baseColumnNames="EVENT_ID" constraintName="MEETING_FK_2"
+                                 referencedTableName="EVENT"
+                                 referencedColumnNames="ID"/>
+        <createTable tableName="MEETING_SPEAKERS">
+            <column name="MEETING_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPEAKER_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="MEETING_SPEAKERS" baseColumnNames="MEETING_ID" constraintName="MEETING_SPEAKERS_FK_1"
+                                 referencedTableName="MEETING"
+                                 referencedColumnNames="ID"/>
+        <addForeignKeyConstraint baseTableName="MEETING_SPEAKERS" baseColumnNames="SPEAKER_ID" constraintName="MEETING_SPEAKERS_FK_2"
+                                 referencedTableName="USER_"
+                                 referencedColumnNames="ID"/>
+
+
     </changeSet>
 
 </databaseChangeLog>

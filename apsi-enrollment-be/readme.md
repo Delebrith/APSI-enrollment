@@ -17,4 +17,7 @@ Changelogs will be loaded automatically after the start.
 
 Application can be started by command ```gradle bootRun -Dspring.profiles.active=prod```
 
+## Sample data
+For each user in sample data password corresponds to username. 
+
  

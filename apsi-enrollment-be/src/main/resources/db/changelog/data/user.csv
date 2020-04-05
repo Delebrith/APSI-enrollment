@@ -1,3 +1,7 @@
 ID,USERNAME,NAME,SURNAME,EMAIL,PASSWORD
 1,student,Stud,Ent,student@pw.edu.pl,$2y$10$dRx9HvxykP8y0NbtU2PEmexQeaVsj0365hmoxy9/vFl948ezU4BFK
 2,wykladowca,Wyklad,Owca,wykladowca@pw.edu.pl,$2y$10$0VR6dMRrBC6eiBzQswJdXOHXSOlZdh5VDqpTlgLMAj1jYOS2SBYAG
+3,student2,Stud2,Ent2,student2@pw.edu.pl,$2y$10$xFrTkJeOGkK8ZNIr1yq4OO5kwEgrwY51FE8GDBHqMvijjbU5fzZbu
+4,student3,Stud3,Ent3,student3@pw.edu.pl,$2y$10$aM752BcuJunA.cVqajeEgu6quj/B4zHa//m8xEFsPnsme2OA/yisy
+5,wykladowca2,Wyklad2,Owca2,wykladowca2@pw.edu.pl,$2y$10$XVTAMWm7zbDrlVNjKviXPOIjHX1PtM4Jv0T5oo8s2My2bTGFtbDO.
+6,sekretarz,Sekre,Tarz,sekretarz@pw.edu.pl,$2y$10$Feo/FzrvfOqTbtdai.n06ejR3tSkPYS41z3DOSNFgPjVUf8bd/p0.
