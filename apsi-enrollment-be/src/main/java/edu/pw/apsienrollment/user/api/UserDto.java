@@ -6,14 +6,14 @@ import lombok.Value;
 
 @Value
 @Builder
-class UserDto {
+public class UserDto {
     Integer id;
     String username;
     String name;
     String surname;
     String email;
 
-    static UserDto of(User user) {
+    public static UserDto of(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
