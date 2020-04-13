@@ -3,11 +3,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { CurrentUserService } from 'src/app/core/auth/current-user.service';
-import { HomeComponent } from './home.component';
+import { MainComponent } from './main.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('MainComponent', () => {
+  let component: MainComponent;
+  let fixture: ComponentFixture<MainComponent>;
 
   const authService = jasmine.createSpyObj('AuthService', ['signOut']);
   const currentUserService = jasmine.createSpyObj('AuthAPIService', [], { currentUser$: of(null) });
@@ -15,7 +15,7 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [HomeComponent],
+      declarations: [MainComponent],
       providers: [
         { provide: AuthService, useValue: authService },
         { provide: CurrentUserService, useValue: currentUserService },
@@ -24,7 +24,7 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

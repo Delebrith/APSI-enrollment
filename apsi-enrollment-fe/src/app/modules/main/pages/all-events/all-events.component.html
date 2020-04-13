@@ -1,0 +1,12 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>{{ 'events.name' | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let event of currentEventsPage$ | async">
+      <td>{{ event.name }}</td>
+    </tr>
+  </tbody>
+</table>
