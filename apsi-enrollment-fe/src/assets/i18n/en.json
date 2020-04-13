@@ -10,5 +10,16 @@
     "thisFieldIsRequired": "This field is required!",
     "invalidUsernameOrPassword": "Invalid user name or password",
     "login": "Login"
+  },
+  "main": {
+    "logout": "Log out",
+    "general": "General",
+    "events": "Events",
+    "home": "Home",
+    "allEvents": "All Events",
+    "myEvents": "My Events"
+  },
+  "events": {
+    "name": "Name"
   }
 }
