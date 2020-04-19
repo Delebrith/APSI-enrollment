@@ -18,19 +18,9 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
 
     @Override
-    public Collection<Event> findAll() {
-        return eventRepository.findAll();
-    }
-
-    @Override
     public Page<Event> findAll(Integer page, Integer pageSize) {
         checkPagingParameters(page, pageSize);
         return eventRepository.findAll(PageRequest.of(page, pageSize));
-    }
-
-    @Override
-    public Collection<Event> findAll(Specification<Event> spec) {
-        return eventRepository.findAll(spec);
     }
 
     @Override

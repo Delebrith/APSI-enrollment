@@ -9,10 +9,6 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Collection;
 
 public interface EventService {
-
-    Collection<Event> findAll();
-    Collection<Event> findAll(Specification<Event> spec);
-
     Page<Event> findAll(Integer page, Integer pageSize);
     Page<Event> findAll(Specification<Event> spec, Integer page, Integer pageSize);
 }
