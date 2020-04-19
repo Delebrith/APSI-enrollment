@@ -20,7 +20,6 @@ public class EventController {
         if(request.getSearchQuery() != null) {
             return search(request.buildEventSpec(), request.getPage(), request.getSize());
         }
-        System.out.println("Search Query is null");
         return findAll(request.getPage(), request.getSize());
     }
 

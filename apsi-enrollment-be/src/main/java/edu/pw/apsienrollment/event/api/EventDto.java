@@ -1,5 +1,7 @@
 package edu.pw.apsienrollment.event.api;
 
+import java.sql.Timestamp;
+
 import lombok.Builder;
 import lombok.Value;
 import lombok.NonNull;
@@ -7,6 +9,7 @@ import lombok.NonNull;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.user.api.UserDto;
+import org.hibernate.annotations.Formula;
 
 
 @Value
@@ -18,6 +21,11 @@ public class EventDto {
     EventType eventType;
     Integer attendeesLimit;
     UserDto organizer;
+
+    @Formula("(select min(m.start) from meeting as m where m.event_id = id)")
+    Timestamp start;
+    @Formula("(select max(m.end) from meeting as m where m.event_id = id)")
+    Timestamp end;
 
     public static EventDto of(@NonNull Event event) {
         return EventDto.builder()
