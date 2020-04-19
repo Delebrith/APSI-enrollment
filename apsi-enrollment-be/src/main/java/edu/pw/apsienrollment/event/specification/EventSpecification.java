@@ -42,11 +42,8 @@ public class EventSpecification implements Specification<Event> {
 
     static <T> Path<T> resolvePath(@NonNull String path, @NonNull Root<Event> root) {
         String[] paths = path.split("\\.");
-        System.out.println("Resolving path for: " + path);
-        System.out.println("Path for root: " + paths[0]);
         Path<T> res = root.get(paths[0]);
         for(String subPath: Arrays.copyOfRange(paths, 1, paths.length)) {
-            System.out.println("Subpath for: " + subPath);
             res = res.get(subPath);
         }
         return res;
