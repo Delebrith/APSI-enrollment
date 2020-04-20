@@ -10,5 +10,5 @@ import java.util.Collection;
 
 public interface EventService {
     Page<Event> findAll(Integer page, Integer pageSize);
-    Page<Event> findAll(Specification<Event> spec, Integer page, Integer pageSize);
+    Page<Event> findAll(String searchQuery, Integer page, Integer pageSize);
 }

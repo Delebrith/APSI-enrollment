@@ -15,21 +15,21 @@ import edu.pw.apsienrollment.event.db.Event;
 public class EventController {
     private final EventService eventService;
 
-    @GetMapping("")
+    @GetMapping
     ResponseEntity<Iterable<EventDto>> events(EventRequestDTO request) {
-        if(request.getSearchQuery() != null) {
-            return search(request.buildEventSpec(), request.getPage(), request.getSize());
+        if (request.getSearchQuery() != null) {
+            return search(request.getSearchQuery(), request.getPage(), request.getSize());
         }
         return findAll(request.getPage(), request.getSize());
     }
 
-    ResponseEntity<Iterable<EventDto>> findAll(Integer page, Integer pageSize) {
+    private ResponseEntity<Iterable<EventDto>> findAll(Integer page, Integer pageSize) {
         return ResponseEntity.ok(eventService.findAll(page, pageSize)
                 .map(EventDto::of));
     }
 
-    ResponseEntity<Iterable<EventDto>> search(Specification<Event> spec, Integer page, Integer size) { ;
-        return ResponseEntity.ok(eventService.findAll(spec, page, size)
+    private ResponseEntity<Iterable<EventDto>> search(String searchQuery, Integer page, Integer size) {
+        return ResponseEntity.ok(eventService.findAll(searchQuery, page, size)
                 .map(EventDto::of));
     }
 }
