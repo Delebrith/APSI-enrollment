@@ -14,23 +14,9 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class EventRequestDTO {
 
-    String searchQuery = null;
+    String searchQuery;
     @Min(0)
     Integer page = 0;
     @Min(1)
     Integer size = 100;
-
-
-    public Specification<Event> buildEventSpec() {
-        if(searchQuery == null) {
-            throw new RuntimeException("Trying to build specification from an empty query");
-        }
-        EventSpecificationBuilder builder = new EventSpecificationBuilder();
-        Pattern pattern = Pattern.compile("([\\w.]+?)([:<>])(\\w+?),", Pattern.UNICODE_CHARACTER_CLASS);
-        Matcher matcher = pattern.matcher(searchQuery + ",");
-        while(matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
-        return builder.build();
-    }
 }

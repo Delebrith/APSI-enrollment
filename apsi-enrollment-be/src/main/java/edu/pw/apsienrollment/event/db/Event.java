@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity(name = "Event")
 @Data
@@ -29,6 +32,11 @@ public class Event {
     private EventType eventType;
 
     private Integer attendeesLimit;
+
+    @Formula("(select min(m.start) from meeting as m where m.event_id = id)")
+    LocalDateTime start;
+    @Formula("(select max(m.end) from meeting as m where m.event_id = id)")
+    LocalDateTime end;
 
     @ManyToOne
     @JoinColumn(name = "ORGANIZER_ID", nullable = false)

@@ -1,6 +1,7 @@
 package edu.pw.apsienrollment.event.api;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.Builder;
 import lombok.Value;
@@ -20,12 +21,9 @@ public class EventDto {
     String description;
     EventType eventType;
     Integer attendeesLimit;
+    LocalDateTime start;
+    LocalDateTime end;
     UserDto organizer;
-
-    @Formula("(select min(m.start) from meeting as m where m.event_id = id)")
-    Timestamp start;
-    @Formula("(select max(m.end) from meeting as m where m.event_id = id)")
-    Timestamp end;
 
     public static EventDto of(@NonNull Event event) {
         return EventDto.builder()
@@ -34,6 +32,8 @@ public class EventDto {
                 .description(event.getDescription())
                 .eventType(event.getEventType())
                 .attendeesLimit(event.getAttendeesLimit())
+                .start(event.getStart())
+                .end(event.getEnd())
                 .organizer(UserDto.of(event.getOrganizer()))
                 .build();
     }
