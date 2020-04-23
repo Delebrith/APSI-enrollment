@@ -1,13 +1,15 @@
 package edu.pw.apsienrollment.event.api;
 
-import org.springframework.data.jpa.domain.Specification;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
 import edu.pw.apsienrollment.event.EventService;
-import edu.pw.apsienrollment.event.db.Event;
 
 @RestController
 @RequestMapping("events")
@@ -15,6 +17,11 @@ import edu.pw.apsienrollment.event.db.Event;
 public class EventController {
     private final EventService eventService;
 
+    @ApiOperation(value = "Get list of events", nickname = "get list of events", notes="",
+        authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
     @GetMapping
     ResponseEntity<Iterable<EventDto>> events(EventRequestDTO request) {
         if (request.getSearchQuery() != null) {
