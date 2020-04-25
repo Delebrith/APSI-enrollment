@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  authBaseUrl: 'http://localhost:8080/auth',
-  apiBaseUrl: 'http://localhost:8080',
+  authBaseUrl: 'http://51.178.84.158/api/auth',
+  apiBaseUrl: 'http://51.178.84.158/api',
 };
