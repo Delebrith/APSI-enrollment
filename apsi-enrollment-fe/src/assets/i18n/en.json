@@ -20,7 +20,14 @@
     "myEvents": "My Events"
   },
   "events": {
-    "name": "Name"
+    "name": "Name",
+    "description": "Description",
+    "eventType": "Event type",
+    "dates": "Dates",
+    "weCouldNotFindEvents": "We couldn't find any events!",
+    "eventsPerPage": "Events per page",
+    "of": "of",
+    "totalEvents": "total events"
   },
   "eventTypes": {
     "LECTURE": "Lecture",
