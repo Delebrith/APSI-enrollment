@@ -17,19 +17,19 @@ public abstract class SearchSpecification<S> implements Specification<S> {
 
     protected Predicate toCommonSearchPredicate(SearchCriteria criteria, Root<S> root, CriteriaBuilder criteriaBuilder) {
         Path<String> path = resolvePath(criteria.getKey(), root);
-        if (criteria.getOperation().equalsIgnoreCase(">")) {
+        if (criteria.getOperation().equals(">")) {
             return criteriaBuilder.greaterThan(
                     path, criteria.getValue().toString());
-        } else if (criteria.getOperation().equalsIgnoreCase("<")) {
+        } else if (criteria.getOperation().equals("<")) {
             return criteriaBuilder.lessThan(
                     path, criteria.getValue().toString());
-        } else if (criteria.getOperation().equalsIgnoreCase(">=")) {
+        } else if (criteria.getOperation().equals(">=")) {
             return criteriaBuilder.greaterThanOrEqualTo(
                     path, criteria.getValue().toString());
-        } else if (criteria.getOperation().equalsIgnoreCase("<=")) {
+        } else if (criteria.getOperation().equals("<=")) {
             return criteriaBuilder.lessThanOrEqualTo(
                     path, criteria.getValue().toString());
-        } else if (criteria.getOperation().equalsIgnoreCase(":")) {
+        } else if (criteria.getOperation().equals("=")) {
             if (path.getJavaType() == String.class) {
                 return criteriaBuilder.like(
                         criteriaBuilder.function("LOWER", String.class, path),
