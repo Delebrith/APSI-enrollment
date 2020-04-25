@@ -26,28 +26,35 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err instanceof HttpErrorResponse && err.status === 401) {
           if (this.isTokenRefreshInProgress) {
-            return this.tokenRefreshCompletedSubject$.pipe(filter((completed) => completed === true));
+            return this.tokenRefreshCompletedSubject$.pipe(
+              filter((completed) => completed === true),
+              switchMap(() => {
+                return this.injectToken(req);
+              }),
+              switchMap((request) => next.handle(request))
+            );
           } else {
             this.tokenRefreshCompletedSubject$.next(false);
             return this.authService.refreshToken().pipe(
               catchError((refreshError) => {
+                this.tokenRefreshCompletedSubject$.error(err);
                 console.error('error while refreshing token from interceptor: ', refreshError);
                 return throwError(err);
               }),
               tap(() => {
                 this.isTokenRefreshInProgress = false;
                 this.tokenRefreshCompletedSubject$.next(true);
-              })
+              }),
+              switchMap(() => {
+                return this.injectToken(req);
+              }),
+              switchMap((request) => next.handle(request))
             );
           }
         } else {
           return throwError(err);
         }
-      }),
-      switchMap(() => {
-        return this.injectToken(req);
-      }),
-      switchMap((request) => next.handle(request))
+      })
     );
   }
 
