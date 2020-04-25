@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -14,17 +14,49 @@ export class EventService {
 
   constructor(private http: HttpClient) {}
 
-  getEventsPage(pageNumber?: number): Observable<Page<BasicEvent>> {
-    return this.http.get<any>(this.baseUrl).pipe(
-      map(({ content, number: retrievedPageNumber, totalPages, size }) => {
-        return {
-          items: content,
-          pageNumber: retrievedPageNumber,
-          pageSize: size,
-          totalPages,
-        } as Page<BasicEvent>;
-      })
-    );
+  getEventsPage({
+    pageNumber,
+    pageSize,
+    searchQuery,
+  }: {
+    pageNumber?: number;
+    pageSize?: number;
+    searchQuery?: string;
+  }): Observable<Page<BasicEvent>> {
+    const params = {
+      page: null,
+      size: null,
+      searchQuery: null,
+    };
+    if (pageNumber != null) {
+      params.page = pageNumber;
+    } else {
+      delete params.page;
+    }
+    if (pageSize != null) {
+      params.size = pageSize;
+    } else {
+      delete params.size;
+    }
+    if (searchQuery != null) {
+      params.searchQuery = searchQuery;
+    } else {
+      delete params.searchQuery;
+    }
+
+    return this.http
+      .get<any>(this.baseUrl, { params })
+      .pipe(
+        map(({ content, number: retrievedPageNumber, totalPages, size, totalElements }) => {
+          return {
+            items: content,
+            pageNumber: retrievedPageNumber,
+            pageSize: size,
+            totalPages,
+            totalElements,
+          } as Page<BasicEvent>;
+        })
+      );
   }
 
   getEventByID(eventID: number): Observable<Event> {
@@ -45,6 +77,6 @@ export class EventService {
       })),
     };
 
-    return this.http.post(`${this.baseUrl}`, event).pipe(map((response) => response as Event));
+    return this.http.post(`${this.baseUrl}`, postBody).pipe(map((response) => response as Event));
   }
 }

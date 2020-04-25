@@ -21,5 +21,15 @@
   },
   "events": {
     "name": "Name"
+  },
+  "eventTypes": {
+    "LECTURE": "Lecture",
+    "LABORATORY": "Laboratory",
+    "PROJECT": "Project",
+    "SEMINAR": "Seminar",
+    "WORKSHOP": "Workshop",
+    "COURSE": "Course",
+    "CONFERENCE": "Conference",
+    "MEETING": "Meeting"
   }
 }
