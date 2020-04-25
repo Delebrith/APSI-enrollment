@@ -1,5 +1,6 @@
 package edu.pw.apsienrollment.event.db;
 
+import edu.pw.apsienrollment.place.db.Place;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "MEETING")
@@ -33,7 +35,7 @@ public class Meeting {
     @JoinTable(name = "MEETING_SPEAKERS",
             joinColumns = @JoinColumn(name = "MEETING_ID", nullable = false, referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "SPEAKER_ID", nullable = false, referencedColumnName = "ID"))
-    private Set<User> speakers;
+    private Set<User> speakers = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "PLACE_ID")

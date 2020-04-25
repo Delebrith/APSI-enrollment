@@ -1,11 +1,14 @@
-package edu.pw.apsienrollment.event.db;
+package edu.pw.apsienrollment.place.db;
 
+import edu.pw.apsienrollment.event.db.Meeting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "PLACE")
 @Data

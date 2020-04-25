@@ -1,6 +1,5 @@
-package edu.pw.apsienrollment.event.api;
+package edu.pw.apsienrollment.event.api.dto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import lombok.Builder;
@@ -10,7 +9,6 @@ import lombok.NonNull;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.user.api.UserDto;
-import org.hibernate.annotations.Formula;
 
 
 @Value
