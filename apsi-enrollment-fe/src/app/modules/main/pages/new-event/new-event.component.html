@@ -1,0 +1,143 @@
+<form clrForm [formGroup]="eventForm">
+  <h2>{{ 'event.details' | translate }}</h2>
+    <clr-input-container>
+      <label>{{ 'event.name' | translate }}</label>
+      <input
+        type="text"
+        name="name"
+        clrInput
+        [placeholder]="'event.name' | translate"
+        formControlName="name"
+      />
+      <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+    </clr-input-container>
+    <clr-textarea-container>
+      <label>{{ 'event.description' | translate }}</label>
+      <textarea
+        clrTextarea
+        name="description"
+        [placeholder]="'event.description' | translate"
+        formControlName="description"></textarea>
+      <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+    </clr-textarea-container>
+    <clr-select-container>
+      <label>{{ 'event.eventType' | translate }}</label>
+      <select
+        clrSelect
+        name="eventType"
+        formControlName="eventType">
+        <option value="one">One</option>
+        <option value="two">Two</option>
+        <option value="three">Three</option>
+      </select>
+      <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+    </clr-select-container>
+    <clr-input-container>
+      <label>{{ 'event.attendeesLimit' | translate }}</label>
+      <input
+        type="number"
+        name="attendeesLimit"
+        clrInput
+        [placeholder]="'event.attendeesLimit' | translate"
+        formControlName="attendeesLimit"
+      />
+      <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+    </clr-input-container>
+
+    <div formArrayName="meetings">
+      <h2>{{ 'event.meetings' | translate }}</h2>
+      <div *ngFor="let meeting of meetings.controls; let i=index" [formGroupName]="i">
+        <h4>{{ 'event.meeting' | translate }} {{i+1}}</h4>
+        <clr-textarea-container>
+          <label>{{ 'event.description' | translate }}</label>
+          <textarea
+            clrTextarea
+            name="description"
+            [placeholder]="'event.description' | translate"
+            formControlName="description"></textarea>
+        </clr-textarea-container>
+        <clr-date-container>
+          <label>{{ 'event.startDate' | translate }}</label>
+          <input
+            type="date"
+            clrDate
+            name="startDate"
+            formControlName="startDate"
+          >
+          <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        </clr-date-container>
+        <clr-input-container>
+          <label>{{ 'event.startTime' | translate }}</label>
+          <input
+            type="time"
+            name="startTime"
+            clrInput
+            [placeholder]="'event.startDate' | translate"
+            formControlName="startDate"
+          />
+          <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        </clr-input-container>
+        <clr-date-container>
+          <label>{{ 'event.endDate' | translate }}</label>
+          <input
+            type="date"
+            clrDate
+            name="endDate"
+            formControlName="endDate"
+          >
+          <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        </clr-date-container>
+        <clr-input-container>
+          <label>{{ 'event.endTime' | translate }}</label>
+          <input
+            type="time"
+            name="endTime"
+            clrInput
+            [placeholder]="'event.endTime' | translate"
+            formControlName="endTime"
+          />
+          <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        </clr-input-container>
+        <clr-select-container>
+          <label>{{ 'event.place' | translate }}</label>
+          <select
+            clrSelect
+            name="place"
+            formControlName="place">
+            <option value="one">Class 1</option>
+            <option value="two">Class 2</option>
+            <option value="three">Class 3</option>
+          </select>
+          <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        </clr-select-container>
+        <div formArrayName="speakers">
+          <div *ngFor="let speaker of speakers(i).controls; let j=index" [formGroupName]=j>
+            <clr-select-container>
+              <label>{{ 'event.speaker' | translate }} {{ j+1 }}</label>
+              <select
+                clrSelect
+                name="speaker"
+                formControlName="speaker">
+                <option value="one">Speaker 1</option>
+                <option value="two">Speaker 2</option>
+                <option value="three">Speaker 3</option>
+              </select>
+              <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+            </clr-select-container>
+          </div>
+          <button class="btn btn-sm" (click)="addSpeaker(i)">{{ 'event.addSpeaker' | translate }}</button>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-sm" (click)="addMeeting()">{{ 'event.addMeeting' | translate }}</button>
+      <br>
+      <br>
+    </div>
+  <button class="btn btn-primary" type="submit" (click)="submit()">{{ 'event.submit' | translate }}</button>
+</form>
+
+results<br>
+
+<pre>
+{{eventForm.value | json}}
+</pre>

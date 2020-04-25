@@ -17,7 +17,8 @@
     "events": "Events",
     "home": "Home",
     "allEvents": "All Events",
-    "myEvents": "My Events"
+    "myEvents": "My Events",
+    "newEvent": "New Events"
   },
   "events": {
     "name": "Name",
@@ -38,5 +39,26 @@
     "COURSE": "Course",
     "CONFERENCE": "Conference",
     "MEETING": "Meeting"
+  },
+  "event": {
+    "details": "Event details",
+    "name": "Name",
+    "description": "Description",
+    "eventType": "Event type",
+    "attendeesLimit": "Attendees limit",
+    "organizer": "Organizer",
+    "startDate": "Start date",
+    "startTime": "Start time",
+    "endDate": "End date",
+    "endTime": "End time",
+    "meetings": "Meetings",
+    "meeting": "Meeting",
+    "speaker": "Speaker",
+    "place": "Place",
+    "addMeeting": "Add meeting",
+    "addSpeaker": "Add speaker",
+    "thisFieldIsRequired": "This field is required!",
+    "submit": "Submit",
+    "reset": "Reset form"
   }
 }
