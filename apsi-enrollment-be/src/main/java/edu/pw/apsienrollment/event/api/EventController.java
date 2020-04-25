@@ -63,7 +63,6 @@ public class EventController {
         authorizations = {@Authorization(value = "JWT")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
-            @ApiResponse(code = 400, message = "If invalid data was provided"),
             @ApiResponse(code = 404, message = "If event does not exist")})
     @GetMapping("{id}")
     ResponseEntity<EventDto> event(@PathVariable("id") Long id) {
