@@ -117,6 +117,7 @@ public class EventServiceImpl implements EventService {
         return place;
     }
 
+    @Override
     public Event getById(Long id) {
         return eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
     }
