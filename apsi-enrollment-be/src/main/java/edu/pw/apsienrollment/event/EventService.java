@@ -8,5 +8,7 @@ public interface EventService {
     Page<Event> findAll(Integer page, Integer pageSize);
     Page<Event> findAll(String searchQuery, Integer page, Integer pageSize);
 
+    Event getById(Long id);
+
     Event createEvent(EventRequestDto eventRequestDto);
 }
