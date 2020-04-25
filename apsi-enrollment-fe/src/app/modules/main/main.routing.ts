@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { AllEventsComponent } from './pages/all-events/all-events.component';
 import { HomeComponent } from './pages/home/home.component';
+import {NewEventComponent} from './pages/new-event/new-event.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'all-events',
         component: AllEventsComponent,
+      },
+      {
+        path: 'new-event',
+        component: NewEventComponent,
       },
       {
         path: '**',
