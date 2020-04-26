@@ -14,7 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUsers(from: Date, to: Date): Observable<User[]> {
+  getAllUsers(): Observable<User[]> {
     const pageSize = 100;
 
     const params = {

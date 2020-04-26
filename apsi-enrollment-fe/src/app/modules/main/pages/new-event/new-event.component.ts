@@ -9,6 +9,11 @@ import {
   Validators
 } from '@angular/forms';
 import {EventType} from '../../../../core/model/event.model';
+import {Place} from '../../../../core/model/place.model';
+import {User} from '../../../../core/model/user.model';
+import {EventService} from '../../services/event/event.service';
+import {PlaceService} from '../../services/place/place.service';
+import {UserService} from '../../services/user/user.service';
 
 export const dateDependenceValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
   const startDate = formGroup.get('startDate').value;
@@ -48,14 +53,54 @@ function parseDate(date: string, time: string) {
 export class NewEventComponent implements OnInit {
   eventForm: FormGroup;
   eventTypes = EventType;
+  availablePlaces: Place[][] = [];
+  availableSpeakers: User[][] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private eventService: EventService, private placeService: PlaceService,
+              private userService: UserService) {
     this.eventForm = fb.group({
       name: [null, [Validators.required]],
       description: [null, [Validators.required]],
       eventType: [null, [Validators.required]],
       attendeesLimit: [null, [Validators.required]],
       meetings: this.fb.array([]),
+    });
+
+    this.getMeetings().valueChanges.subscribe(data => {
+      this.getMeetings().controls.forEach((meeting, index) => {
+        let start;
+        let end;
+        if (meeting.get('startDate').valid && meeting.get('startTime').valid ) {
+          start = parseDate(meeting.get('startDate').value, meeting.get('startTime').value);
+        }
+        if (meeting.get('endDate').valid && meeting.get('endTime').valid ) {
+          end = parseDate(meeting.get('endDate').value, meeting.get('endTime').value);
+        }
+        if (start && end) {
+          this.placeService
+          .getAvailablePlaces(start, end)
+          .subscribe(places => {
+            this.availablePlaces[index] = places;
+          });
+          this.userService
+            .getAvailableUsers(start, end)
+            .subscribe(users => {
+              this.availableSpeakers[index] = users;
+            });
+        } else {
+          this.placeService
+          .getAllPlaces()
+          .subscribe(places => {
+            this.availablePlaces[index] = places;
+          });
+          this.userService
+            .getAllUsers()
+            .subscribe(users => {
+              this.availableSpeakers[index] = users;
+            });
+        }
+
+      });
     });
   }
 
@@ -77,10 +122,14 @@ export class NewEventComponent implements OnInit {
         validator: dateDependenceValidator,
       });
     this.getMeetings().push(meetingGroup);
+    this.availablePlaces.push([]);
+    this.availableSpeakers.push([]);
   }
 
   deleteMeeting(index: number) {
     this.getMeetings().removeAt(index);
+    this.availablePlaces.slice(index, 1);
+    this.availableSpeakers.slice(index, 1);
   }
 
   getSpeakers(index: number) {
