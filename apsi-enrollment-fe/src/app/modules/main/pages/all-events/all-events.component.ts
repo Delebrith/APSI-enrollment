@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { BasicEvent } from 'src/app/core/model/event.model';
 import { EventService } from '../../services/event/event.service';
+import {EventDetailComponent} from '../event-detail/event-detail.component';
 
 @Component({
   templateUrl: './all-events.component.html',
   styleUrls: ['./all-events.component.scss'],
 })
 export class AllEventsComponent implements OnInit {
+  @ViewChild(EventDetailComponent) modal: EventDetailComponent;
   events: BasicEvent[];
   totalEvents: number;
   loading = true;
@@ -35,6 +37,6 @@ export class AllEventsComponent implements OnInit {
   }
 
   onShowEventDetails(eventId: number) {
-    console.error(`not implemented: show event details of event ${eventId}`);
+    this.modal.open(eventId);
   }
 }
