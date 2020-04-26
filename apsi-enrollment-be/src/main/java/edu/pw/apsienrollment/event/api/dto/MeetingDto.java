@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import edu.pw.apsienrollment.event.db.Meeting;
 import edu.pw.apsienrollment.place.api.PlaceDto;
-import edu.pw.apsienrollment.user.api.UserDto;
+import edu.pw.apsienrollment.user.api.dto.UserDto;
 import lombok.Builder;
 import lombok.Value;
 
