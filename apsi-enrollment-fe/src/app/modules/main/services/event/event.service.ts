@@ -59,10 +59,16 @@ export class EventService {
       );
   }
 
-  getEventByID(eventID: number): Observable<Event> {
-    return this.http.get(`${this.baseUrl}/${eventID}`).pipe(
-      map((response) => {
-        return null;
+  getEventByID(eventId: number): Observable<Event> {
+    return this.http.get<any>(`${this.baseUrl}/${eventId}`).pipe(
+      map(({ name, description, eventType, attendeesLimit, meetings }) => {
+        return {
+          name,
+          description,
+          eventType,
+          attendeesLimit,
+          meetings,
+        } as Event;
       })
     );
   }
