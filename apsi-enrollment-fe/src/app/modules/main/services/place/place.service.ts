@@ -40,7 +40,7 @@ export class PlaceService {
 
     const params = {
       size: pageSize.toString(),
-      searchQuery: `availableBetween:${from.toISOString()};${to.toISOString()}`,
+      searchQuery: `availableBetween=${from.toISOString()};${to.toISOString()}`,
     };
 
     return this.getPage(params).pipe(
