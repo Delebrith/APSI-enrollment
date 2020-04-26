@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {BasicEvent} from 'src/app/core/model/event.model';
+import { Event} from 'src/app/core/model/event.model';
+import {EventService} from '../../services/event/event.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -9,15 +9,18 @@ import {BasicEvent} from 'src/app/core/model/event.model';
 })
 export class EventDetailComponent implements OnInit {
   show = false;
-  eventId: number;
-  event$: Observable<BasicEvent>;
+  event: Event;
 
   open(eventId: number) {
     this.show = true;
-    this.eventId = eventId;
+    this.eventService
+      .getEventById(eventId)
+      .subscribe(event => {
+        this.event = event;
+      });
   }
 
-  constructor() { }
+  constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
   }
