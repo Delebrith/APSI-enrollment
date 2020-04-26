@@ -1,4 +1,4 @@
-package edu.pw.apsienrollment.user.api;
+package edu.pw.apsienrollment.user.api.dto;
 
 import edu.pw.apsienrollment.user.db.User;
 import lombok.Builder;
