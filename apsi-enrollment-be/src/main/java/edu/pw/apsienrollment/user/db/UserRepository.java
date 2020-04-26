@@ -14,8 +14,8 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     @Query("select u from USER_ u where u.id = :id and not(exists" +
             "   (select m from MEETING m where " +
             "       u in elements(m.speakers) and" +
-            "       ((m.start >= :availableFrom and m.start <= :availableTo) or" +
-            "       (m.end >= :availableFrom and m.end <= :availableTo) or" +
+            "       ((m.start >= :availableFrom and m.start < :availableTo) or" +
+            "       (m.end > :availableFrom and m.end <= :availableTo) or" +
             "       (m.start <= :availableFrom and m.end >= :availableTo))" +
             "   ))")
     Optional<User> findByIdAndAvailability(@Param("id") Integer id,

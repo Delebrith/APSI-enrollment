@@ -8,7 +8,7 @@ import lombok.NonNull;
 
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.db.EventType;
-import edu.pw.apsienrollment.user.api.UserDto;
+import edu.pw.apsienrollment.user.api.dto.UserDto;
 
 
 @Value
