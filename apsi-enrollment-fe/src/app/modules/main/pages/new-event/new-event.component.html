@@ -115,26 +115,36 @@
           </div>
         </div>
       </div>
-      <clr-select-container>
+      <clr-datalist-container>
         <label>{{ 'event.place' | translate }}</label>
-        <select clrSelect name="place" formControlName="place" class="apsi-select">
-          <option value="one">Class 1</option>
-          <option value="two">Class 2</option>
-          <option value="three">Class 3</option>
-        </select>
+        <input
+          clrDatalistInput
+          [placeholder]="'event.place' | translate"
+          name="place"
+          formControlName="place"
+          class="apsi-input"
+        />
+        <datalist>
+            <option *ngFor="let place of availablePlaces[i]" [value]="place.id">{{place.name}}</option>
+        </datalist>
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
-      </clr-select-container>
+      </clr-datalist-container>
       <div formArrayName="speakers">
         <div *ngFor="let speaker of getSpeakers(i).controls; let j = index" [formGroupName]="j">
-          <clr-select-container>
-            <label>{{ 'event.speaker' | translate }} {{ j + 1 }}</label>
-            <select clrSelect name="speaker" formControlName="speaker" class="apsi-select">
-              <option value="one">Speaker 1</option>
-              <option value="two">Speaker 2</option>
-              <option value="three">Speaker 3</option>
-            </select>
+          <clr-datalist-container>
+            <label>{{ 'event.speaker' | translate }}</label>
+            <input
+              clrDatalistInput
+              [placeholder]="'event.speaker' | translate"
+              name="speaker"
+              formControlName="speaker"
+              class="apsi-input"
+            />
+            <datalist>
+              <option *ngFor="let user of availableSpeakers[i]" [value]="user.id">{{user.name}}</option>
+            </datalist>
             <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
-          </clr-select-container>
+          </clr-datalist-container>
         </div>
       </div>
       <br/>
