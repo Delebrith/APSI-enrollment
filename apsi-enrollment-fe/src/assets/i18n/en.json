@@ -59,6 +59,7 @@
     "deleteMeeting": "Delete meeting",
     "addSpeaker": "Add speaker",
     "thisFieldIsRequired": "This field is required!",
+    "invalidDateFormat": "Invalid date format!",
     "timeError": "End occurs before start!",
     "submit": "Submit",
     "reset": "Reset form"

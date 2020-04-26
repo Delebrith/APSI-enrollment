@@ -62,7 +62,12 @@
       <clr-date-container>
         <label>{{ 'event.startDate' | translate }}</label>
         <input type="date" clrDate name="startDate" formControlName="startDate" class="apsi-date"/>
-        <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        <clr-control-error
+          *ngIf="meeting.get('startDate').errors?.required">{{ 'event.thisFieldIsRequired' | translate }}
+        </clr-control-error>
+        <clr-control-error
+          *ngIf="meeting.get('startDate').errors?.dateFormat">{{ 'event.invalidDateFormat' | translate }}
+        </clr-control-error>
       </clr-date-container>
       <clr-input-container>
         <label>{{ 'event.startTime' | translate }}</label>
@@ -79,7 +84,12 @@
       <clr-date-container>
         <label>{{ 'event.endDate' | translate }}</label>
         <input type="date" clrDate name="endDate" formControlName="endDate" class="apsi-date"/>
-        <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
+        <clr-control-error
+          *ngIf="meeting.get('endDate').errors?.required">{{ 'event.thisFieldIsRequired' | translate }}
+        </clr-control-error>
+        <clr-control-error
+          *ngIf="meeting.get('endDate').errors?.dateFormat">{{ 'event.invalidDateFormat' | translate }}
+        </clr-control-error>
       </clr-date-container>
       <clr-input-container>
         <label>{{ 'event.endTime' | translate }}</label>
@@ -93,7 +103,7 @@
         />
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
       </clr-input-container>
-      <div *ngIf="meeting.errors?.time" class="alert alert-danger" role="alert">
+      <div *ngIf="meeting.errors?.dateDependence" class="alert alert-danger" role="alert">
         <div class="alert-items">
           <div class="alert-item static">
             <div class="alert-icon-wrapper">

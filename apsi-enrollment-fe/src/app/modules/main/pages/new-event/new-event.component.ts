@@ -1,8 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {EventType} from '../../../../core/model/event.model';
 
-export const timeValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+export const dateDependenceValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
   const startDate = formGroup.get('startDate').value;
   const startTime = formGroup.get('startTime').value;
   const endDate = formGroup.get('endDate').value;
@@ -12,9 +20,15 @@ export const timeValidator: ValidatorFn = (formGroup: FormGroup): ValidationErro
     const end = parseDate(endDate, endTime);
     if (start > end) {
       return {
-        time: true
+        dateDependence: true
       };
     }
+  }
+};
+
+export const dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  if (control && control.value && !Date.parse(control.value)) {
+    return {dateFormat: true};
   }
 };
 
@@ -52,15 +66,15 @@ export class NewEventComponent implements OnInit {
   addMeeting() {
     const meetingGroup = this.fb.group({
         description: [null],
-        startDate: [null, [Validators.required]],
+        startDate: [null, [Validators.required, dateValidator]],
         startTime: [null, [Validators.required]],
-        endDate: [null, [Validators.required]],
+        endDate: [null, [Validators.required, dateValidator]],
         endTime: [null, [Validators.required]],
         speakers: this.fb.array([]),
         place: [null, [Validators.required]],
       },
       {
-        validator: timeValidator,
+        validator: dateDependenceValidator,
       });
     this.getMeetings().push(meetingGroup);
   }
