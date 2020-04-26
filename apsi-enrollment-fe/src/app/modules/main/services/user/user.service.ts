@@ -14,6 +14,27 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+  getAllUsers(from: Date, to: Date): Observable<User[]> {
+    const pageSize = 100;
+
+    const params = {
+      size: pageSize.toString(),
+    };
+
+    return this.getPage(params).pipe(
+      expand((page: Page<User>) => {
+        if (page.pageNumber === page.totalPages - 1) {
+          return EMPTY;
+        } else {
+          return this.getPage({ ...params, page: (page.pageNumber + 1).toString() });
+        }
+      }),
+      concatMap((page: Page<User>) => (page ? page.items : [])),
+      toArray(),
+      take(1)
+    );
+  }
+
   getAvailableUsers(from: Date, to: Date): Observable<User[]> {
     const pageSize = 100;
 
