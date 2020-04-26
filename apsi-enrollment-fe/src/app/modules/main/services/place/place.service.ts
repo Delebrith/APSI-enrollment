@@ -14,6 +14,27 @@ export class PlaceService {
 
   constructor(private http: HttpClient) {}
 
+  getAllPlaces(): Observable<Place[]> {
+    const pageSize = 100;
+
+    const params = {
+      size: pageSize.toString(),
+    };
+
+    return this.getPage(params).pipe(
+      expand((page: Page<Place>) => {
+        if (page.pageNumber === page.totalPages - 1) {
+          return EMPTY;
+        } else {
+          return this.getPage({ ...params, page: (page.pageNumber + 1).toString() });
+        }
+      }),
+      concatMap((page: Page<Place>) => (page ? page.items : [])),
+      toArray(),
+      take(1)
+    );
+  }
+
   getAvailablePlaces(from: Date, to: Date): Observable<Place[]> {
     const pageSize = 100;
 
