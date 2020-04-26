@@ -3,96 +3,92 @@
     {{ 'event.details' | translate }}
   </div>
   <div class="modal-body">
-<!--    <div *ngIf="event$ | async as event">-->
-    <div>
-      <div class="clr-row">
-        <div class="clr-col-4">
-          <span><b>{{ 'event.name' | translate }}</b></span>
-        </div>
-        <div class="clr-col">
-          <span>gfdfd</span>
-        </div>
-      </div>
-      <div class="clr-row">
-        <div class="clr-col-4">
-          <span><b>{{ 'event.description' | translate }}</b></span>
-        </div>
-        <div class="clr-col">
-          <span>sfafsdafadssafddafsfasf</span>
-        </div>
-      </div>
-      <div class="clr-row">
-        <div class="clr-col-4">
-          <span><b>{{ 'event.eventType' | translate }}</b></span>
-        </div>
-        <div class="clr-col">
-          <span>dfssafdfads</span>
-        </div>
-      </div>
-      <div class="clr-row">
-        <div class="clr-col-4">
-          <span><b>{{ 'event.attendeesLimit' | translate }}</b></span>
-        </div>
-        <div class="clr-col">
-          <span>dfssafdfads</span>
-        </div>
-      </div>
-      <div class="clr-row">
-        <div class="clr-col-4">
-          <span><b>{{ 'event.organizer' | translate }}</b></span>
-        </div>
-        <div class="clr-col">
-          <span>dfssafdfads</span>
-        </div>
-      </div>
-      <br>
-      <clr-accordion clrAccordionMultiPanel="true">
-        <clr-accordion-panel *ngFor="let meeting of [1, 2]; let i=index">
-          <clr-accordion-title>{{ 'event.meeting' | translate }} {{i + 1}}</clr-accordion-title>
-          <clr-accordion-content *clrIfExpanded>
-            <div class="clr-row">
-              <div class="clr-col-4">
-                <span><b>{{ 'event.description' | translate }}</b></span>
-              </div>
-              <div class="clr-col">
-                <span>dfssafdfads</span>
-              </div>
-            </div>
-            <div class="clr-row">
-              <div class="clr-col-4">
-                <span><b>{{ 'event.startTime' | translate }}</b></span>
-              </div>
-              <div class="clr-col">
-                <span>dfssafdfads</span>
-              </div>
-            </div>
-            <div class="clr-row">
-              <div class="clr-col-4">
-                <span><b>{{ 'event.endTime' | translate }}</b></span>
-              </div>
-              <div class="clr-col">
-                <span>dfssafdfads</span>
-              </div>
-            </div>
-            <div class="clr-row">
-              <div class="clr-col-4">
-                <span><b>{{ 'event.place' | translate }}</b></span>
-              </div>
-              <div class="clr-col">
-                <span>dfssafdfads</span>
-              </div>
-            </div>
-            <div class="clr-row" *ngFor="let speaker of [1, 2]; let j=index" >
-              <div class="clr-col-4">
-                <span><b>{{ 'event.speaker' | translate }} {{j+1}}</b></span>
-              </div>
-              <div class="clr-col">
-                <span>dfssafdfads</span>
-              </div>
-            </div>
-          </clr-accordion-content>
-        </clr-accordion-panel>
-      </clr-accordion>
+    <div *ngIf="!event else elseBlock">
+      <span class="spinner"></span>
     </div>
+    <ng-template #elseBlock>
+      <div>
+        <div class="clr-row">
+          <div class="clr-col-4">
+            <span><b>{{ 'event.name' | translate }}</b></span>
+          </div>
+          <div class="clr-col">
+            <span>{{ event.name }}</span>
+          </div>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col-4">
+            <span><b>{{ 'event.description' | translate }}</b></span>
+          </div>
+          <div class="clr-col">
+            <span>{{ event.description }}</span>
+          </div>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col-4">
+            <span><b>{{ 'event.eventType' | translate }}</b></span>
+          </div>
+          <div class="clr-col">
+            <span>{{ 'eventTypes.' + event.eventType | translate }}</span>
+          </div>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col-4">
+            <span><b>{{ 'event.attendeesLimit' | translate }}</b></span>
+          </div>
+          <div class="clr-col">
+            <span>{{ event.attendeesLimit }}</span>
+          </div>
+        </div>
+        <br>
+        <clr-accordion clrAccordionMultiPanel="true">
+          <clr-accordion-panel *ngFor="let meeting of event.meetings; let i=index">
+            <clr-accordion-title>{{ 'event.meeting' | translate }} {{i + 1}}</clr-accordion-title>
+            <clr-accordion-content *clrIfExpanded>
+              <div class="clr-row">
+                <div class="clr-col-4">
+                  <span><b>{{ 'event.description' | translate }}</b></span>
+                </div>
+                <div class="clr-col">
+                  <span>{{meeting.description}}</span>
+                </div>
+              </div>
+              <div class="clr-row">
+                <div class="clr-col-4">
+                  <span><b>{{ 'event.startTime' | translate }}</b></span>
+                </div>
+                <div class="clr-col">
+                  <span>{{meeting.start | date:'short'}}</span>
+                </div>
+              </div>
+              <div class="clr-row">
+                <div class="clr-col-4">
+                  <span><b>{{ 'event.endTime' | translate }}</b></span>
+                </div>
+                <div class="clr-col">
+                  <span>{{meeting.end | date:'short'}}</span>
+                </div>
+              </div>
+              <div class="clr-row">
+                <div class="clr-col-4">
+                  <span><b>{{ 'event.place' | translate }}</b></span>
+                </div>
+                <div class="clr-col">
+                  <span>{{meeting.place.name}}</span>
+                </div>
+              </div>
+              <div class="clr-row" *ngFor="let speaker of meeting.speakers; let j=index">
+                <div class="clr-col-4">
+                  <span><b>{{ 'event.speaker' | translate }} {{j + 1}}</b></span>
+                </div>
+                <div class="clr-col">
+                  <span>{{speaker.name}}</span>
+                </div>
+              </div>
+            </clr-accordion-content>
+          </clr-accordion-panel>
+        </clr-accordion>
+      </div>
+    </ng-template>
   </div>
 </clr-modal>
