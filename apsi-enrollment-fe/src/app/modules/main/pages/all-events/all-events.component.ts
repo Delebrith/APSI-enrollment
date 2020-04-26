@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
-import { BasicEvent, Event, EventType } from 'src/app/core/model/event.model';
-import { Page } from 'src/app/core/model/pagination.model';
+import { BasicEvent } from 'src/app/core/model/event.model';
 import { EventService } from '../../services/event/event.service';
 
 @Component({
