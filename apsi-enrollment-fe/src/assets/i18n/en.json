@@ -56,8 +56,10 @@
     "speaker": "Speaker",
     "place": "Place",
     "addMeeting": "Add meeting",
+    "deleteMeeting": "Delete meeting",
     "addSpeaker": "Add speaker",
     "thisFieldIsRequired": "This field is required!",
+    "timeError": "End occurs before start!",
     "submit": "Submit",
     "reset": "Reset form"
   }

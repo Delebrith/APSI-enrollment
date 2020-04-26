@@ -26,9 +26,9 @@
   <clr-select-container>
     <label>{{ 'event.eventType' | translate }}</label>
     <select clrSelect name="eventType" formControlName="eventType" class="apsi-select">
-      <option value="one">One</option>
-      <option value="two">Two</option>
-      <option value="three">Three</option>
+      <option *ngFor="let eventType of eventTypes | keyvalue" [value]="eventType.key">
+        {{ 'eventTypes.' + eventType.key | translate }}
+      </option>
     </select>
     <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
   </clr-select-container>
@@ -61,25 +61,24 @@
       </clr-textarea-container>
       <clr-date-container>
         <label>{{ 'event.startDate' | translate }}</label>
-        <input type="date" clrDate name="startDate" formControlName="startDate" class="apsi-date" />
+        <input type="date" clrDate name="startDate" formControlName="startDate" class="apsi-date"/>
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
       </clr-date-container>
-
       <clr-input-container>
         <label>{{ 'event.startTime' | translate }}</label>
         <input
           type="time"
           name="startTime"
           clrInput
-          [placeholder]="'event.startDate' | translate"
-          formControlName="startDate"
+          [placeholder]="'event.startTime' | translate"
+          formControlName="startTime"
           class="apsi-input"
         />
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
       </clr-input-container>
       <clr-date-container>
         <label>{{ 'event.endDate' | translate }}</label>
-        <input type="date" clrDate name="endDate" formControlName="endDate" class="apsi-date" />
+        <input type="date" clrDate name="endDate" formControlName="endDate" class="apsi-date"/>
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
       </clr-date-container>
       <clr-input-container>
@@ -94,6 +93,18 @@
         />
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
       </clr-input-container>
+      <div *ngIf="meeting.errors?.time" class="alert alert-danger" role="alert">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            <span class="alert-text">
+              {{ 'event.timeError' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
       <clr-select-container>
         <label>{{ 'event.place' | translate }}</label>
         <select clrSelect name="place" formControlName="place" class="apsi-select">
@@ -115,19 +126,23 @@
             <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
           </clr-select-container>
         </div>
-        <button class="btn btn-sm" (click)="addSpeaker(i)" type="button">{{ 'event.addSpeaker' | translate }}</button>
+      </div>
+      <br/>
+      <div class="btn-group btn-outline-primary btn-sm">
+        <button class="btn" (click)="addSpeaker(i)" type="button">{{ 'event.addSpeaker' | translate }}</button>
+        <button class="btn" (click)="deleteMeeting(i)" type="button">{{ 'event.deleteMeeting' | translate }}</button>
       </div>
     </div>
-    <br />
+    <br/>
     <button class="btn btn-sm" (click)="addMeeting()" type="button">{{ 'event.addMeeting' | translate }}</button>
-    <br />
-    <br />
+    <br/>
+    <br/>
   </div>
   <button class="btn btn-primary" type="submit" (click)="submit()">{{ 'event.submit' | translate }}</button>
 </form>
 
-results<br />
+results<br/>
 
-<pre
-  >{{ eventForm.value | json }}
+<pre>
+  {{ eventForm.value | json }}
 </pre>
