@@ -4,6 +4,8 @@ import edu.pw.apsienrollment.common.api.dto.SearchRequestDTO;
 import edu.pw.apsienrollment.event.EventService;
 import edu.pw.apsienrollment.event.api.dto.EventDto;
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
+import edu.pw.apsienrollment.event.api.dto.EventWithMeetingsDto;
+import edu.pw.apsienrollment.event.db.Event;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -65,8 +67,8 @@ public class EventController {
             @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
             @ApiResponse(code = 404, message = "If event does not exist")})
     @GetMapping("{id}")
-    ResponseEntity<EventDto> event(@PathVariable("id") Long id) {
-        EventDto e = EventDto.of(eventService.getById(id));
-        return ResponseEntity.ok(e);
+    ResponseEntity<EventWithMeetingsDto> event(@PathVariable("id") Long id) {
+        Event event = eventService.getById(id);
+        return ResponseEntity.ok(EventWithMeetingsDto.of(event, eventService.getMeetings(event)));
     }
 }

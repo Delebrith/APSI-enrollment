@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,5 +121,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event getById(Long id) {
         return eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+    }
+
+    @Override
+    public List<Meeting> getMeetings(Event event) {
+        return meetingRepository.findByEvent(event);
     }
 }
