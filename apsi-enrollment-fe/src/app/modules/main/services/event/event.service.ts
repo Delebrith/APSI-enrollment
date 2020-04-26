@@ -1,8 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { BasicEvent, Event, Meeting } from 'src/app/core/model/event.model';
+import { map, tap } from 'rxjs/operators';
+import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page } from 'src/app/core/model/pagination.model';
 import { environment } from 'src/environments/environment';
 
@@ -59,10 +59,13 @@ export class EventService {
       );
   }
 
-  getEventByID(eventId: number): Observable<Event> {
+  getEventById(eventId: number): Observable<Event> {
     return this.http.get<any>(`${this.baseUrl}/${eventId}`).pipe(
-      map(({ name, description, eventType, attendeesLimit, meetings }) => {
+      tap(console.log),
+      map(({ event, meetings }) => {
+        const { id, name, description, eventType, attendeesLimit } = event;
         return {
+          id,
           name,
           description,
           eventType,
@@ -73,16 +76,16 @@ export class EventService {
     );
   }
 
-  createNewEvent(event: Event): Observable<Event> {
+  createNewEvent(event: EventRequest): Observable<BasicEvent> {
     const postBody = {
       ...event,
-      meetings: event.meetings.map((meeting: Meeting) => ({
+      meetings: event.meetings.map((meeting: MeetingRequest) => ({
         ...meeting,
         start: meeting.start.toISOString(),
         end: meeting.end.toISOString(),
       })),
     };
 
-    return this.http.post(`${this.baseUrl}`, postBody).pipe(map((response) => response as Event));
+    return this.http.post(`${this.baseUrl}`, postBody).pipe(map((response) => response as BasicEvent));
   }
 }

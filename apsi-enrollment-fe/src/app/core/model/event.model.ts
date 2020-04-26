@@ -1,4 +1,5 @@
-import { Organizer } from './organizer.model';
+import { Place } from './place.model';
+import { User } from './user.model';
 
 export enum EventType {
   LECTURE = 'LECTURE',
@@ -19,7 +20,23 @@ export interface BasicEvent {
   attendeesLimit: number;
   start: Date;
   end: Date;
-  organizer: Organizer;
+  organizer: User;
+}
+
+export interface EventRequest {
+  name: string;
+  description: string;
+  eventType: EventType;
+  attendeesLimit: number;
+  meetings: MeetingRequest[];
+}
+
+export interface MeetingRequest {
+  description: string;
+  start: Date;
+  end: Date;
+  placeId: number;
+  speakerIds: number[];
 }
 
 export interface Event {
@@ -34,6 +51,6 @@ export interface Meeting {
   description: string;
   start: Date;
   end: Date;
-  placeId: number;
-  speakerIds: number[];
+  place: Place;
+  speakers: User[];
 }
