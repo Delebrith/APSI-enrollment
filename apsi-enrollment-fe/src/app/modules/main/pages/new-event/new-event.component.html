@@ -26,6 +26,7 @@
   <clr-select-container>
     <label>{{ 'event.eventType' | translate }}</label>
     <select clrSelect name="eventType" formControlName="eventType" class="apsi-select">
+      <option [value]="null" disabled>---</option>
       <option *ngFor="let eventType of eventTypes | keyvalue" [value]="eventType.key">
         {{ 'eventTypes.' + eventType.key | translate }}
       </option>
@@ -61,12 +62,12 @@
       </clr-textarea-container>
       <clr-date-container>
         <label>{{ 'event.startDate' | translate }}</label>
-        <input type="date" clrDate name="startDate" formControlName="startDate" class="apsi-date"/>
-        <clr-control-error
-          *ngIf="meeting.get('startDate').errors?.required">{{ 'event.thisFieldIsRequired' | translate }}
+        <input type="date" clrDate name="startDate" formControlName="startDate" class="apsi-date" />
+        <clr-control-error *ngIf="meeting.get('startDate').errors?.required">
+          {{ 'event.thisFieldIsRequired' | translate }}
         </clr-control-error>
-        <clr-control-error
-          *ngIf="meeting.get('startDate').errors?.dateFormat">{{ 'event.invalidDateFormat' | translate }}
+        <clr-control-error *ngIf="meeting.get('startDate').errors?.dateFormat">
+          {{ 'event.invalidDateFormat' | translate }}
         </clr-control-error>
       </clr-date-container>
       <clr-input-container>
@@ -83,12 +84,12 @@
       </clr-input-container>
       <clr-date-container>
         <label>{{ 'event.endDate' | translate }}</label>
-        <input type="date" clrDate name="endDate" formControlName="endDate" class="apsi-date"/>
-        <clr-control-error
-          *ngIf="meeting.get('endDate').errors?.required">{{ 'event.thisFieldIsRequired' | translate }}
+        <input type="date" clrDate name="endDate" formControlName="endDate" class="apsi-date" />
+        <clr-control-error *ngIf="meeting.get('endDate').errors?.required"
+          >{{ 'event.thisFieldIsRequired' | translate }}
         </clr-control-error>
-        <clr-control-error
-          *ngIf="meeting.get('endDate').errors?.dateFormat">{{ 'event.invalidDateFormat' | translate }}
+        <clr-control-error *ngIf="meeting.get('endDate').errors?.dateFormat"
+          >{{ 'event.invalidDateFormat' | translate }}
         </clr-control-error>
       </clr-date-container>
       <clr-input-container>
@@ -115,54 +116,40 @@
           </div>
         </div>
       </div>
-      <clr-datalist-container>
+      <clr-select-container>
         <label>{{ 'event.place' | translate }}</label>
-        <input
-          clrDatalistInput
-          [placeholder]="'event.place' | translate"
-          name="place"
-          formControlName="place"
-          class="apsi-input"
-        />
-        <datalist>
-            <option *ngFor="let place of availablePlaces[i]" [value]="place.id">{{place.name}}</option>
-        </datalist>
+        <select clrSelect name="eventType" formControlName="place" class="apsi-select">
+          <option [value]="null" disabled>---</option>
+          <option *ngFor="let place of availablePlaces[i]" [ngValue]="place.id">{{ place.name }}</option>
+        </select>
         <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
-      </clr-datalist-container>
+      </clr-select-container>
       <div formArrayName="speakers">
         <div *ngFor="let speaker of getSpeakers(i).controls; let j = index" [formGroupName]="j">
-          <clr-datalist-container>
+          <clr-select-container>
             <label>{{ 'event.speaker' | translate }}</label>
-            <input
-              clrDatalistInput
-              [placeholder]="'event.speaker' | translate"
-              name="speaker"
-              formControlName="speaker"
-              class="apsi-input"
-            />
-            <datalist>
-              <option *ngFor="let user of availableSpeakers[i]" [value]="user.id">{{user.name}}</option>
-            </datalist>
+            <select clrSelect name="eventType" formControlName="speaker" class="apsi-select">
+              <option [value]="null" disabled>---</option>
+              <option *ngFor="let user of availableSpeakers[i]" [ngValue]="user.id">{{ user.name }}</option>
+            </select>
             <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
-          </clr-datalist-container>
+          </clr-select-container>
         </div>
       </div>
-      <br/>
+      <br />
       <div class="btn-group btn-outline-primary btn-sm">
         <button class="btn" (click)="addSpeaker(i)" type="button">{{ 'event.addSpeaker' | translate }}</button>
         <button class="btn" (click)="deleteMeeting(i)" type="button">{{ 'event.deleteMeeting' | translate }}</button>
       </div>
     </div>
-    <br/>
+    <br />
     <button class="btn btn-sm" (click)="addMeeting()" type="button">{{ 'event.addMeeting' | translate }}</button>
-    <br/>
-    <br/>
+    <br />
+    <br />
   </div>
   <button class="btn btn-primary" type="submit" (click)="submit()">{{ 'event.submit' | translate }}</button>
 </form>
-
-results<br/>
-
+results<br />
 <pre>
   {{ eventForm.value | json }}
 </pre>
