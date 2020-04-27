@@ -130,7 +130,9 @@
             <label>{{ 'event.speaker' | translate }}</label>
             <select clrSelect name="eventType" formControlName="speaker" class="apsi-select">
               <option [value]="null" disabled>---</option>
-              <option *ngFor="let user of availableSpeakers[i]" [ngValue]="user.id">{{ user.name }}</option>
+              <option *ngFor="let user of availableSpeakers[i]" [ngValue]="user.id">
+                {{ user.name }} {{ user.surname }}
+              </option>
             </select>
             <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
           </clr-select-container>
@@ -144,33 +146,33 @@
     </div>
     <br />
     <button class="btn btn-sm" (click)="addMeeting()" type="button">{{ 'event.addMeeting' | translate }}</button>
-     <div *ngIf="getMeetings().errors?.noMeeting" class="alert alert-danger" role="alert">
-        <div class="alert-items">
-          <div class="alert-item static">
-            <div class="alert-icon-wrapper">
-              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-            </div>
-            <span class="alert-text">
-              {{ 'event.noMeetingError' | translate }}
-            </span>
+    <div *ngIf="getMeetings().errors?.noMeeting" class="alert alert-danger" role="alert">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
           </div>
+          <span class="alert-text">
+            {{ 'event.noMeetingError' | translate }}
+          </span>
         </div>
       </div>
-    <br/>
-    <br/>
+    </div>
+    <br />
+    <br />
   </div>
   <div *ngIf="createError" class="alert alert-danger" role="alert">
-        <div class="alert-items">
-          <div class="alert-item static">
-            <div class="alert-icon-wrapper">
-              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-            </div>
-            <span class="alert-text">
-              {{ 'event.failedToCreate' | translate }}
-            </span>
-          </div>
+    <div class="alert-items">
+      <div class="alert-item static">
+        <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
         </div>
+        <span class="alert-text">
+          {{ 'event.failedToCreate' | translate }}
+        </span>
       </div>
+    </div>
+  </div>
   <button class="btn btn-primary" type="submit" (click)="submit()" [disabled]="!eventForm.valid">
     {{ 'event.submit' | translate }}
   </button>

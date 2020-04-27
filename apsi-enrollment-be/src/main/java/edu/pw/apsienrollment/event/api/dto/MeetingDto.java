@@ -16,7 +16,7 @@ import lombok.Value;
 @Builder
 public class MeetingDto {
     @NotNull Long id;
-    String desctiption;
+    String description;
     @NotNull LocalDateTime start;
     @NotNull LocalDateTime end;
     @NotNull List<UserDto> speakers;
@@ -25,7 +25,7 @@ public class MeetingDto {
     public static MeetingDto of(Meeting meeting) {
         return builder()
             .id(meeting.getId())
-            .desctiption(meeting.getDescription())
+            .description(meeting.getDescription())
             .start(meeting.getStart())
             .end(meeting.getEnd())
             .speakers(meeting.getSpeakers().stream().map(UserDto::of).collect(Collectors.toList()))
