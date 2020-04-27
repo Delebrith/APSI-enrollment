@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -6,16 +6,25 @@ import {
   FormGroup,
   ValidationErrors,
   ValidatorFn,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { Subject, timer } from 'rxjs';
-import { debounce, takeUntil } from 'rxjs/operators';
-import { EventType } from '../../../../core/model/event.model';
-import { Place } from '../../../../core/model/place.model';
-import { User } from '../../../../core/model/user.model';
-import { EventService } from '../../services/event/event.service';
-import { PlaceService } from '../../services/place/place.service';
-import { UserService } from '../../services/user/user.service';
+import {Router} from '@angular/router';
+import {Subject, timer} from 'rxjs';
+import {debounce, takeUntil} from 'rxjs/operators';
+import {EventRequest, EventType, MeetingRequest} from '../../../../core/model/event.model';
+import {Place} from '../../../../core/model/place.model';
+import {User} from '../../../../core/model/user.model';
+import {EventService} from '../../services/event/event.service';
+import {PlaceService} from '../../services/place/place.service';
+import {UserService} from '../../services/user/user.service';
+
+export const noMeetingValidator: ValidatorFn = (formArray: FormArray): ValidationErrors | null => {
+  if (formArray && formArray.length === 0) {
+    return {
+      noMeeting: true
+    };
+  }
+};
 
 export const dateDependenceValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
   const startDate = formGroup.get('startDate').value;
@@ -35,7 +44,7 @@ export const dateDependenceValidator: ValidatorFn = (formGroup: FormGroup): Vali
 
 export const dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   if (control && control.value && !Date.parse(control.value)) {
-    return { dateFormat: true };
+    return {dateFormat: true};
   }
 };
 
@@ -57,6 +66,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   eventTypes = EventType;
   availablePlaces: Place[][] = [];
   availableSpeakers: User[][] = [];
+  createError = false;
 
   subscriptions$: Subject<void>;
 
@@ -64,8 +74,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private eventService: EventService,
     private placeService: PlaceService,
-    private userService: UserService
-  ) {
+    private userService: UserService,
+    private router: Router) {
     this.subscriptions$ = new Subject<void>();
 
     this.eventForm = fb.group({
@@ -73,14 +83,14 @@ export class NewEventComponent implements OnInit, OnDestroy {
       description: [null, [Validators.required]],
       eventType: [null, [Validators.required]],
       attendeesLimit: [null, [Validators.required]],
-      meetings: this.fb.array([]),
+      meetings: this.fb.array([], [noMeetingValidator]),
     });
 
     this.getMeetings()
       .valueChanges.pipe(
-        debounce(() => timer(500)),
-        takeUntil(this.subscriptions$)
-      )
+      debounce(() => timer(500)),
+      takeUntil(this.subscriptions$)
+    )
       .subscribe((data) => {
         this.getMeetings().controls.forEach((meeting, index) => {
           let start: Date;
@@ -108,9 +118,11 @@ export class NewEventComponent implements OnInit, OnDestroy {
           }
         });
       });
+    this.addMeeting();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngOnDestroy(): void {
     this.subscriptions$.next();
@@ -159,5 +171,34 @@ export class NewEventComponent implements OnInit, OnDestroy {
     );
   }
 
-  submit() {}
+  submit() {
+    const meetingList: MeetingRequest[] = [];
+    this.getMeetings().controls.forEach((meeting, index) => {
+      const speakerList: number[] = [];
+      (meeting.get('speakers') as FormArray).controls.forEach((speaker, index2) => {
+        speakerList.push(speaker.get('speaker').value);
+      });
+      meetingList.push({
+        description: meeting.get('description').value,
+        start: parseDate(meeting.get('startDate').value, meeting.get('startTime').value),
+        end: parseDate(meeting.get('endDate').value, meeting.get('endTime').value),
+        placeId: meeting.get('place').value,
+        speakerIds: speakerList,
+      });
+    });
+    const newEvent: EventRequest = ({
+      name: this.eventForm.get('name').value,
+      description: this.eventForm.get('description').value,
+      eventType: this.eventForm.get('eventType').value,
+      attendeesLimit: this.eventForm.get('attendeesLimit').value,
+      meetings: meetingList
+    });
+    this.eventService.createNewEvent(newEvent).subscribe(() => {
+        this.router.navigate(['../', 'all-events']);
+      },
+      () => {
+        this.createError = true;
+      },
+    );
+  }
 }
