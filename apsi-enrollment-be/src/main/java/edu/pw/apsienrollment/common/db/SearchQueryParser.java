@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class SearchQueryParser {
     public static final String KEY = "([\\w.]+?)";
     public static final String OPERATOR = "(=|>|>=|<|<=)";
-    public static final String VALUE = "([\\w:\\-;\\p{Space}]+?)";
+    public static final String VALUE = "([\\w:\\-;\\.\\p{Space}]+?)";
 
     public static Collection<SearchCriteria> parse(@NonNull String searchQuery) {
         Pattern pattern = Pattern.compile(KEY + OPERATOR + VALUE + ",", Pattern.UNICODE_CHARACTER_CLASS);
