@@ -6,6 +6,7 @@ import edu.pw.apsienrollment.event.db.Meeting;
 
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -23,8 +24,8 @@ public class PlaceSpecification extends SearchSpecification<Place> {
                 .map(criteria -> {
                     if (criteria.getKey().equalsIgnoreCase("availableBetween")) {
                         String[] availability = ((String) criteria.getValue()).split(";");
-                        LocalDateTime availableFrom = LocalDateTime.parse(availability[0]);
-                        LocalDateTime availableTo = LocalDateTime.parse(availability[1]);
+                        LocalDateTime availableFrom = LocalDateTime.parse(availability[0], DateTimeFormatter.ISO_DATE_TIME);
+                        LocalDateTime availableTo = LocalDateTime.parse(availability[1], DateTimeFormatter.ISO_DATE_TIME);
 
                         return getAvailabilityPredicate(availableFrom, availableTo, root, query, criteriaBuilder);
                     } else {
