@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("events")
+@RequestMapping("event")
 @RequiredArgsConstructor
 @Validated
 public class EventController {
