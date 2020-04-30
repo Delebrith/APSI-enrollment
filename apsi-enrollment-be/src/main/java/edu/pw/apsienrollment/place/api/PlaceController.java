@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("places")
+@RequestMapping("place")
 @RequiredArgsConstructor
 @Validated
 public class PlaceController {
