@@ -35,6 +35,7 @@ public class Meeting {
     @JoinTable(name = "MEETING_SPEAKERS",
             joinColumns = @JoinColumn(name = "MEETING_ID", nullable = false, referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "SPEAKER_ID", nullable = false, referencedColumnName = "ID"))
+    @Builder.Default
     private Set<User> speakers = new HashSet<>();
 
     @ManyToOne
