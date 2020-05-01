@@ -60,6 +60,7 @@ public class EventServiceImpl implements EventService {
                 .eventType(eventRequestDto.getEventType())
                 .attendeesLimit(eventRequestDto.getAttendeesLimit())
                 .organizer(authenticationService.getAuthenticatedUser())
+                .cost(eventRequestDto.getCost())
                 .build();
         eventRepository.save(created);
         createMeetings(eventRequestDto.getMeetings(), created);
@@ -112,7 +113,7 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(() ->
                         new PlaceNotMeetingRequirementsException(meetingRequestDto.getStart(), meetingRequestDto.getEnd())
                 );
-        if (place.getCapacity() < created.getAttendeesLimit()) {
+        if (created.getAttendeesLimit() != null && place.getCapacity() < created.getAttendeesLimit()) {
             throw new PlaceNotMeetingRequirementsException(place.getName(), place.getCapacity(), created.getAttendeesLimit());
         }
         return place;

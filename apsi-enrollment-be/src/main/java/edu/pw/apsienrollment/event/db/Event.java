@@ -41,4 +41,7 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "ORGANIZER_ID", nullable = false)
     private User organizer;
+
+    @Builder.Default
+    private Float cost = 0f;
 }
