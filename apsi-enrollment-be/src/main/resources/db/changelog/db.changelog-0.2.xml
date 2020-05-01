@@ -7,8 +7,6 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="2.1" author="pszwed">
-        <dropTable tableName="ENROLLMENT"/>
-
         <createTable tableName="ENROLLMENT">
             <column name="ID" type="bigint" autoIncrement="true" startWith="100">
                 <constraints nullable="false" primaryKey="true"  />
