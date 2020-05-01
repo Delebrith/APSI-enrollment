@@ -6,6 +6,7 @@ import edu.pw.apsienrollment.event.api.dto.EventDto;
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
 import edu.pw.apsienrollment.event.api.dto.EventWithMeetingsDto;
 import edu.pw.apsienrollment.event.db.Event;
+import edu.pw.apsienrollment.event.meeting.MeetingService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -24,6 +25,7 @@ import java.net.URI;
 @Validated
 public class EventController {
     private final EventService eventService;
+    private final MeetingService meetingService;
 
     @ApiOperation(value = "Get list of events", nickname = "get list of events", notes="",
         authorizations = {@Authorization(value = "JWT")})
@@ -69,6 +71,6 @@ public class EventController {
     @GetMapping("{id}")
     ResponseEntity<EventWithMeetingsDto> event(@PathVariable("id") Long id) {
         Event event = eventService.getById(id);
-        return ResponseEntity.ok(EventWithMeetingsDto.of(event, eventService.getMeetings(event)));
+        return ResponseEntity.ok(EventWithMeetingsDto.of(event, meetingService.getMeetings(event)));
     }
 }
