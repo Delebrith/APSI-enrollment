@@ -1,6 +1,5 @@
 package edu.pw.apsienrollment.user.db;
 
-import edu.pw.apsienrollment.event.db.Meeting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,9 +34,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Set<UserRole> roles = new HashSet<>();
-
-//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "speakers")
-//    Set<Meeting> meetings = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

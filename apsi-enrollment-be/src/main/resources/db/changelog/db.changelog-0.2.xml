@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2.1" author="pszwed">
+        <dropTable tableName="ENROLLMENT"/>
+
+        <createTable tableName="ENROLLMENT">
+            <column name="ID" type="bigint" autoIncrement="true" startWith="100">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="PARTICIPANT_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EVENT_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="varchar2(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ENROLLMENT" baseColumnNames="PARTICIPANT_ID" constraintName="ENROLLMENT_FK_1"
+                                 referencedTableName="USER_"
+                                 referencedColumnNames="ID"/>
+        <addForeignKeyConstraint baseTableName="ENROLLMENT" baseColumnNames="EVENT_ID" constraintName="ENROLLMENT_FK_2"
+                                 referencedTableName="EVENT"
+                                 referencedColumnNames="ID"/>
+
+        <addColumn tableName="EVENT">
+            <column name="cost" type="DECIMAL(12, 2)" defaultValue="0"/>
+        </addColumn>
+
+        <createTable tableName="PAYMENT">
+            <column name="ID" type="bigint" autoIncrement="true" startWith="100">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="ORDER_ID" type="varchar2(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="varchar2(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ENROLLMENT_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="PAYMENT" baseColumnNames="ENROLLMENT_ID" constraintName="PAYMENT_FK_1"
+                                 referencedTableName="ENROLLMENT"
+                                 referencedColumnNames="ID"/>
+
+    </changeSet>
+
+</databaseChangeLog>

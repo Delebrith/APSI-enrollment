@@ -20,4 +20,6 @@ public class EventRequestDto {
     @NotNull @Min(1) Integer attendeesLimit;
 
     @NotEmpty Set<MeetingRequestDto> meetings;
+
+    Float cost = 0f;
 }
