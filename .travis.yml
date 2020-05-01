@@ -16,7 +16,7 @@ jobs:
       script: make test-fe
     - language: java
       before-script: cd apsi-enrollment-be
-      script: "./gradlew build"
+      script: "./gradlew clean build"
     - stage: deploy
       addons:
         ssh_known_hosts:
