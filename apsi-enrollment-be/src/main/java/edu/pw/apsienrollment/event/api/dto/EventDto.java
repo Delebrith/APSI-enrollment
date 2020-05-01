@@ -22,6 +22,7 @@ public class EventDto {
     LocalDateTime start;
     LocalDateTime end;
     UserDto organizer;
+    Float cost;
 
     public static EventDto of(@NonNull Event event) {
         return EventDto.builder()
@@ -33,6 +34,7 @@ public class EventDto {
                 .start(event.getStart())
                 .end(event.getEnd())
                 .organizer(UserDto.of(event.getOrganizer()))
+                .cost(event.getCost())
                 .build();
     }
 }

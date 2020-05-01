@@ -22,4 +22,10 @@
                   file="db/changelog/data/meeting_speakers.csv"/>
     </changeSet>
 
+    <changeSet id="sample_data_2" author="pszwed">
+        <sql>
+            UPDATE EVENT SET cost = 125.00 WHERE EVENT_TYPE = 'COURSE'
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
