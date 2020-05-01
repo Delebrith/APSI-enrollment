@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
 
 import edu.pw.apsienrollment.event.db.Event;
-import edu.pw.apsienrollment.event.db.Meeting;
+import edu.pw.apsienrollment.event.meeting.Meeting;
 import lombok.Builder;
 import lombok.Value;
 

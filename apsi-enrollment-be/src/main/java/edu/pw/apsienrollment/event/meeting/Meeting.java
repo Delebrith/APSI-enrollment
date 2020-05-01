@@ -1,5 +1,6 @@
-package edu.pw.apsienrollment.event.db;
+package edu.pw.apsienrollment.event.meeting;
 
+import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.place.db.Place;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package edu.pw.apsienrollment.place.db;
 
 import edu.pw.apsienrollment.common.db.SearchCriteria;
 import edu.pw.apsienrollment.common.db.SearchSpecification;
-import edu.pw.apsienrollment.event.db.Meeting;
+import edu.pw.apsienrollment.event.meeting.Meeting;
 
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
