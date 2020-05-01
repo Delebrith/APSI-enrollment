@@ -1,4 +1,4 @@
-package edu.pw.apsienrollment.event.db.specification;
+package edu.pw.apsienrollment.event.db;
 
 import edu.pw.apsienrollment.common.db.SearchCriteria;
 import edu.pw.apsienrollment.common.db.SearchSpecification;

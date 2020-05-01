@@ -1,4 +1,4 @@
-package edu.pw.apsienrollment.event.exception;
+package edu.pw.apsienrollment.event.meeting.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
