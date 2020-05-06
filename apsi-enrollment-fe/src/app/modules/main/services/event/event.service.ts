@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class EventService {
-  private baseUrl = `${environment.apiBaseUrl}/events`;
+  private baseUrl = `${environment.apiBaseUrl}/event`;
 
   constructor(private http: HttpClient) {}
 
