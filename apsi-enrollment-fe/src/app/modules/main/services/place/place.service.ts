@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class PlaceService {
-  private baseUrl = `${environment.apiBaseUrl}/places`;
+  private baseUrl = `${environment.apiBaseUrl}/place`;
 
   constructor(private http: HttpClient) {}
 
