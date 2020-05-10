@@ -172,14 +172,18 @@
     <br />
     <br />
   </div>
-  <div *ngIf="createError" class="alert alert-danger" role="alert">
+  <div *ngIf="createError != null" class="alert alert-danger" role="alert">
     <div class="alert-items">
       <div class="alert-item static">
         <div class="alert-icon-wrapper">
           <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
         </div>
         <span class="alert-text">
-          {{ 'event.failedToCreate' | translate }}
+          <ng-container *ngIf="createError.messageKey">
+            {{ 'errors.' + createError.messageKey | translate: createError.messageParams }}
+          </ng-container>
+          <ng-container *ngIf="!createError.messageKey"></ng-container>
+          {{ createError.message }}
         </span>
       </div>
     </div>
