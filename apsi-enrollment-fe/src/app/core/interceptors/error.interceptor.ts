@@ -7,12 +7,13 @@ import { APIError, APIErrorMessageType } from '../model/api-error.model';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor() {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('interceptor url', req.url);
-    if (req.url.startsWith('assets') || req.url.startsWith(`${environment.authBaseUrl}`)) {
+    if (!req.url.startsWith('assets') && !req.url.startsWith(`${environment.authBaseUrl}`)) {
       return next.handle(req).pipe(
         catchError((err) => {
+          console.log('error', err);
+
           if (err instanceof HttpErrorResponse) {
             const body = err.error;
             const { status, message, messageKey, messageParams } = body;
