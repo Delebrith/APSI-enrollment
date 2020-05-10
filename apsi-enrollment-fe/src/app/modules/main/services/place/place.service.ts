@@ -45,7 +45,7 @@ export class PlaceService {
 
     return this.getPage(params).pipe(
       expand((page: Page<Place>) => {
-        if (page.pageNumber === page.totalPages - 1) {
+        if (page.totalPages === 0 || page.pageNumber === page.totalPages - 1) {
           return EMPTY;
         } else {
           return this.getPage({ ...params, page: (page.pageNumber + 1).toString() });

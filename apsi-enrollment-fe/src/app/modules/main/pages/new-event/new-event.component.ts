@@ -9,8 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounce, map, switchAll, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject, timer } from 'rxjs';
-import { debounce, filter, takeUntil } from 'rxjs/operators';
+import { APIError } from 'src/app/core/model/api-error.model';
 import { CurrentUserService } from '../../../../core/auth/current-user.service';
 import { EventRequest, EventType, MeetingRequest } from '../../../../core/model/event.model';
 import { Place } from '../../../../core/model/place.model';
@@ -51,6 +52,9 @@ export const dateValidator: ValidatorFn = (control: AbstractControl): Validation
 };
 
 function parseDate(date: string, time: string) {
+  if (!date || !time || isNaN(Date.parse(date)) || time.indexOf(':') === -1) {
+    return null;
+  }
   const d = new Date(date);
   const splitTime = time.split(':');
   d.setHours(Number(splitTime[0]));
@@ -110,34 +114,32 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.getMeetings()
       .valueChanges.pipe(
         debounce(() => timer(500)),
+        map((data) => {
+          return data.map((meeting, idx) => {
+            const start = parseDate(meeting.startDate, meeting.startTime);
+            const end = parseDate(meeting.endDate, meeting.endTime);
+            return { idx, start, end };
+          });
+        }),
+        switchAll(),
         takeUntil(this.subscriptions$)
       )
-      .subscribe((data) => {
-        this.getMeetings().controls.forEach((meeting, index) => {
-          let start: Date;
-          let end: Date;
-          if (meeting.get('startDate').valid && meeting.get('startTime').valid) {
-            start = parseDate(meeting.get('startDate').value, meeting.get('startTime').value);
-          }
-          if (meeting.get('endDate').valid && meeting.get('endTime').valid) {
-            end = parseDate(meeting.get('endDate').value, meeting.get('endTime').value);
-          }
-          if (start && end) {
-            this.placeService.getAvailablePlaces(start, end).subscribe((places) => {
-              this.availablePlaces[index] = places;
-            });
-            this.userService.getAvailableUsers(start, end).subscribe((users) => {
-              this.availableSpeakers[index] = users;
-            });
-          } else {
-            this.placeService.getAllPlaces().subscribe((places) => {
-              this.availablePlaces[index] = places;
-            });
-            this.userService.getAllUsers().subscribe((users) => {
-              this.availableSpeakers[index] = users;
-            });
-          }
-        });
+      .subscribe(({ start, end, idx }) => {
+        if (start && end) {
+          this.placeService.getAvailablePlaces(start, end).subscribe((places) => {
+            this.availablePlaces[idx] = places;
+          });
+          this.userService.getAvailableUsers(start, end).subscribe((users) => {
+            this.availableSpeakers[idx] = users;
+          });
+        } else {
+          this.placeService.getAllPlaces().subscribe((places) => {
+            this.availablePlaces[idx] = places;
+          });
+          this.userService.getAllUsers().subscribe((users) => {
+            this.availableSpeakers[idx] = users;
+          });
+        }
       });
     this.addMeeting();
   }
