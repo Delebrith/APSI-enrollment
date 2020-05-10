@@ -71,6 +71,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
   createError = false;
   currency: string;
 
+  createError: APIError | null = null;
+
   subscriptions$: Subject<void>;
 
   constructor(
@@ -216,8 +218,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
       () => {
         this.router.navigate(['/main/all-events']);
       },
-      () => {
-        this.createError = true;
+      (error: APIError) => {
+        this.createError = error;
       }
     );
   }
