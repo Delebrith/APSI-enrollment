@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
-import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
+import { BasicEvent, Event, EventRequest, EventType, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page } from 'src/app/core/model/pagination.model';
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class EventService {
+  private baseUrl = `${environment.apiBaseUrl}/event`;
+  private eventTypeUrl = `${this.baseUrl}/eventTypes`;
   private eventBaseUrl = `${environment.apiBaseUrl}/event`;
   private enrollmentBaseUrl = `${environment.apiBaseUrl}/enrollment`;
 
@@ -74,6 +76,14 @@ export class EventService {
           attendeesLimit,
           meetings,
         } as Event;
+      })
+    );
+  }
+
+  getPossibleEventTypes(): Observable<EventType[]> {
+    return this.http.get<any>(this.eventTypeUrl).pipe(
+      map(({eventTypeList}) => {
+        return eventTypeList as EventType[];
       })
     );
   }

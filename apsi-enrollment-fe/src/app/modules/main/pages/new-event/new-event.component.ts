@@ -63,7 +63,7 @@ function parseDate(date: string, time: string) {
 })
 export class NewEventComponent implements OnInit, OnDestroy {
   eventForm: FormGroup;
-  eventTypes = EventType;
+  eventTypes: EventType[] = [];
   availablePlaces: Place[][] = [];
   availableSpeakers: User[][] = [];
   createError = false;
@@ -85,6 +85,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
       eventType: [null, [Validators.required]],
       attendeesLimit: [null, [Validators.required]],
       meetings: this.fb.array([], [noMeetingValidator]),
+    });
+
+    this.eventService.getPossibleEventTypes().subscribe((eventTypes) => {
+      this.eventTypes = eventTypes;
     });
 
     this.getMeetings()

@@ -7,6 +7,7 @@ import edu.pw.apsienrollment.event.api.dto.MeetingRequestDto;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.db.EventRepository;
 import edu.pw.apsienrollment.event.db.EventSpecification;
+import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.event.exception.EventNotFoundException;
 import edu.pw.apsienrollment.event.exception.UserUnauthorizedToCreateEventException;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
@@ -17,7 +18,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -73,6 +77,16 @@ class EventServiceImpl implements EventService {
     @Override
     public Event getById(Long id) {
         return eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+    }
+
+    @Override
+    public List<EventType> getEventTypes() {
+        User user = authenticationService.getAuthenticatedUser();
+        return Arrays.stream(EventType.values())
+                .filter(type -> type.getAuthorizedUserRoles().stream()
+                        .filter(role -> user.getRoles().contains(role))
+                        .findAny().isPresent())
+                .collect(Collectors.toList());
     }
 
 }
