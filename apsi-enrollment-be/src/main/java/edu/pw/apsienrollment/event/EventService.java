@@ -2,6 +2,7 @@ package edu.pw.apsienrollment.event;
 
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
 import edu.pw.apsienrollment.event.db.Event;
+import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface EventService {
     Event getById(Long id);
 
     Event createEvent(EventRequestDto eventRequestDto);
+
+    List<EventType> getEventTypes();
 }
