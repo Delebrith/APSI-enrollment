@@ -27,8 +27,8 @@
     <label>{{ 'event.eventType' | translate }}</label>
     <select clrSelect name="eventType" formControlName="eventType" class="apsi-select">
       <option [value]="null" disabled>---</option>
-      <option *ngFor="let eventType of eventTypes | keyvalue" [value]="eventType.key">
-        {{ 'eventTypes.' + eventType.key | translate }}
+      <option *ngFor="let eventType of eventTypes" [value]="eventType">
+        {{ 'eventTypes.' + eventType | translate }}
       </option>
     </select>
     <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
