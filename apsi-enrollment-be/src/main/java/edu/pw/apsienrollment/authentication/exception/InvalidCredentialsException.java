@@ -1,7 +1,10 @@
 package edu.pw.apsienrollment.authentication.exception;
 
-public class InvalidCredentialsException extends RuntimeException {
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
+
+public class InvalidCredentialsException extends ApsiException {
     public InvalidCredentialsException() {
-        super("Invalid username or password");
+        super(ExceptionCode.INVALID_CREDENTIALS, "Invalid username or password", null);
     }
 }
