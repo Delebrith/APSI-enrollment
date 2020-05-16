@@ -1,11 +1,14 @@
 package edu.pw.apsienrollment.event.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import com.google.common.collect.ImmutableMap;
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
+import edu.pw.apsienrollment.event.db.EventType;
 
-@ResponseStatus(HttpStatus.FORBIDDEN)
-public class UserUnauthorizedToCreateEventException extends RuntimeException {
-    public UserUnauthorizedToCreateEventException() {
-        super("User does not have rights to create events of given type");
+public class UserUnauthorizedToCreateEventException extends ApsiException {
+    public UserUnauthorizedToCreateEventException(EventType eventType) {
+        super(ExceptionCode.UNAUTHORIZED_TO_CREATE_EVENT,
+                "User does not have rights to create events of given type",
+                ImmutableMap.of("eventType", eventType));
     }
 }
