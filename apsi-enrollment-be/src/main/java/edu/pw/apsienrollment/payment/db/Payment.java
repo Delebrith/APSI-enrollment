@@ -1,6 +1,6 @@
 package edu.pw.apsienrollment.payment.db;
 
-import edu.pw.apsienrollment.event.enrollment.Enrollment;
+import edu.pw.apsienrollment.enrollment.db.Enrollment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
