@@ -25,9 +25,9 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
 
     @Override
-    public Enrollment signUp(EnrollmentRequestDto enrollmentRequestDto) {
+    public Enrollment signUp(Long eventId) {
         User user = authenticationService.getAuthenticatedUser();
-        Event event = eventService.getById(enrollmentRequestDto.getEventId());
+        Event event = eventService.getById(eventId);
 
         if (isAlreadySigned(user, event)) {
             throw new AlreadySignedUpException();
@@ -54,6 +54,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
     private boolean isAlreadySigned(User user, Event event) {
-        return enrollmentRepository.countByUserAndEvent(user, event) >= 1;
+        return enrollmentRepository.existsByUserAndEvent(user, event);
     }
 }
