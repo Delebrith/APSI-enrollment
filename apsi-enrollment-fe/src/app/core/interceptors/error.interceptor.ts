@@ -16,18 +16,18 @@ export class ErrorInterceptor implements HttpInterceptor {
 
           if (err instanceof HttpErrorResponse) {
             const body = err.error;
-            const { status, message, messageKey, messageParams } = body;
+            const { status, message, code, params } = body;
             return throwError({
               status,
               message,
-              messageKey,
-              messageParams,
+              code,
+              params,
             } as APIError);
           }
           return throwError({
             message: 'Unknown error (client side)',
-            messageKey: APIErrorMessageType.UNKNOWN,
-            messageParams: {},
+            code: APIErrorMessageType.UNKNOWN,
+            params: {},
             status: 0,
           } as APIError);
         })

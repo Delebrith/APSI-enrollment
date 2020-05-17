@@ -179,11 +179,12 @@
           <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
         </div>
         <span class="alert-text">
-          <ng-container *ngIf="createError.messageKey">
-            {{ 'errors.' + createError.messageKey | translate: createError.messageParams }}
+          <ng-container *ngIf="createError.code">
+            {{ 'errors.' + createError.code | translate: createError.params }}
           </ng-container>
-          <ng-container *ngIf="!createError.messageKey"></ng-container>
-          {{ createError.message }}
+          <ng-container *ngIf="createError.code == null">
+            {{ createError.message }}
+          </ng-container>
         </span>
       </div>
     </div>

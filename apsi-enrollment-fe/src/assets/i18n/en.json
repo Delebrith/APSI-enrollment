@@ -82,5 +82,18 @@
     "of": "of",
     "totalPayments": "total payments",
     "showEnrollment": "Show enrollment"
+  },
+  "errors": {
+    "INVALID_CREDENTIALS": "Invalid credentials",
+    "REFRESH_TOKEN_NOT_VALID": "Not valid refresh token",
+    "REFRESH_TOKEN_NOT_FOUND": "Refresh token not found",
+    "EVENT_NOT_FOUND": "Event not found",
+    "UNAUTHORIZED_TO_CREATE_EVENT": "You do not have permissions to create event of given type",
+    "PLACE_TOO_SMALL": "Place is to small for requested number of attendees",
+    "PLACE_NOT_AVAILABLE": "Place is not available in requested time",
+    "SPEAKER_UNAVAILABLE": "Speaker is not available in requested time",
+    "PLACE_NOT_FOUND": "Place not found",
+    "VALIDATION_FAILED": "Validation failed",
+    "USER_NOT_FOUND": "User not found"
   }
 }
