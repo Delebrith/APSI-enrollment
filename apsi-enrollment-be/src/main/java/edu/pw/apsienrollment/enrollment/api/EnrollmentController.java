@@ -29,7 +29,7 @@ public class EnrollmentController {
             @ApiResponse(code = 400, message = "If invalid data was provided")})
     @PostMapping
     ResponseEntity<EnrollmentDto> signUp(@Valid @RequestBody EnrollmentRequestDto enrollmentRequestDto) {
-        EnrollmentDto entrollment = EnrollmentDto.of(enrollmentService.signUp(enrollmentRequestDto));
-        return ResponseEntity.ok(entrollment);
+        EnrollmentDto enrollment = EnrollmentDto.of(enrollmentService.signUp(enrollmentRequestDto.getEventId()));
+        return ResponseEntity.ok(enrollment);
     }
 }
