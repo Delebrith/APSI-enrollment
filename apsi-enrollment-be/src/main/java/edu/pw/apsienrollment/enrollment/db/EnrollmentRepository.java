@@ -12,5 +12,5 @@ import edu.pw.apsienrollment.user.db.User;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     Long countByEvent(Event event);
 
-    Long countByUserAndEvent(User user, Event event);
+    boolean existsByUserAndEvent(User user, Event event);
 }
