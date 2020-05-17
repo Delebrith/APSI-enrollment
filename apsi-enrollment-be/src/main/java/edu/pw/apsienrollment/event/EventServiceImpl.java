@@ -63,7 +63,7 @@ class EventServiceImpl implements EventService {
                 .getAuthorizedUserRoles().stream()
                 .filter(role -> creator.getRoles().contains(role))
                 .findAny()
-                .orElseThrow(UserUnauthorizedToCreateEventException::new);
+                .orElseThrow(() -> new UserUnauthorizedToCreateEventException(eventRequestDto.getEventType()));
     }
 
     private void createMeetings(Collection<MeetingRequestDto> meetingRequestDtos, Event created) {

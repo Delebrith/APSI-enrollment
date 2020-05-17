@@ -1,7 +1,10 @@
 package edu.pw.apsienrollment.authentication.exception;
 
-public class RefreshTokenNotFoundException extends RuntimeException {
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
+
+public class RefreshTokenNotFoundException extends ApsiException {
     public RefreshTokenNotFoundException() {
-        super("Refresh token not found");
+        super(ExceptionCode.REFRESH_TOKEN_NOT_FOUND, "Refresh token not found", null);
     }
 }

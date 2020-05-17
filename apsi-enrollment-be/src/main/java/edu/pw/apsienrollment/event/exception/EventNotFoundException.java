@@ -1,11 +1,10 @@
 package edu.pw.apsienrollment.event.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class EventNotFoundException extends RuntimeException {
+public class EventNotFoundException extends ApsiException {
     public EventNotFoundException() {
-        super("Event not found");
+        super(ExceptionCode.EVENT_NOT_FOUND, "Event not found", null);
     }
 }

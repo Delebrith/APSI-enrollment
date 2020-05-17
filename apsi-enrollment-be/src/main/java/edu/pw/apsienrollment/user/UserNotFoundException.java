@@ -1,7 +1,10 @@
 package edu.pw.apsienrollment.user;
 
-public class UserNotFoundException extends RuntimeException {
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
+
+public class UserNotFoundException extends ApsiException {
     UserNotFoundException() {
-        super("User not found");
+        super(ExceptionCode.USER_NOT_FOUND, "User not found", null);
     }
 }
