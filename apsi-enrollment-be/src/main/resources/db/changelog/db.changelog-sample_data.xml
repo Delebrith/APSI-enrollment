@@ -28,4 +28,11 @@
         </sql>
     </changeSet>
 
+    <changeSet id="sample_data_3" author="gajus123">
+        <loadData tableName="ENROLLMENT"
+                  file="db/changelog/data/enrollment.csv"/>
+        <loadData tableName="PAYMENT"
+                  file="db/changelog/data/payment.csv"/>
+    </changeSet>
+
 </databaseChangeLog>
