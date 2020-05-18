@@ -5,6 +5,6 @@ import edu.pw.apsienrollment.common.exception.ExceptionCode;
 
 public class AlreadySignedUpException extends ApsiException {
     public AlreadySignedUpException() {
-        super(ExceptionCode.USER_ALREADY_SIGNED, "Already signed up for event", null);
+        super(ExceptionCode.USER_ALREADY_SIGNED_UP, "Already signed up for event", null);
     }
 }
