@@ -6,6 +6,8 @@ import edu.pw.apsienrollment.common.api.dto.ErrorDto;
 import edu.pw.apsienrollment.authentication.exception.InvalidCredentialsException;
 import edu.pw.apsienrollment.common.exception.ApsiException;
 import edu.pw.apsienrollment.common.exception.ExceptionCode;
+import edu.pw.apsienrollment.enrollment.exception.AlreadySignedUpException;
+import edu.pw.apsienrollment.enrollment.exception.AttendeesLimitException;
 import edu.pw.apsienrollment.event.exception.EventNotFoundException;
 import edu.pw.apsienrollment.event.exception.UserUnauthorizedToCreateEventException;
 import edu.pw.apsienrollment.event.meeting.exception.PlaceNotMeetingRequirementsException;
@@ -51,7 +53,9 @@ public class DefaultExceptionHandler {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler({PlaceNotMeetingRequirementsException.class,
-            SpeakerUnavailableException.class})
+            SpeakerUnavailableException.class,
+            AlreadySignedUpException.class,
+            AttendeesLimitException.class})
     @ResponseBody
     ErrorDto handleConflict(final HttpServletRequest req, final ApsiException ex) {
         return ErrorDto.of(ex, req.getRequestURI());
