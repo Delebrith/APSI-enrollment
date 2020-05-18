@@ -5,6 +5,6 @@ import edu.pw.apsienrollment.common.exception.ExceptionCode;
 
 public class AttendeesLimitException extends ApsiException {
     public AttendeesLimitException() {
-        super(ExceptionCode.NO_FREE_PLACES, "No free places left", null);
+        super(ExceptionCode.ATTENDEES_LIMIT_EXCEDED, "No free places left", null);
     }
 }
