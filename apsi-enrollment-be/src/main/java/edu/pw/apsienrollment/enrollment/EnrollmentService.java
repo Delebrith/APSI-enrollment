@@ -1,8 +1,11 @@
 package edu.pw.apsienrollment.enrollment;
 
-import edu.pw.apsienrollment.enrollment.api.dto.EnrollmentRequestDto;
 import edu.pw.apsienrollment.enrollment.db.Enrollment;
+
+import java.util.Collection;
 
 public interface EnrollmentService {
     Enrollment signUp(Long eventId);
+
+    Collection<Enrollment> getMyEnrollments();
 }
