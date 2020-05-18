@@ -1,11 +1,10 @@
 package edu.pw.apsienrollment.enrollment.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class AttendeesLimitException extends RuntimeException {
+public class AttendeesLimitException extends ApsiException {
     public AttendeesLimitException() {
-        super("No free places for event left");
+        super(ExceptionCode.NO_FREE_PLACES, "No free places left", null);
     }
 }
