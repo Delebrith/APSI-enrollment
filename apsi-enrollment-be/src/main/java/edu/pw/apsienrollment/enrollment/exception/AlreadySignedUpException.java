@@ -1,11 +1,10 @@
 package edu.pw.apsienrollment.enrollment.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import edu.pw.apsienrollment.common.exception.ApsiException;
+import edu.pw.apsienrollment.common.exception.ExceptionCode;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class AlreadySignedUpException extends RuntimeException {
+public class AlreadySignedUpException extends ApsiException {
     public AlreadySignedUpException() {
-        super("User has already signed up for event");
+        super(ExceptionCode.USER_ALREADY_SIGNED, "Already signed up for event", null);
     }
 }
