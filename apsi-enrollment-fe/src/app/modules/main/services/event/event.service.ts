@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page } from 'src/app/core/model/pagination.model';
 import { environment } from 'src/environments/environment';
@@ -10,7 +11,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class EventService {
-  private baseUrl = `${environment.apiBaseUrl}/event`;
+  private eventBaseUrl = `${environment.apiBaseUrl}/event`;
+  private enrollmentBaseUrl = `${environment.apiBaseUrl}/enrollment`;
 
   constructor(private http: HttpClient) {}
 
@@ -45,7 +47,7 @@ export class EventService {
     }
 
     return this.http
-      .get<any>(this.baseUrl, { params })
+      .get<any>(this.eventBaseUrl, { params })
       .pipe(
         map(({ content, number: retrievedPageNumber, totalPages, size, totalElements }) => {
           return {
@@ -60,7 +62,7 @@ export class EventService {
   }
 
   getEventById(eventId: number): Observable<Event> {
-    return this.http.get<any>(`${this.baseUrl}/${eventId}`).pipe(
+    return this.http.get<any>(`${this.eventBaseUrl}/${eventId}`).pipe(
       tap(console.log),
       map(({ event, meetings }) => {
         const { id, name, description, eventType, attendeesLimit } = event;
@@ -85,7 +87,25 @@ export class EventService {
         end: meeting.end.toISOString(),
       })),
     };
+    return this.http.post(`${this.eventBaseUrl}`, postBody).pipe(map((response) => response as BasicEvent));
+  }
 
-    return this.http.post(`${this.baseUrl}`, postBody).pipe(map((response) => response as BasicEvent));
+  getEnrollmentStatus(eventId: number): Observable<EnrollmentStatus> {
+    return this.http.get<any>(`${this.enrollmentBaseUrl}/my-enrollments`).pipe(
+      map((enrollments: Enrollment[]) => enrollments.filter((e) => e.event.id === eventId)),
+      map((enrollments: Enrollment[]) => {
+        if (enrollments.length === 0) {
+          return EnrollmentStatus.NOT_ENROLLED;
+        }
+        return enrollments[0].status;
+      })
+    );
+  }
+
+  signUp(eventId: number): Observable<Enrollment> {
+    const postBody = {
+      eventId,
+    };
+    return this.http.post(`${this.enrollmentBaseUrl}`, postBody).pipe(map((response) => response as Enrollment));
   }
 }

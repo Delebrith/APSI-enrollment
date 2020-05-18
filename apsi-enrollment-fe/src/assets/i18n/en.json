@@ -64,6 +64,9 @@
     "noMeetingError": "At least one meeting required!",
     "failedToCreate": "Failed to create new event.",
     "submit": "Submit",
-    "reset": "Reset form"
+    "reset": "Reset form",
+    "register": "Sign up",
+    "checkPayment": "Check payment",
+    "alreadyRegistered": "Already signed up"
   }
 }
