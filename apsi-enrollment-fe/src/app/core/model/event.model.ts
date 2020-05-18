@@ -40,6 +40,7 @@ export interface MeetingRequest {
 }
 
 export interface Event {
+  id: number;
   name: string;
   description: string;
   eventType: EventType;
