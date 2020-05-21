@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
-import { Page } from 'src/app/core/model/pagination.model';
+import { Page, PageRequest } from 'src/app/core/model/pagination.model';
 import { UserRole } from 'src/app/core/model/user.model';
 import { environment } from 'src/environments/environment';
 
@@ -21,11 +21,7 @@ export class EventService {
     pageNumber,
     pageSize,
     searchQuery,
-  }: {
-    pageNumber?: number;
-    pageSize?: number;
-    searchQuery?: string;
-  }): Observable<Page<BasicEvent>> {
+  }: PageRequest): Observable<Page<BasicEvent>> {
     const params = {
       page: null,
       size: null,
