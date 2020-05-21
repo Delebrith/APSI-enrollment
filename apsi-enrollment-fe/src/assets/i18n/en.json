@@ -68,14 +68,18 @@
     "reset": "Reset form",
     "register": "Sign up",
     "checkPayment": "Check payment",
-    "alreadyRegistered": "Already signed up"
+    "alreadyRegistered": "Already signed up",
+    "pending": "Pending"
   },
   "payments": {
-    "amount": "Payment amount",
-    "paid": "Payment status",
+    "id": "Payment id",
+    "status": "Payment status",
+    "order": "Payment Order Id",
+    "enrollment": "Enrollment",
     "weCouldNotFindPayments": "We could't find any payments!",
     "paymentsPerPage": "Payments per page",
     "of": "of",
-    "totalPayments": "total payments"
+    "totalPayments": "total payments",
+    "showEnrollment": "Show enrollment"
   }
 }

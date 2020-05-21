@@ -1,4 +1,8 @@
+import { Enrollment } from './enrollment.model';
+
 export interface Payment {
-    amount: number;
-    paid: boolean;
+    id: number;
+    orderId: number;
+    status: string;
+    enrollment: Enrollment; 
 }
