@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CoreModule} from 'src/app/core/core.module';
 import {SharedModule} from 'src/app/shared/shared.module';
