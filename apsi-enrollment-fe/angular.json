@@ -19,19 +19,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/@clr/icons/clr-icons.min.css",
               "node_modules/@clr/ui/clr-ui.min.css",
               "src/app/styles/global.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/app/styles"
-              ]
+              "includePaths": ["src/app/styles"]
             },
             "scripts": [
               "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
@@ -94,17 +89,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/app/styles/global.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/app/styles/global.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/app/styles"
-              ]
+              "includePaths": ["src/app/styles"]
             },
             "scripts": []
           }
@@ -112,14 +100,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -142,8 +124,5 @@
     "@schematics/angular:component": {
       "styleext": "scss"
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
