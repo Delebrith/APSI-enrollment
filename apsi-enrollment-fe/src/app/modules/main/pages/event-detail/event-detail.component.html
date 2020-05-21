@@ -112,8 +112,8 @@
             <button *ngSwitchCase="enrollmentStatusEnum.NOT_ENROLLED" class="btn btn-primary" (click)="onRegister()">
               {{ 'event.register' | translate }}
             </button>
-            <button *ngSwitchCase="enrollmentStatusEnum.PENDING" class="btn btn-warning" (click)="onPay()">
-              {{ 'event.checkPayment' | translate }}
+            <button *ngSwitchCase="enrollmentStatusEnum.PENDING" class="btn btn-warning">
+              {{ 'event.pending' | translate }}
             </button>
             <button *ngSwitchCase="enrollmentStatusEnum.ENROLLED" class="btn btn-success">
               {{ 'event.alreadyRegistered' | translate }}

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Payment } from 'src/app/core/model/payment.model'
-import { PaymentService } from 'src/app/modules/main/services/payments/payments.service'
+import { PaymentService } from 'src/app/modules/main/services/payments/payment.service'
 import { ClrDatagridStateInterface } from '@clr/angular';
+import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
   selector: 'app-all-payments',
@@ -9,7 +10,7 @@ import { ClrDatagridStateInterface } from '@clr/angular';
   styleUrls: ['./all-payments.component.scss']
 })
 export class AllPaymentsComponent implements OnInit {
-
+  @ViewChild(EventDetailComponent) modal: EventDetailComponent;
   payments: Payment[];
   totalPayments: number;
   loading = true;
@@ -27,6 +28,10 @@ export class AllPaymentsComponent implements OnInit {
         this.totalPayments = page.totalElements;
         this.loading = false;
       });
+  }
+
+  onShowEventDetails(eventId: number) {
+    this.modal.open(eventId);
   }
 
 }

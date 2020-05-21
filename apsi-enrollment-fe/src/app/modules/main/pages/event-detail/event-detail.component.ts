@@ -41,8 +41,4 @@ export class EventDetailComponent implements OnInit {
       }
     );
   }
-
-  onPay() {
-    // TODO: redirect to payment page
-  }
 }
