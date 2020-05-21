@@ -18,7 +18,8 @@
     "home": "Home",
     "allEvents": "All Events",
     "myEvents": "My Events",
-    "newEvent": "New Events"
+    "newEvent": "New Events",
+    "allPayments": "My Payments"
   },
   "events": {
     "name": "Name",
@@ -68,5 +69,13 @@
     "register": "Sign up",
     "checkPayment": "Check payment",
     "alreadyRegistered": "Already signed up"
+  },
+  "payments": {
+    "amount": "Payment amount",
+    "paid": "Payment status",
+    "weCouldNotFindPayments": "We could't find any payments!",
+    "paymentsPerPage": "Payments per page",
+    "of": "of",
+    "totalPayments": "total payments"
   }
 }
