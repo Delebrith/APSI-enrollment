@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { User } from '../model/user.model';
 import { AuthAPIService } from './auth-api.service';
 import { AuthService } from './auth.service';
@@ -21,7 +21,7 @@ export class CurrentUserService implements OnDestroy {
 
     auth.authToken$
       .pipe(
-        switchMap((token) => authAPI.getUserForToken(token)),
+        switchMap((token) => (token ? authAPI.getUserForToken(token) : of(null))),
         takeUntil(this.subscriptions$)
       )
       .subscribe((user) => this.currentUserSubject$.next(user));
