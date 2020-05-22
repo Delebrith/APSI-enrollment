@@ -12,6 +12,7 @@ import edu.pw.apsienrollment.event.exception.EventNotFoundException;
 import edu.pw.apsienrollment.event.exception.UserUnauthorizedToCreateEventException;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
 import edu.pw.apsienrollment.user.db.User;
+import edu.pw.apsienrollment.user.db.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,7 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,13 +82,11 @@ class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventType> getEventTypes() {
-        User user = authenticationService.getAuthenticatedUser();
+    public Map<EventType, List<UserRole>> getAllowedToCreate() {
         return Arrays.stream(EventType.values())
-                .filter(type -> type.getAuthorizedUserRoles().stream()
-                        .filter(role -> user.getRoles().contains(role))
-                        .findAny().isPresent())
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(
+                        type -> type,
+                        type -> type.getAuthorizedUserRoles().stream().collect(Collectors.toList())));
     }
 
 }
