@@ -6,7 +6,9 @@ import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 
 import java.util.List;
+import java.util.Map;
 
+import edu.pw.apsienrollment.user.db.UserRole;
 import org.springframework.data.domain.Page;
 
 public interface EventService {
@@ -17,5 +19,5 @@ public interface EventService {
 
     Event createEvent(EventRequestDto eventRequestDto);
 
-    List<EventType> getEventTypes();
+    Map<EventType, List<UserRole>> getAllowedToCreate();
 }
