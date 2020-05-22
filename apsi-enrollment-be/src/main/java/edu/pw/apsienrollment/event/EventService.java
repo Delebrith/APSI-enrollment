@@ -5,7 +5,7 @@ import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import edu.pw.apsienrollment.user.db.UserRole;
@@ -19,5 +19,5 @@ public interface EventService {
 
     Event createEvent(EventRequestDto eventRequestDto);
 
-    Map<EventType, List<UserRole>> getAllowedToCreate();
+    Map<EventType, Collection<UserRole>> getAllowedToCreate();
 }
