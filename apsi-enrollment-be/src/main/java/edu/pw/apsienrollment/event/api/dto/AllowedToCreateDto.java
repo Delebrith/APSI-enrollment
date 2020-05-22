@@ -7,15 +7,15 @@ import lombok.NonNull;
 
 import edu.pw.apsienrollment.event.db.EventType;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 @Value
 @Builder
 public class AllowedToCreateDto {
-    Map<EventType, List<UserRole>> allowedToCreate;
+    Map<EventType, Collection<UserRole>> allowedToCreate;
 
-    public static AllowedToCreateDto of(@NonNull Map<EventType, List<UserRole>> allowedToCreate) {
+    public static AllowedToCreateDto of(@NonNull Map<EventType, Collection<UserRole>> allowedToCreate) {
         return builder()
             .allowedToCreate(allowedToCreate)
             .build();
