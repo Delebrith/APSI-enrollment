@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -82,11 +81,11 @@ class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Map<EventType, List<UserRole>> getAllowedToCreate() {
+    public Map<EventType, Collection<UserRole>> getAllowedToCreate() {
         return Arrays.stream(EventType.values())
                 .collect(Collectors.toMap(
                         type -> type,
-                        type -> type.getAuthorizedUserRoles().stream().collect(Collectors.toList())));
+                        type -> type.getAuthorizedUserRoles()));
     }
 
 }
