@@ -14,10 +14,10 @@ export class PaymentService {
 
     constructor(private http: HttpClient) {}
 
-    getCurrency(): Observable<String> {
+    getCurrency(): Observable<string> {
         return this.http
             .get<any>(`${this.baseUrl}/currency`)
-            .pipe(map((response) => response.currency as String));
+            .pipe(map((response) => response.currency as string));
     }
 
     create(enrollment: Enrollment): Observable<Payment> {

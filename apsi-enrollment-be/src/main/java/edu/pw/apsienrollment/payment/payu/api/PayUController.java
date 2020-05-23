@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.pw.apsienrollment.payment.PaymentService;
 import edu.pw.apsienrollment.payment.payu.api.dto.NotificationDto;
+import edu.pw.apsienrollment.payment.payu.api.dto.OrderStatus;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,10 +21,10 @@ public class PayUController {
 
     @PostMapping("notify")
     ResponseEntity<Void> notify(@RequestBody NotificationDto notificationDto) {
-        if (notificationDto.getOrder().getStatus().equals("COMPLETED")) {
+        if (notificationDto.getOrder().getStatus().equals(OrderStatus.COMPLETED)) {
             paymentService.completePayment(notificationDto.getOrder().getExtOrderId());
         }
-        else if (notificationDto.getOrder().getStatus().equals("CANCELED"))
+        else if (notificationDto.getOrder().getStatus().equals(OrderStatus.CANCELED))
             paymentService.cancelPayment(notificationDto.getOrder().getExtOrderId());
             
         return ResponseEntity.ok().build();
