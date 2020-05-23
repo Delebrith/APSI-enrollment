@@ -32,7 +32,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         if (isAlreadySigned(user, event)) {
             throw new AlreadySignedUpException();
         }
-        if (isEventFull(event)) {
+        if (event.getAttendeesLimit() != null && isEventFull(event)) {
             throw new AttendeesLimitException();
         }
 
