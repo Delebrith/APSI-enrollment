@@ -2,6 +2,7 @@ package edu.pw.apsienrollment.event.api;
 
 import edu.pw.apsienrollment.common.api.dto.SearchRequestDTO;
 import edu.pw.apsienrollment.event.EventService;
+import edu.pw.apsienrollment.event.api.dto.AllowedToCreateDto;
 import edu.pw.apsienrollment.event.api.dto.EventDto;
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
 import edu.pw.apsienrollment.event.api.dto.EventWithMeetingsDto;
@@ -72,5 +73,16 @@ public class EventController {
     ResponseEntity<EventWithMeetingsDto> event(@PathVariable("id") Long id) {
         Event event = eventService.getById(id);
         return ResponseEntity.ok(EventWithMeetingsDto.of(event, meetingService.getMeetings(event)));
+    }
+
+
+    @ApiOperation(value = "Get allowed to create", nickname = "get allowed to create", notes="",
+            authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided"),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("allowed-to-create")
+    ResponseEntity<AllowedToCreateDto> getAllowedToCreate() {
+        return ResponseEntity.ok(AllowedToCreateDto.of(eventService.getAllowedToCreate()));
     }
 }

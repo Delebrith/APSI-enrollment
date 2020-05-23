@@ -2,10 +2,13 @@ package edu.pw.apsienrollment.event;
 
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
 import edu.pw.apsienrollment.event.db.Event;
+import edu.pw.apsienrollment.event.db.EventType;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
+import edu.pw.apsienrollment.user.db.UserRole;
 import org.springframework.data.domain.Page;
 
 public interface EventService {
@@ -15,4 +18,6 @@ public interface EventService {
     Event getById(Long id);
 
     Event createEvent(EventRequestDto eventRequestDto);
+
+    Map<EventType, Collection<UserRole>> getAllowedToCreate();
 }

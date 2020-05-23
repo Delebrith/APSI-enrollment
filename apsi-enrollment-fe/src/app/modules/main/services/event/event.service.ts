@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page } from 'src/app/core/model/pagination.model';
+import { UserRole } from 'src/app/core/model/user.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -76,6 +77,12 @@ export class EventService {
         } as Event;
       })
     );
+  }
+
+  getAllowedToCreate(): Observable<{ EventType: UserRole[] }> {
+    return this.http
+      .get<any>(`${this.eventBaseUrl}/allowed-to-create`)
+      .pipe(map(({ allowedToCreate }) => allowedToCreate as { EventType: UserRole[] }));
   }
 
   createNewEvent(event: EventRequest): Observable<BasicEvent> {

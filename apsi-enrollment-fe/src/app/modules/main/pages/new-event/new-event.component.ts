@@ -9,8 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, timer } from 'rxjs';
-import { debounce, takeUntil } from 'rxjs/operators';
+import { combineLatest, Subject, timer } from 'rxjs';
+import { debounce, filter, takeUntil } from 'rxjs/operators';
+import { CurrentUserService } from '../../../../core/auth/current-user.service';
 import { EventRequest, EventType, MeetingRequest } from '../../../../core/model/event.model';
 import { Place } from '../../../../core/model/place.model';
 import { User } from '../../../../core/model/user.model';
@@ -63,7 +64,7 @@ function parseDate(date: string, time: string) {
 })
 export class NewEventComponent implements OnInit, OnDestroy {
   eventForm: FormGroup;
-  eventTypes = EventType;
+  eventTypes: EventType[];
   availablePlaces: Place[][] = [];
   availableSpeakers: User[][] = [];
   createError = false;
@@ -75,6 +76,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private eventService: EventService,
     private placeService: PlaceService,
     private userService: UserService,
+    private currentUserService: CurrentUserService,
     private router: Router
   ) {
     this.subscriptions$ = new Subject<void>();
@@ -86,6 +88,16 @@ export class NewEventComponent implements OnInit, OnDestroy {
       attendeesLimit: [null, [Validators.required]],
       meetings: this.fb.array([], [noMeetingValidator]),
     });
+
+    const allowedToCreate$ = eventService.getAllowedToCreate();
+    const currentUser$ = currentUserService.currentUser$;
+    combineLatest([allowedToCreate$, currentUser$])
+      .pipe(filter(([allowedToCreate, currentUser]) => currentUser != null))
+      .subscribe(([allowedToCreate, currentUser]) => {
+        this.eventTypes = Object.entries(allowedToCreate)
+          .filter(([eventType, roles]) => roles.some((x) => currentUser.userRoles.includes(x)))
+          .map(([eventType, roles]) => eventType as EventType);
+      });
 
     this.getMeetings()
       .valueChanges.pipe(
