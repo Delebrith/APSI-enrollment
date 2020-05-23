@@ -6,8 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import lombok.Getter;
 
 @Configuration
+@Getter
 public class PaymentConfig {
-    private final @Getter String currency;
+    private final String currency;
 
     PaymentConfig(@Value("${apsi.payment.currency}") String currency) {
         this.currency = currency;
