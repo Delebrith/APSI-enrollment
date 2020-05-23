@@ -6,13 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import lombok.Getter;
 
 @Configuration
+@Getter
 public class PayUConfig {
-    private final @Getter String oAuthKey;
-    private final @Getter String oAuthSecret;
-    private final @Getter String apiUri;
-    private final @Getter String notificationUri;
-    private final @Getter String continueUri;
-    private final @Getter String posId;
+    private final String oAuthKey;
+    private final String oAuthSecret;
+    private final String apiUri;
+    private final String notificationUri;
+    private final String continueUri;
+    private final String posId;
 
     public PayUConfig(
         @Value("${apsi.payment.payu.OAuthID}") String oAuthKey,
