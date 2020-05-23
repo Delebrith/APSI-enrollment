@@ -7,5 +7,5 @@ public class OrderDto {
     String orderId;
     String extOrderId;
     //PayU sends also some data that will not be used on our side
-    String status;
+    OrderStatus status;
 }
