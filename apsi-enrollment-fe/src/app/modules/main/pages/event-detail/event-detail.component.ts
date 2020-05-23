@@ -12,7 +12,7 @@ import { PaymentService } from '../../services/payment/payment.service';
 export class EventDetailComponent implements OnInit {
   show = false;
   event: Event;
-  currency: String;
+  currency: string;
 
   enrollmentStatusEnum = EnrollmentStatus;
   enrollmentStatus: EnrollmentStatus;

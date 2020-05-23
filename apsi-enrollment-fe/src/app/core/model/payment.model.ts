@@ -1,9 +1,9 @@
 import { Enrollment } from './enrollment.model';
 
 export enum PaymentStatus {
-  NOT_ENROLLED = 'NEW',
-  PENDING = 'SUCCESS',
-  ENROLLED = 'CANCELED',
+  NOT_ENROLLED = 'NOT_ENROLLED',
+  PENDING = 'PENDING',
+  ENROLLED = 'ENROLLED',
 }
 
 export interface Payment {

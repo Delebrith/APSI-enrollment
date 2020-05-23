@@ -69,7 +69,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   availablePlaces: Place[][] = [];
   availableSpeakers: User[][] = [];
   createError = false;
-  currency: String;
+  currency: string;
 
   subscriptions$: Subject<void>;
 
