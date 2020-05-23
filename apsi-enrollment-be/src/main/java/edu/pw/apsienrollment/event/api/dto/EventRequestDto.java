@@ -14,7 +14,7 @@ public class EventRequestDto {
 
     @NotNull EventType eventType;
 
-    @NotNull @Min(1) Integer attendeesLimit;
+    @Min(1) Integer attendeesLimit;
 
     @NotEmpty Set<MeetingRequestDto> meetings;
 
