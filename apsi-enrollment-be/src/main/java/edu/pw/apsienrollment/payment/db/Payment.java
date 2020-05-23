@@ -21,8 +21,7 @@ public class Payment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private String providerOrderId;
 
     @Column(nullable = false)
@@ -33,12 +32,10 @@ public class Payment {
     @JoinColumn(name = "enrollment_id", nullable = false)
     private Enrollment enrollment;
 
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private String providerRedirectUrl;
 
-    @Column
+    @Column(nullable = false)
     @Default
-    @NotNull
     private String uuid = UUID.randomUUID().toString();
 }

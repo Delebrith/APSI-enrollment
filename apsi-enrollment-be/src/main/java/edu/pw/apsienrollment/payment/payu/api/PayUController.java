@@ -20,11 +20,7 @@ public class PayUController {
 
     @PostMapping("notify")
     ResponseEntity<Void> notify(@RequestBody NotificationDto notificationDto) {
-        System.out.printf("[%s]\n", notificationDto.getOrder().getStatus());
-        System.out.printf("[%s]\n", notificationDto.getOrder().getExtOrderId());
-
         if (notificationDto.getOrder().getStatus().equals("COMPLETED")) {
-            System.out.println("!!!");
             paymentService.completePayment(notificationDto.getOrder().getExtOrderId());
         }
         else if (notificationDto.getOrder().getStatus().equals("CANCELED"))

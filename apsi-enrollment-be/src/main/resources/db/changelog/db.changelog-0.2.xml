@@ -36,14 +36,16 @@
             <column name="ID" type="bigint" autoIncrement="true" startWith="100">
                 <constraints nullable="false" primaryKey="true"  />
             </column>
-            <column name="ORDER_ID" type="varchar2(1000)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="PROVIDER_ORDER_ID" type="varchar2(1000)" />
+            <column name="PROVIDER_REDIRECT_URL" type="varchar2(1000)"/>
             <column name="STATUS" type="varchar2(32)">
                 <constraints nullable="false"/>
             </column>
             <column name="ENROLLMENT_ID" type="bigint">
                 <constraints nullable="false"/>
+            </column>
+            <column name="UUID" type="varchar2(256)">
+                <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
         <addForeignKeyConstraint baseTableName="PAYMENT" baseColumnNames="ENROLLMENT_ID" constraintName="PAYMENT_FK_1"

@@ -14,12 +14,16 @@ import edu.pw.apsienrollment.payment.PaymentConfig;
 import edu.pw.apsienrollment.payment.PaymentProviderService;
 import edu.pw.apsienrollment.payment.db.Payment;
 import edu.pw.apsienrollment.payment.payu.exception.PayUException;
-import edu.pw.apsienrollment.payment.payu.api.dto.OAuthResponse;
+import edu.pw.apsienrollment.payment.payu.api.dto.OAuthResponseDto;
 import edu.pw.apsienrollment.payment.payu.api.dto.OrderCreateRequestDto;
 import edu.pw.apsienrollment.payment.payu.api.dto.OrderCreateResponseDto;
 
 @Service
 public class PaymentProviderServicePayUImpl implements PaymentProviderService {
+    private final String OAUTH_REQUEST_BODY = "grant_type=client_credentials&client_id=%s&client_secret=%s";
+    private final String OAUTH_ENDPOINT = "/pl/standard/user/oauth/authorize";
+    private final String ORDERS_ENDPOINT = "/api/v2_1/orders";
+
     private final RestTemplate payURestTemplate;
     private final PayUConfig payUConfig;
     private final PaymentConfig paymentConfig;
@@ -35,7 +39,7 @@ public class PaymentProviderServicePayUImpl implements PaymentProviderService {
 
     @Override
     public Payment createProviderPayment(Payment payment, Enrollment enrollment, String customerIp) {
-        OAuthResponse authorization = authorizePayU();
+        OAuthResponseDto authorization = authorizePayU();
         OrderCreateResponseDto response = createPayUOrder(enrollment, payment.getUuid(), customerIp, authorization);
 
         payment.setProviderOrderId(response.getExtOrderId());
@@ -44,20 +48,20 @@ public class PaymentProviderServicePayUImpl implements PaymentProviderService {
         return payment;
     }
 
-    private OAuthResponse authorizePayU() {
+    private OAuthResponseDto authorizePayU() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<String> entity = new HttpEntity<String>(
-            String.format("grant_type=client_credentials&client_id=%s&client_secret=%s",
+            String.format(OAUTH_REQUEST_BODY,
             payUConfig.getOAuthKey(), payUConfig.getOAuthSecret()),
             headers);
 
         System.out.println(entity.getBody());
         System.out.println(payURestTemplate.toString());
         
-        ResponseEntity<OAuthResponse> response = payURestTemplate.exchange(
-            "/pl/standard/user/oauth/authorize", HttpMethod.POST, entity, OAuthResponse.class);
+        ResponseEntity<OAuthResponseDto> response = payURestTemplate.exchange(
+            OAUTH_ENDPOINT, HttpMethod.POST, entity, OAuthResponseDto.class);
         
         if (!response.getStatusCode().is2xxSuccessful())
             throw new PayUException();
@@ -66,7 +70,7 @@ public class PaymentProviderServicePayUImpl implements PaymentProviderService {
     }
 
     private OrderCreateResponseDto createPayUOrder(
-        Enrollment enrollment, String extOrderId, String customerIp, OAuthResponse authorization) {
+        Enrollment enrollment, String extOrderId, String customerIp, OAuthResponseDto authorization) {
         OrderCreateRequestDto requestDto = OrderCreateRequestDto.create(
             enrollment, extOrderId, customerIp,
             payUConfig.getPosId(),
@@ -79,7 +83,7 @@ public class PaymentProviderServicePayUImpl implements PaymentProviderService {
         requestHeaders.setBearerAuth(authorization.getAccess_token());
         HttpEntity<OrderCreateRequestDto> requestEntity = new HttpEntity<OrderCreateRequestDto>(requestDto, requestHeaders);
         ResponseEntity<OrderCreateResponseDto> response = payURestTemplate.exchange(
-            "/api/v2_1/orders", HttpMethod.POST, requestEntity, OrderCreateResponseDto.class);
+            ORDERS_ENDPOINT, HttpMethod.POST, requestEntity, OrderCreateResponseDto.class);
         
         if (!response.getStatusCode().is2xxSuccessful() && !response.getStatusCode().is3xxRedirection()) 
             throw new PayUException();
