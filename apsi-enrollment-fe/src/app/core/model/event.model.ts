@@ -29,6 +29,7 @@ export interface EventRequest {
   eventType: EventType;
   attendeesLimit: number;
   meetings: MeetingRequest[];
+  cost: number;
 }
 
 export interface MeetingRequest {
@@ -45,6 +46,7 @@ export interface Event {
   description: string;
   eventType: EventType;
   attendeesLimit: number;
+  cost: number;
   meetings: Meeting[];
 }
 

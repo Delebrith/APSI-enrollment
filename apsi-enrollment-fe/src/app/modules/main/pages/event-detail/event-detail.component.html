@@ -48,6 +48,17 @@
             <span>{{ event.attendeesLimit }}</span>
           </div>
         </div>
+        <div class="clr-row">
+          <div class="clr-col-4">
+            <span
+              ><b>{{ 'event.cost' | translate }}</b></span
+            >
+          </div>
+          <div class="clr-col">
+            <span>{{ event.cost }}</span>
+            <span> {{ currency }}</span>
+          </div>
+        </div>
         <div class="accordion-container">
           <clr-accordion clrAccordionMultiPanel="true">
             <clr-accordion-panel *ngFor="let meeting of event.meetings; let i = index">

@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
+
+import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "PAYMENT")
 @Data
@@ -17,8 +21,9 @@ public class Payment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String orderId;
+    @Column
+    @NotNull
+    private String providerOrderId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -27,4 +32,13 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "enrollment_id", nullable = false)
     private Enrollment enrollment;
+
+    @Column
+    @NotNull
+    private String providerRedirectUrl;
+
+    @Column
+    @Default
+    @NotNull
+    private String uuid = UUID.randomUUID().toString();
 }
