@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { Event } from 'src/app/core/model/event.model';
 import { EventService } from '../../services/event/event.service';
+import { PaymentService } from '../../services/payment/payment.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -11,11 +12,17 @@ import { EventService } from '../../services/event/event.service';
 export class EventDetailComponent implements OnInit {
   show = false;
   event: Event;
+  currency: String;
 
   enrollmentStatusEnum = EnrollmentStatus;
   enrollmentStatus: EnrollmentStatus;
 
-  constructor(private eventService: EventService) {}
+  constructor(
+    private eventService: EventService,
+    private paymentService: PaymentService
+    ) {
+      paymentService.getCurrency().subscribe((currency) => this.currency = currency);
+    }
 
   ngOnInit() {}
 
@@ -33,7 +40,11 @@ export class EventDetailComponent implements OnInit {
     this.eventService.signUp(this.event.id).subscribe(
       (enrollment) => {
         this.enrollmentStatus = enrollment.status;
-        // TODO: redirect to payment page
+        this.paymentService.create(enrollment).subscribe(
+          (payment) => {
+            window.location.href = payment.redirectUrl
+          }
+        )
       },
       (error) => {
         console.error(error);

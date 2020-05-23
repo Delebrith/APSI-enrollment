@@ -6,4 +6,8 @@ import org.springframework.data.domain.Page;
 
 public interface PaymentService {
     Page<Payment> findUserPayments(Integer page, Integer pageSize);
+    void completePayment(String uuid);
+    void cancelPayment(String uuid);
+    Payment createPayment(Long enrollmentId, String customerIp);
+    String getCurrency();
 }

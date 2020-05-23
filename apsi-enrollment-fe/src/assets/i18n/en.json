@@ -68,8 +68,9 @@
     "reset": "Reset form",
     "register": "Sign up",
     "checkPayment": "Check payment",
+    "payNow": "Pay now",
     "alreadyRegistered": "Already signed up",
-    "pending": "Pending"
+    "cost": "Cost"
   },
   "payments": {
     "id": "Payment id",

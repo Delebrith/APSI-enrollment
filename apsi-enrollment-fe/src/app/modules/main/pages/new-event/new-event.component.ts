@@ -18,6 +18,7 @@ import { User } from '../../../../core/model/user.model';
 import { EventService } from '../../services/event/event.service';
 import { PlaceService } from '../../services/place/place.service';
 import { UserService } from '../../services/user/user.service';
+import { PaymentService } from '../../services/payment/payment.service';
 
 export const noMeetingValidator: ValidatorFn = (formArray: FormArray): ValidationErrors | null => {
   if (formArray && formArray.length === 0) {
@@ -68,6 +69,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   availablePlaces: Place[][] = [];
   availableSpeakers: User[][] = [];
   createError = false;
+  currency: String;
 
   subscriptions$: Subject<void>;
 
@@ -76,10 +78,16 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private eventService: EventService,
     private placeService: PlaceService,
     private userService: UserService,
+<<<<<<< HEAD
     private currentUserService: CurrentUserService,
+=======
+    private paymentService: PaymentService,
+>>>>>>> TG-37, TG-38 PayU Integration
     private router: Router
   ) {
     this.subscriptions$ = new Subject<void>();
+
+    this.paymentService.getCurrency().subscribe((currency) => this.currency = currency);
 
     this.eventForm = fb.group({
       name: [null, [Validators.required]],
@@ -87,6 +95,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       eventType: [null, [Validators.required]],
       attendeesLimit: [null, [Validators.required]],
       meetings: this.fb.array([], [noMeetingValidator]),
+      cost: [0, []],
     });
 
     const allowedToCreate$ = eventService.getAllowedToCreate();
@@ -204,6 +213,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       eventType: this.eventForm.get('eventType').value,
       attendeesLimit: this.eventForm.get('attendeesLimit').value,
       meetings: meetingList,
+      cost: this.eventForm.get('cost').value,
     };
     this.eventService.createNewEvent(newEvent).subscribe(
       () => {
