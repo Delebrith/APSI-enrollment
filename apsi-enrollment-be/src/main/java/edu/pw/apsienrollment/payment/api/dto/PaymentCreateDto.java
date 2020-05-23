@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentCreateDto {
-    @NotNull Long enrollmentId;
+    private @NotNull Long enrollmentId;
 }
