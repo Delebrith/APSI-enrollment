@@ -1,17 +1,11 @@
 package edu.pw.apsienrollment.payment.payu;
 
-import java.io.IOException;
-
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,21 +30,7 @@ public class PaymentProviderServicePayUImpl implements PaymentProviderService {
         RestTemplateBuilder restTemplateBuilder) {
         this.payUConfig = payUConfig;
         this.paymentConfig = paymentConfig;
-        this.payURestTemplate = restTemplateBuilder.rootUri(payUConfig.getApiUri()).interceptors(
-            new ClientHttpRequestInterceptor(){
-            
-                @Override
-                public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
-                        throws IOException {
-                        System.out.println(request.getMethod());
-                        System.out.println(request.getURI());
-                        System.out.println(request.getHeaders());
-                        System.out.println(body.toString());
-
-                    return execution.execute(request, body);
-                }
-            }
-        ).build();
+        this.payURestTemplate = restTemplateBuilder.rootUri(payUConfig.getApiUri()).build();
     }
 
     @Override
