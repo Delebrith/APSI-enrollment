@@ -16,13 +16,15 @@ public class PaymentDto {
     String orderId;
     PaymentStatus status;
     EnrollmentDto enrollment;
+    String redirectUrl;
 
     public static PaymentDto of(@NonNull Payment payment) {
         return PaymentDto.builder()
                 .id(payment.getId())
-                .orderId(payment.getOrderId())
+                .orderId(payment.getProviderOrderId())
                 .status(payment.getStatus())
                 .enrollment(EnrollmentDto.of(payment.getEnrollment()))
+                .redirectUrl(payment.getProviderRedirectUrl())
                 .build();
     }
 }

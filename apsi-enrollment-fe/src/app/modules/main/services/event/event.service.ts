@@ -62,7 +62,7 @@ export class EventService {
     return this.http.get<any>(`${this.eventBaseUrl}/${eventId}`).pipe(
       tap(console.log),
       map(({ event, meetings }) => {
-        const { id, name, description, eventType, attendeesLimit } = event;
+        const { id, name, description, eventType, attendeesLimit, cost } = event;
         return {
           id,
           name,
@@ -70,6 +70,7 @@ export class EventService {
           eventType,
           attendeesLimit,
           meetings,
+          cost
         } as Event;
       })
     );

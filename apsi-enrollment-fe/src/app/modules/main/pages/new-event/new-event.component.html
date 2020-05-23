@@ -45,6 +45,17 @@
     />
     <clr-control-error>{{ 'event.thisFieldIsRequired' | translate }}</clr-control-error>
   </clr-input-container>
+  <clr-input-container>
+    <label>{{ 'event.cost' | translate }} {{ currency }}</label>
+    <input
+      type="number"
+      name="cost"
+      clrInput
+      [placeholder]="'event.cost' | translate"
+      formControlName="cost"
+      class="apsi-input"
+    />
+  </clr-input-container>
 
   <div formArrayName="meetings">
     <h2>{{ 'event.meetings' | translate }}</h2>

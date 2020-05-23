@@ -6,6 +6,7 @@ import edu.pw.apsienrollment.enrollment.db.EnrollmentRepository;
 import edu.pw.apsienrollment.enrollment.db.EnrollmentStatus;
 import edu.pw.apsienrollment.enrollment.exception.AlreadySignedUpException;
 import edu.pw.apsienrollment.enrollment.exception.AttendeesLimitException;
+import edu.pw.apsienrollment.enrollment.exception.EnrollmentNotFoundException;
 import edu.pw.apsienrollment.event.EventService;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.user.db.User;
@@ -60,5 +61,15 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     private boolean isAlreadySigned(User user, Event event) {
         return enrollmentRepository.existsByUserAndEvent(user, event);
+    }
+
+    public void enroll(Enrollment enrollment) {
+        enrollment.setStatus(EnrollmentStatus.ENROLLED);
+        enrollmentRepository.save(enrollment);
+    }
+
+    @Override
+    public Enrollment getById(Long id) {
+        return enrollmentRepository.findById(id).orElseThrow(EnrollmentNotFoundException::new);
     }
 }
