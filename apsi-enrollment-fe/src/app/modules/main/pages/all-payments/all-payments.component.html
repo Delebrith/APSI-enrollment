@@ -1,0 +1,29 @@
+<clr-datagrid (clrDgRefresh)="onDgRefresh($event)" [clrDgLoading]="loading">
+    <clr-dg-column>{{ 'payments.id' | translate}}</clr-dg-column>
+    <clr-dg-column>{{ 'payments.order' | translate}}</clr-dg-column>
+    <clr-dg-column>{{ 'payments.status' | translate}}</clr-dg-column>
+    <clr-dg-column>{{ 'payments.enrollment' | translate}}</clr-dg-column>
+
+    <clr-dg-placeholder>{{ 'payments.weCouldNotFindPayments' | translate }}</clr-dg-placeholder>
+
+    <clr-dg-row *ngFor="let payment of payments">
+        <clr-dg-cell>{{ payment.id }}</clr-dg-cell>
+        <clr-dg-cell>{{ payment.orderId }}</clr-dg-cell>
+        <clr-dg-cell>{{ payment.status }}</clr-dg-cell>
+        <clr-dg-cell>
+          <a href="javascript:void(0);" (click)="onShowEventDetails(payment.enrollment.event.id)">
+            {{ payment.enrollment.event.name }}
+          </a>
+        </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgTotalItems]="totalPayments">
+          <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">{{
+            'payments.paymentsPerPage' | translate
+          }}</clr-dg-page-size>
+          {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} {{ 'payments.of' | translate }} {{ totalPayments }}
+          {{ 'payments.totalPayments' | translate }}
+        </clr-dg-pagination>
+      </clr-dg-footer>
+</clr-datagrid>
+<app-event-detail></app-event-detail>

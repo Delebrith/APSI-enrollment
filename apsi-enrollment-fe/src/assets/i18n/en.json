@@ -18,7 +18,8 @@
     "home": "Home",
     "allEvents": "All Events",
     "myEvents": "My Events",
-    "newEvent": "New Events"
+    "newEvent": "New Events",
+    "allPayments": "My Payments"
   },
   "events": {
     "name": "Name",
@@ -67,6 +68,18 @@
     "reset": "Reset form",
     "register": "Sign up",
     "checkPayment": "Check payment",
-    "alreadyRegistered": "Already signed up"
+    "alreadyRegistered": "Already signed up",
+    "pending": "Pending"
+  },
+  "payments": {
+    "id": "Payment id",
+    "status": "Payment status",
+    "order": "Payment Order Id",
+    "enrollment": "Enrollment",
+    "weCouldNotFindPayments": "We could't find any payments!",
+    "paymentsPerPage": "Payments per page",
+    "of": "of",
+    "totalPayments": "total payments",
+    "showEnrollment": "Show enrollment"
   }
 }

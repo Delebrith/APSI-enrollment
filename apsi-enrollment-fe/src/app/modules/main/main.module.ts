@@ -9,9 +9,10 @@ import {AllEventsComponent} from './pages/all-events/all-events.component';
 import {EventDetailComponent} from './pages/event-detail/event-detail.component';
 import {HomeComponent} from './pages/home/home.component';
 import {NewEventComponent} from './pages/new-event/new-event.component';
+import { AllPaymentsComponent } from './pages/all-payments/all-payments.component';
 
 @NgModule({
-  declarations: [HomeComponent, MainComponent, AllEventsComponent, EventDetailComponent, NewEventComponent],
+  declarations: [HomeComponent, MainComponent, AllEventsComponent, AllPaymentsComponent, EventDetailComponent, NewEventComponent],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
 })
 export class MainModule {
