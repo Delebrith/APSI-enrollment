@@ -78,11 +78,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private eventService: EventService,
     private placeService: PlaceService,
     private userService: UserService,
-<<<<<<< HEAD
     private currentUserService: CurrentUserService,
-=======
     private paymentService: PaymentService,
->>>>>>> TG-37, TG-38 PayU Integration
     private router: Router
   ) {
     this.subscriptions$ = new Subject<void>();
