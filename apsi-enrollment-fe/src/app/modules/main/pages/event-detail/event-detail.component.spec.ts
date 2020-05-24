@@ -1,9 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 import { EventService } from '../../services/event/event.service';
+import { PaymentService } from '../../services/payment/payment.service';
 import { EventDetailComponent } from './event-detail.component';
 
 const eventService = jasmine.createSpyObj('EventService', ['getEventsPage']);
+const paymentService = jasmine.createSpyObj('EventService', { getCurrency: of(null), create: of(null) });
 
 describe('EventDetailComponent', () => {
   let component: EventDetailComponent;
@@ -13,7 +16,10 @@ describe('EventDetailComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [EventDetailComponent],
-      providers: [{ provide: EventService, useValue: eventService }],
+      providers: [
+        { provide: EventService, useValue: eventService },
+        { provide: PaymentService, useValue: paymentService },
+      ],
     }).compileComponents();
   }));
 
