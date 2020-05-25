@@ -9,17 +9,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounce, map, switchAll, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject, timer } from 'rxjs';
+import { debounce, filter, map, switchAll, takeUntil } from 'rxjs/operators';
 import { APIError } from 'src/app/core/model/api-error.model';
 import { CurrentUserService } from '../../../../core/auth/current-user.service';
 import { EventRequest, EventType, MeetingRequest } from '../../../../core/model/event.model';
 import { Place } from '../../../../core/model/place.model';
 import { User } from '../../../../core/model/user.model';
 import { EventService } from '../../services/event/event.service';
+import { PaymentService } from '../../services/payment/payment.service';
 import { PlaceService } from '../../services/place/place.service';
 import { UserService } from '../../services/user/user.service';
-import { PaymentService } from '../../services/payment/payment.service';
 
 export const noMeetingValidator: ValidatorFn = (formArray: FormArray): ValidationErrors | null => {
   if (formArray && formArray.length === 0) {
@@ -72,10 +72,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
   eventTypes: EventType[];
   availablePlaces: Place[][] = [];
   availableSpeakers: User[][] = [];
-  createError = false;
+  createError: APIError | null;
   currency: string;
-
-  createError: APIError | null = null;
 
   subscriptions$: Subject<void>;
 
@@ -90,7 +88,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptions$ = new Subject<void>();
 
-    this.paymentService.getCurrency().subscribe((currency) => this.currency = currency);
+    this.paymentService.getCurrency().subscribe((currency) => (this.currency = currency));
 
     this.eventForm = fb.group({
       name: [null, [Validators.required]],
