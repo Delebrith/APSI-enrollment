@@ -1,5 +1,6 @@
 package edu.pw.apsienrollment.enrollment;
 
+import edu.pw.apsienrollment.attendance.AttendanceService;
 import edu.pw.apsienrollment.authentication.AuthenticationService;
 import edu.pw.apsienrollment.enrollment.db.Enrollment;
 import edu.pw.apsienrollment.enrollment.db.EnrollmentRepository;
@@ -9,6 +10,7 @@ import edu.pw.apsienrollment.enrollment.exception.AttendeesLimitException;
 import edu.pw.apsienrollment.enrollment.exception.EnrollmentNotFoundException;
 import edu.pw.apsienrollment.event.EventService;
 import edu.pw.apsienrollment.event.db.Event;
+import edu.pw.apsienrollment.event.meeting.MeetingService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import java.util.Collection;
 public class EnrollmentServiceImpl implements EnrollmentService {
     private final AuthenticationService authenticationService;
     private final EventService eventService;
+    private final MeetingService meetingService;
+    private final AttendanceService attendanceService;
 
     private final EnrollmentRepository enrollmentRepository;
 
@@ -47,6 +51,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .status(status)
                 .build();
         enrollmentRepository.save(enrollment);
+
+        if (status == EnrollmentStatus.ENROLLED) {
+            meetingService.getMeetings(event)
+                    .forEach(meeting -> attendanceService.putIntoAttendanceList(meeting, user));
+        }
+
         return enrollment;
     }
 
@@ -65,6 +75,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     public void enroll(Enrollment enrollment) {
         enrollment.setStatus(EnrollmentStatus.ENROLLED);
+        meetingService.getMeetings(enrollment.getEvent())
+                .forEach(meeting -> attendanceService.putIntoAttendanceList(meeting, enrollment.getUser()));
         enrollmentRepository.save(enrollment);
     }
 
