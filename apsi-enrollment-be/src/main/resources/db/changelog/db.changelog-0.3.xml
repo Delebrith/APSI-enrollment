@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="3.1" author="pszwed">
+        <createTable tableName="ATTENDANCE">
+            <column name="ID" type="bigint" autoIncrement="true" startWith="100">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="USER_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MEETING_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ATTENDANCE_STATUS" type="varchar2(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ATTENDANCE" baseColumnNames="USER_ID" constraintName="ATTENDANCE_FK_1"
+                                 referencedTableName="USER_"
+                                 referencedColumnNames="ID"/>
+        <addForeignKeyConstraint baseTableName="ATTENDANCE" baseColumnNames="MEETING_ID" constraintName="ATTENDANCE_FK_2"
+                                 referencedTableName="MEETING"
+                                 referencedColumnNames="ID"/>
+
+    </changeSet>
+
+</databaseChangeLog>
