@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-class Attendance {
+public class Attendance {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

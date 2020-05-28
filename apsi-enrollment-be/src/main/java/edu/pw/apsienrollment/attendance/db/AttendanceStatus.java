@@ -1,5 +1,5 @@
 package edu.pw.apsienrollment.attendance.db;
 
-enum AttendanceStatus {
+public enum AttendanceStatus {
     UNCHECKED, PRESENT, ABSENT
 }
