@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, find } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
@@ -94,7 +94,16 @@ export class EventService {
     return this.http.post(`${this.eventBaseUrl}`, postBody).pipe(map((response) => response as BasicEvent));
   }
 
+  getEnrollment(eventId: number) : Observable<Enrollment> {
+    return this.http.get<any>(`${this.enrollmentBaseUrl}/my-enrollments`).pipe(
+      map((enrollments: Enrollment[]) => enrollments.find((e) => e.event.id === eventId))
+    );
+  }
+
   getEnrollmentStatus(eventId: number): Observable<EnrollmentStatus> {
+    return this.getEnrollment(eventId).pipe(
+      map((enrollment: Enrollment) => enrollment?.status ?? EnrollmentStatus.NOT_ENROLLED)
+    )
     return this.http.get<any>(`${this.enrollmentBaseUrl}/my-enrollments`).pipe(
       map((enrollments: Enrollment[]) => enrollments.filter((e) => e.event.id === eventId)),
       map((enrollments: Enrollment[]) => {

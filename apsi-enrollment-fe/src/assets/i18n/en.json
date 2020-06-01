@@ -69,6 +69,7 @@
     "register": "Sign up",
     "checkPayment": "Check payment",
     "payNow": "Pay now",
+    "pending": "Pending",
     "alreadyRegistered": "Already signed up",
     "cost": "Cost"
   },
