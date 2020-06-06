@@ -46,4 +46,14 @@ public class EnrollmentController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(enrollments);
     }
+
+    @ApiOperation(value = "Get enrollment QR code", nickname = "get enrollment QR code", notes = "",
+            authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("{id}/qr-code")
+    ResponseEntity<byte[]> getQRCode(@PathVariable Long id) {
+        return ResponseEntity.ok(enrollmentService.generateQRCode(id));
+    }
 }
