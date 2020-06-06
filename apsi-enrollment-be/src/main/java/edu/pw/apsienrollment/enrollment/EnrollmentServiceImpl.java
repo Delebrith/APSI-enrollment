@@ -12,6 +12,7 @@ import edu.pw.apsienrollment.event.EventService;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
 import edu.pw.apsienrollment.user.db.User;
+import edu.pw.apsienrollment.qrcode.QRCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private final EventService eventService;
     private final MeetingService meetingService;
     private final AttendanceService attendanceService;
+    private final QRCodeService qrcodeService;
 
     private final EnrollmentRepository enrollmentRepository;
 
@@ -63,6 +65,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public Collection<Enrollment> getMyEnrollments() {
         return enrollmentRepository.findByUser(authenticationService.getAuthenticatedUser());
+    }
+
+    @Override
+    public byte[] generateQRCode(Long enrollmentId) {
+        return qrcodeService.generateQRCode(
+            String.format("enrollment/%d/confirm", enrollmentId), 640, 640);
     }
 
     private boolean isEventFull(Event event) {

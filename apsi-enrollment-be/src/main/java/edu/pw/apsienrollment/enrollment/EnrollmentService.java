@@ -12,4 +12,6 @@ public interface EnrollmentService {
     void enroll(Enrollment enrollment);
 
     Enrollment getById(Long id);
+
+    byte[] generateQRCode(Long enrollmentId);
 }
