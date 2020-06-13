@@ -85,4 +85,28 @@ public class EventController {
     ResponseEntity<AllowedToCreateDto> getAllowedToCreate() {
         return ResponseEntity.ok(AllowedToCreateDto.of(eventService.getAllowedToCreate()));
     }
+    
+    @ApiOperation(value = "Get list of events where authenticated user is a speaker",
+        nickname = "get list of my events", notes="", authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("my")
+    ResponseEntity<Iterable<EventDto>> getMyEvents(@Valid SearchRequestDTO request) {
+        if (request.getSearchQuery() != null) {
+            return searchMy(request.getSearchQuery(), request.getPage(), request.getSize());
+        }
+        return findAllMy(request.getPage(), request.getSize());
+    }
+    
+    private ResponseEntity<Iterable<EventDto>> findAllMy(Integer page, Integer pageSize) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUser(page, pageSize)
+                .map(EventDto::of));
+    }
+
+    private ResponseEntity<Iterable<EventDto>> searchMy(String searchQuery, Integer page, Integer size) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUser(searchQuery, page, size)
+                .map(EventDto::of));
+    }
+
 }

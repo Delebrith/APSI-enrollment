@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { EventService } from '../../services/event/event.service';
-import { AllEventsComponent } from './all-events.component';
+import { AllEventsComponent } from '../all-events/all-events.component';
 
 const eventService = jasmine.createSpyObj('EventService', ['getEventsPage']);
 

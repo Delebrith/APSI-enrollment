@@ -9,6 +9,7 @@ import edu.pw.apsienrollment.place.db.Place;
 import edu.pw.apsienrollment.user.UserService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
