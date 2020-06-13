@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,22 @@ class EventServiceImpl implements EventService {
     public Page<Event> findAll(String searchQuery, Integer page, Integer pageSize) {
         return eventRepository.findAll(
                 new EventSpecification(SearchQueryParser.parse(searchQuery)),
+                PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Event> findOfAuthenticatedUser(Integer page, Integer pageSize) {
+        User user = authenticationService.getAuthenticatedUser();
+        return eventRepository.findAll(
+                new EventSpecification(Collections.emptyList()).toSpecificationWithSpeaker(user),
+                PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Event> findOfAuthenticatedUser(String searchQuery, Integer page, Integer pageSize) {
+        User user = authenticationService.getAuthenticatedUser();
+        return eventRepository.findAll(
+                new EventSpecification(SearchQueryParser.parse(searchQuery)).toSpecificationWithSpeaker(user),
                 PageRequest.of(page, pageSize));
     }
 

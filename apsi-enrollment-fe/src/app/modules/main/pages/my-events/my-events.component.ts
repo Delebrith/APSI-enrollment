@@ -9,10 +9,10 @@ import { Component } from '@angular/core';
   templateUrl: '../events/events.component.html',
   styleUrls: ['../events/events.component.scss'],
 })
-export class AllEventsComponent extends EventsComponent {
+export class MyEventsComponent extends EventsComponent {
   constructor(eventService: EventService) {super(eventService)}
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
-    return this.eventService.getEventsPage(request)
+    return this.eventService.getMyEventsPage(request)
   }
 }

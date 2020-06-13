@@ -22,6 +22,22 @@ export class EventService {
     pageSize,
     searchQuery,
   }: PageRequest): Observable<Page<BasicEvent>> {
+    return this._getEventsPage({pageNumber, pageSize, searchQuery}, this.eventBaseUrl);
+  }
+  
+  getMyEventsPage({
+    pageNumber,
+    pageSize,
+    searchQuery,
+  }: PageRequest): Observable<Page<BasicEvent>> {
+    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my`);
+  }
+
+  _getEventsPage({
+    pageNumber,
+    pageSize,
+    searchQuery,
+  }: PageRequest, address: string): Observable<Page<BasicEvent>> {
     const params = {
       page: null,
       size: null,
@@ -44,7 +60,7 @@ export class EventService {
     }
 
     return this.http
-      .get<any>(this.eventBaseUrl, { params })
+      .get<any>(address, { params })
       .pipe(
         map(({ content, number: retrievedPageNumber, totalPages, size, totalElements }) => {
           return {
