@@ -9,10 +9,12 @@ import { User } from 'src/app/core/model/user.model';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
+  sidenavCollapsed: boolean;
   currentUser$: Observable<User>;
 
   constructor(private currentUserService: CurrentUserService, private authService: AuthService) {
     this.currentUser$ = currentUserService.currentUser$;
+    this.sidenavCollapsed = true;
   }
 
   ngOnInit() {}

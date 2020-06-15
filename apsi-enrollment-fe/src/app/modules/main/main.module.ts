@@ -15,6 +15,7 @@ import { AllEventsComponent } from './pages/all-events/all-events.component';
 import { AllPaymentsComponent } from './pages/all-payments/all-payments.component';
 import { EventAttendanceListComponent } from './pages/event-attendance-list/event-attendance-list.component';
 import { EventDetailComponent } from './pages/event-detail/event-detail.component';
+import { CheckAttendanceComponent } from './pages/check-attendance/check-attendance.component';
 import { MyAttendancesComponent } from './pages/my-attendances/my-attendances.component';
 import { MyEnrolledEventsComponent } from './pages/my-enrolled-events/my-enrolled-events.component';
 import { MyEventsComponent } from './pages/my-events/my-events.component';
@@ -36,6 +37,7 @@ import { NewEventComponent } from './pages/new-event/new-event.component';
     MyEnrolledEventsComponent,
     MyAttendancesComponent,
     EnrollmentsPdfComponent,
+    CheckAttendanceComponent,
     AttendancePdfComponent,
     QrCodeModalComponent,
     EventAttendanceListComponent,

@@ -1,13 +1,13 @@
-<div class="main-container">
+<clr-main-container>
   <app-app-level-alert></app-app-level-alert>
-  <header class="header header-6">
+  <clr-header class="header-6">
     <div class="branding">
-      <a class="nav-link" routerLink="/main">
+      <a routerLink="/main">
         <clr-icon shape="vm-bug"></clr-icon>
         <span class="title">{{ 'global.appName' | translate }}</span>
       </a>
     </div>
-    <div class="header-nav">
+    <div class="header-nav" [clr-nav-level]="1">
       <a class="nav-link nav-text" routerLinkActive="active" routerLink="./">{{ 'main.general' | translate }}</a>
     </div>
     <div class="header-actions">
@@ -21,29 +21,37 @@
         </clr-dropdown-menu>
       </clr-dropdown>
     </div>
-  </header>
+  </clr-header>
   <div class="content-container">
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
-    <nav class="sidenav">
-      <section class="sidenav-content">
-        <a class="nav-link" routerLinkActive="active" routerLink="my-events">
-          {{ 'main.myEvents' | translate }}
-        </a>
-        <a class="nav-link" routerLinkActive="active" routerLink="all-events">
-          {{ 'main.allEvents' | translate }}
-        </a>
-        <a class="nav-link" routerLinkActive="active" routerLink="my-attendances">
-          {{ 'main.myAttendances' | translate }}
-        </a>
-        <a class="nav-link" routerLinkActive="active" routerLink="new-event">
-          {{ 'main.newEvent' | translate }}
-        </a>
-        <a class="nav-link" routerLinkActive="active" routerLink="all-payments">
-          {{ 'main.allPayments' | translate }}
-        </a>
-      </section>
-    </nav>
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="sidenavCollapsed">
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="my-events">
+        <clr-icon clrVerticalNavIcon shape="event"></clr-icon>
+        {{ 'main.myEvents' | translate }}
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="all-events">
+        <clr-icon clrVerticalNavIcon shape="calendar"></clr-icon>
+        {{ 'main.allEvents' | translate }}
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="my-attendances">
+              <clr-icon clrVerticalNavIcon shape="list"></clr-icon>
+        {{ 'main.myAttendances' | translate }}
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="new-event">
+        <clr-icon clrVerticalNavIcon shape="plus"></clr-icon>
+        {{ 'main.newEvent' | translate }}
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="all-payments">
+        <clr-icon clrVerticalNavIcon shape="dollar"></clr-icon>
+        {{ 'main.allPayments' | translate }}
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="check-attendance">
+        <clr-icon clrVerticalNavIcon shape="checkbox-list"></clr-icon>
+        {{ 'main.checkAttendance' | translate }}
+      </a>
+    </clr-vertical-nav>
+
   </div>
-</div>
+</clr-main-container>
