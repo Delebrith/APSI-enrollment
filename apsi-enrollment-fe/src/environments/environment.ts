@@ -5,6 +5,6 @@
 export const environment = {
   production: false,
 
-  authBaseUrl: 'http://localhost:8080/auth',
-  apiBaseUrl: 'http://localhost:8080',
+  authBaseUrl: 'http://10.245.13.79:8080/auth',
+  apiBaseUrl: 'http://10.245.13.79:8080',
 };

@@ -1,0 +1,13 @@
+<div>
+  <div *ngIf="isAndroid">
+    <button class="btn btn-primary" (click)="onScanCode()" *ngIf="!loadingScanner">Scan QR code</button>
+    <div *ngIf="loadingScanner">
+      <span class="spinner"></span>
+    </div>
+  </div>
+  <div *ngIf="!isAndroid">
+    {{ 'scan.androidRequiredMessage' | translate }}
+  </div>
+
+  {{ code }}
+</div>
