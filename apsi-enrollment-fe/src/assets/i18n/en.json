@@ -25,6 +25,7 @@
     "myEvents": "My Events",
     "newEvent": "Create Event",
     "allPayments": "My Payments",
+    "checkAttendance": "Check attendance",
     "myAttendances": "My Attendances"
   },
   "events": {
