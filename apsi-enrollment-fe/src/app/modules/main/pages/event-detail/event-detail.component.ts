@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
-import { EnrollmentStatus, Enrollment } from 'src/app/core/model/enrollment.model';
+import { switchMap } from 'rxjs/operators';
+import { EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { Event } from 'src/app/core/model/event.model';
+import { Payment } from 'src/app/core/model/payment.model';
 import { EventService } from '../../services/event/event.service';
 import { PaymentService } from '../../services/payment/payment.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-detail',
@@ -40,24 +40,32 @@ export class EventDetailComponent implements OnInit {
   }
 
   onRegister() {
-    this.eventService.signUp(this.event.id).subscribe(this.createPayment);
+    this.eventService
+      .signUp(this.event.id)
+      .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
+      .subscribe(
+        (payment) => this.redirectPayment(payment),
+        (error) => {
+          console.error(error);
+          // TODO: use API error to display error message alert
+        }
+      );
   }
 
   onPayNow() {
-    this.eventService.getEnrollment(this.event.id).subscribe(this.createPayment);
+    this.eventService
+      .getEnrollment(this.event.id)
+      .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
+      .subscribe(
+        (payment) => this.redirectPayment(payment),
+        (error) => {
+          console.error(error);
+          // TODO: use API error to display error message alert
+        }
+      );
   }
 
-  createPayment(enrollment: Enrollment) {
-    this.enrollmentStatus = enrollment.status;
-    
-    this.paymentService.create(enrollment).subscribe(
-      (payment) => {
-        window.location.href = payment.redirectUrl;
-      },
-      (error) => {
-        console.error(error);
-        // TODO: use API error to display error message alert
-      }
-    );
+  redirectPayment(payment: Payment) {
+    window.location.href = payment.redirectUrl;
   }
 }
