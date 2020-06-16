@@ -40,21 +40,17 @@ export class EventDetailComponent implements OnInit {
   }
 
   onRegister() {
-    this.createPayment(this.eventService.signUp(this.event.id));
+    this.eventService.signUp(this.event.id).subscribe(this.createPayment);
   }
 
   onPayNow() {
-    this.createPayment(this.eventService.getEnrollment(this.event.id));
+    this.eventService.getEnrollment(this.event.id).subscribe(this.createPayment);
   }
 
-  createPayment(enrollment: Observable<Enrollment>) {
-    enrollment.pipe(
-      tap((enrollment) => {
-        this.enrollmentStatus = enrollment.status;
-      }),
-      switchMap((enrollment) => this.paymentService.create(enrollment))
-    )
-    .subscribe(
+  createPayment(enrollment: Enrollment) {
+    this.enrollmentStatus = enrollment.status;
+    
+    this.paymentService.create(enrollment).subscribe(
       (payment) => {
         window.location.href = payment.redirectUrl;
       },
