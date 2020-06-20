@@ -134,4 +134,27 @@ public class EventController {
                 .map(EventDto::of));
     }
     
+    @ApiOperation(value = "Get list of events where authenticated user is the organizer",
+        nickname = "get list of my organized events", notes="", authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("my-enrolled")
+    ResponseEntity<Iterable<EventDto>> getMyEventsByEnrollment(@Valid SearchRequestDTO request) {
+        if (request.getSearchQuery() != null) {
+            return searchMyByEnrollment(request.getSearchQuery(), request.getPage(), request.getSize());
+        }
+        return findAllMyByEnrollment(request.getPage(), request.getSize());
+    }
+    
+    private ResponseEntity<Iterable<EventDto>> findAllMyByEnrollment(Integer page, Integer pageSize) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUserByEnrollment(page, pageSize)
+                .map(EventDto::of));
+    }
+
+    private ResponseEntity<Iterable<EventDto>> searchMyByEnrollment(String searchQuery, Integer page, Integer size) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUserByEnrollment(searchQuery, page, size)
+                .map(EventDto::of));
+    }
+    
 }

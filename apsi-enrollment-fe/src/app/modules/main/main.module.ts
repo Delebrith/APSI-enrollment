@@ -14,10 +14,12 @@ import {MyEventsComponent} from './pages/my-events/my-events.component';
 import {MySpeakerEventsComponent} from './pages/my-speaker-events/my-speaker-events.component';
 import {MyOrganizerEventsComponent} from './pages/my-organizer-events/my-organizer-events.component';
 import { MyAttendancesComponent } from './pages/my-attendances/my-attendances.component';
+import { MyEnrolledEventsComponent } from './pages/my-enrolled-events/my-enrolled-events.component';
 
 @NgModule({
   declarations: [
-    HomeComponent, MainComponent, AllEventsComponent, MyEventsComponent, MySpeakerEventsComponent, MyOrganizerEventsComponent,
+    HomeComponent, MainComponent, AllEventsComponent, MyEventsComponent,
+    MySpeakerEventsComponent, MyOrganizerEventsComponent, MyEnrolledEventsComponent,
     AllPaymentsComponent, EventDetailComponent, NewEventComponent, MyAttendancesComponent],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
 })
