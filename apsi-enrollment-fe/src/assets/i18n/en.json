@@ -29,7 +29,9 @@
     "weCouldNotFindEvents": "We couldn't find any events!",
     "eventsPerPage": "Events per page",
     "of": "of",
-    "totalEvents": "total events"
+    "totalEvents": "total events",
+    "mySpeakerEvents": "Events I speak at",
+    "myOrganizerEvents": "Events I organize"
   },
   "eventTypes": {
     "LECTURE": "Lecture",

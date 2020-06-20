@@ -91,21 +91,44 @@ public class EventController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
             @ApiResponse(code = 400, message = "If invalid data was provided")})
-    @GetMapping("my")
-    ResponseEntity<Iterable<EventDto>> getMyEvents(@Valid SearchRequestDTO request) {
+    @GetMapping("my-speaker")
+    ResponseEntity<Iterable<EventDto>> getMyEventsBySpeaker(@Valid SearchRequestDTO request) {
         if (request.getSearchQuery() != null) {
-            return searchMy(request.getSearchQuery(), request.getPage(), request.getSize());
+            return searchMyBySpeaker(request.getSearchQuery(), request.getPage(), request.getSize());
         }
-        return findAllMy(request.getPage(), request.getSize());
+        return findAllMyBySpeaker(request.getPage(), request.getSize());
     }
     
-    private ResponseEntity<Iterable<EventDto>> findAllMy(Integer page, Integer pageSize) {
-        return ResponseEntity.ok(eventService.findOfAuthenticatedUser(page, pageSize)
+    private ResponseEntity<Iterable<EventDto>> findAllMyBySpeaker(Integer page, Integer pageSize) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUserBySpeaker(page, pageSize)
                 .map(EventDto::of));
     }
 
-    private ResponseEntity<Iterable<EventDto>> searchMy(String searchQuery, Integer page, Integer size) {
-        return ResponseEntity.ok(eventService.findOfAuthenticatedUser(searchQuery, page, size)
+    private ResponseEntity<Iterable<EventDto>> searchMyBySpeaker(String searchQuery, Integer page, Integer size) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUserBySpeaker(searchQuery, page, size)
+                .map(EventDto::of));
+    }
+    
+    @ApiOperation(value = "Get list of events where authenticated user is the organizer",
+        nickname = "get list of my organized events", notes="", authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("my-organizer")
+    ResponseEntity<Iterable<EventDto>> getMyEventsByOrganizer(@Valid SearchRequestDTO request) {
+        if (request.getSearchQuery() != null) {
+            return searchMyByOrganizer(request.getSearchQuery(), request.getPage(), request.getSize());
+        }
+        return findAllMyByOrganizer(request.getPage(), request.getSize());
+    }
+    
+    private ResponseEntity<Iterable<EventDto>> findAllMyByOrganizer(Integer page, Integer pageSize) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUserByOrganizer(page, pageSize)
+                .map(EventDto::of));
+    }
+
+    private ResponseEntity<Iterable<EventDto>> searchMyByOrganizer(String searchQuery, Integer page, Integer size) {
+        return ResponseEntity.ok(eventService.findOfAuthenticatedUserByOrganizer(searchQuery, page, size)
                 .map(EventDto::of));
     }
 

@@ -8,6 +8,7 @@ import edu.pw.apsienrollment.user.db.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -50,6 +51,16 @@ public class EventSpecification extends SearchSpecification<Event> {
             return builder.and(
                 builder.isMember(speaker, meetings.get("speakers")),
                 builder.equal(event, meetings.get("event")),
+                this.toPredicate(event, query, builder));
+        };
+    }
+
+    public Specification<Event> toSpecificationWithOrganizer(User organizer) {
+        return (event, query, builder) -> {
+            query.distinct(true);
+
+            return builder.and(
+                builder.equal(event.get("organizer"), organizer),
                 this.toPredicate(event, query, builder));
         };
     }
