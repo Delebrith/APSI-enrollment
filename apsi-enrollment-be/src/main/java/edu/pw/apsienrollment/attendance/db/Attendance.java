@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.*;
 
@@ -29,4 +30,8 @@ public class Attendance {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AttendanceStatus attendanceStatus;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private String token = RandomStringUtils.randomAlphanumeric(32);
 }

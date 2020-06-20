@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -46,15 +45,5 @@ public class EnrollmentController {
                 .map(EnrollmentDto::of)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(enrollments);
-    }
-
-    @ApiOperation(value = "Get enrollment QR code", nickname = "get enrollment QR code", notes = "",
-            authorizations = {@Authorization(value = "JWT")})
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "If valid credentials were provided", response = Iterable.class),
-            @ApiResponse(code = 400, message = "If invalid data was provided")})
-    @GetMapping(value = "{id}/qr-code", produces = MediaType.IMAGE_PNG_VALUE)
-    ResponseEntity<byte[]> getQRCode(@PathVariable Long id) {
-        return ResponseEntity.ok(enrollmentService.generateQRCode(id));
     }
 }
