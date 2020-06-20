@@ -1,5 +1,7 @@
 package edu.pw.apsienrollment.common.api;
 
+import edu.pw.apsienrollment.attendance.exception.AttendanceNotFoundException;
+import edu.pw.apsienrollment.attendance.exception.UserUnauthorizedToCheckAttendanceException;
 import edu.pw.apsienrollment.authentication.exception.RefreshTokenIsNotValidException;
 import edu.pw.apsienrollment.authentication.exception.RefreshTokenNotFoundException;
 import edu.pw.apsienrollment.common.api.dto.ErrorDto;
@@ -18,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,8 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -37,14 +36,16 @@ public class DefaultExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({UserNotFoundException.class, UsernameNotFoundException.class,
-            RefreshTokenNotFoundException.class, EventNotFoundException.class})
+            RefreshTokenNotFoundException.class, EventNotFoundException.class,
+            AttendanceNotFoundException.class})
     @ResponseBody
     ErrorDto handleResourceNotFound(final HttpServletRequest req, final ApsiException ex) {
         return ErrorDto.of(ex, req.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler({UserUnauthorizedToCreateEventException.class})
+    @ExceptionHandler({UserUnauthorizedToCreateEventException.class,
+            UserUnauthorizedToCheckAttendanceException.class})
     @ResponseBody
     ErrorDto handleForbidden(final HttpServletRequest req, final ApsiException ex) {
         return ErrorDto.of(ex, req.getRequestURI());

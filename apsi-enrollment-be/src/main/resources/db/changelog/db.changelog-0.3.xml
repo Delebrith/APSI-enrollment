@@ -20,6 +20,9 @@
             <column name="ATTENDANCE_STATUS" type="varchar2(32)">
                 <constraints nullable="false"/>
             </column>
+            <column name="TOKEN" type="varchar2(32)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addForeignKeyConstraint baseTableName="ATTENDANCE" baseColumnNames="USER_ID" constraintName="ATTENDANCE_FK_1"
                                  referencedTableName="USER_"

@@ -99,6 +99,8 @@
     "VALIDATION_FAILED": "Validation failed",
     "USER_NOT_FOUND": "User not found",
     "USER_ALREADY_SIGNED_UP": "User is already signed up for this event",
-    "ATTENDEES_LIMIT_EXCEEDED": "Attendees limit exceeded"
+    "ATTENDEES_LIMIT_EXCEEDED": "Attendees limit exceeded",
+    "USER_NOT_AUTHORIZED_TO_CHECK_ATTENDANCE": "User not authorized to check attendance",
+    "ATTENDANCE_NOT_FOUND": "Attendance not found"
   }
 }
