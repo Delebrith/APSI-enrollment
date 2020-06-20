@@ -10,7 +10,7 @@
     <clr-dg-cell>{{ attendance.meeting.event.name }}</clr-dg-cell>
     <clr-dg-cell>{{ attendance.meeting.description }}</clr-dg-cell>
     <clr-dg-cell>{{ attendance.meeting.start | date: 'dd-MM-yyyy' }} - {{ attendance.meeting.end | date: 'dd-MM-yyyy' }}</clr-dg-cell>
-    <clr-dg-cell>{{ 'attendanceStatus' + attendance.status | translate }}</clr-dg-cell>
+    <clr-dg-cell>{{ 'attendanceStatus.' + attendance.status | translate }}</clr-dg-cell>
   </clr-dg-row>
   <clr-dg-footer>
     <clr-dg-pagination #pagination [clrDgTotalItems]="totalAttendances">
