@@ -1,0 +1,15 @@
+<ng-container *ngFor="let alert of alerts; let idx = index">
+  <div class="alert alert-app-level" role="alert" [ngClass]="cssForAlert(alert)">
+    <div class="alert-items">
+      <div class="alert-item static">
+        <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="danger"></clr-icon>
+        </div>
+        <div class="alert-text">{{ alert.message }}</div>
+      </div>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="onClose(idx)">
+      <clr-icon aria-hidden="true" shape="close"></clr-icon>
+    </button>
+  </div>
+</ng-container>
