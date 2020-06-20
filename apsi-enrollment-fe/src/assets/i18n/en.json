@@ -19,7 +19,8 @@
     "allEvents": "All Events",
     "myEvents": "My Events",
     "newEvent": "New Events",
-    "allPayments": "My Payments"
+    "allPayments": "My Payments",
+    "myAttendances": "My Attendances"
   },
   "events": {
     "name": "Name",
@@ -30,8 +31,10 @@
     "eventsPerPage": "Events per page",
     "of": "of",
     "totalEvents": "total events",
+    "totalMeetings": "total meetings",
     "mySpeakerEvents": "Events I speak at",
-    "myOrganizerEvents": "Events I organize"
+    "myOrganizerEvents": "Events I organize",
+    "attendanceStatus": "Attendance status"
   },
   "eventTypes": {
     "LECTURE": "Lecture",
@@ -102,5 +105,10 @@
     "ATTENDEES_LIMIT_EXCEEDED": "Attendees limit exceeded",
     "USER_NOT_AUTHORIZED_TO_CHECK_ATTENDANCE": "User not authorized to check attendance",
     "ATTENDANCE_NOT_FOUND": "Attendance not found"
+  },
+  "attendanceStatus": {
+    "UNCHECKED": "Unchecked",
+    "PRESENT": "Present",
+    "ABSENT": "Absent"
   }
 }

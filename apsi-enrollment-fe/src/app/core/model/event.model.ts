@@ -56,4 +56,5 @@ export interface Meeting {
   end: Date;
   place: Place;
   speakers: User[];
+  event: Event;
 }
