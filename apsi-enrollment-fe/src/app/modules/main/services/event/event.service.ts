@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap, find } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
-import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { Page, PageSearchRequest } from 'src/app/core/model/pagination.model';
 import { UserRole } from 'src/app/core/model/user.model';
 import { environment } from 'src/environments/environment';
 
@@ -21,7 +21,7 @@ export class EventService {
     pageNumber,
     pageSize,
     searchQuery,
-  }: PageRequest): Observable<Page<BasicEvent>> {
+  }: PageSearchRequest): Observable<Page<BasicEvent>> {
     return this._getEventsPage({pageNumber, pageSize, searchQuery}, this.eventBaseUrl);
   }
   
@@ -29,7 +29,7 @@ export class EventService {
     pageNumber,
     pageSize,
     searchQuery,
-  }: PageRequest): Observable<Page<BasicEvent>> {
+  }: PageSearchRequest): Observable<Page<BasicEvent>> {
     return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-speaker`);
   }
   
@@ -37,7 +37,7 @@ export class EventService {
     pageNumber,
     pageSize,
     searchQuery,
-  }: PageRequest): Observable<Page<BasicEvent>> {
+  }: PageSearchRequest): Observable<Page<BasicEvent>> {
     return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-organizer`);
   }
 
@@ -45,7 +45,7 @@ export class EventService {
     pageNumber,
     pageSize,
     searchQuery,
-  }: PageRequest, address: string): Observable<Page<BasicEvent>> {
+  }: PageSearchRequest, address: string): Observable<Page<BasicEvent>> {
     const params = {
       page: null,
       size: null,
