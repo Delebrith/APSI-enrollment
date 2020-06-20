@@ -78,6 +78,22 @@ class EventServiceImpl implements EventService {
     }
 
     @Override
+    public Page<Event> findOfAuthenticatedUserByEnrollment(Integer page, Integer pageSize) {
+        User user = authenticationService.getAuthenticatedUser();
+        return eventRepository.findAll(
+                new EventSpecification(Collections.emptyList()).toSpecificationWithEnrolled(user),
+                PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Event> findOfAuthenticatedUserByEnrollment(String searchQuery, Integer page, Integer pageSize) {
+        User user = authenticationService.getAuthenticatedUser();
+        return eventRepository.findAll(
+                new EventSpecification(SearchQueryParser.parse(searchQuery)).toSpecificationWithEnrolled(user),
+                PageRequest.of(page, pageSize));
+    }
+
+    @Override
     public Event createEvent(EventRequestDto eventRequestDto) {
         User creator = authenticationService.getAuthenticatedUser();
         validateEventCreationAuthorities(eventRequestDto, creator);

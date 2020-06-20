@@ -19,6 +19,9 @@ public interface EventService {
 
     Page<Event> findOfAuthenticatedUserByOrganizer(Integer page, Integer pageSize);
     Page<Event> findOfAuthenticatedUserByOrganizer(String searchQuery, Integer page, Integer pageSize);
+    
+    Page<Event> findOfAuthenticatedUserByEnrollment(Integer page, Integer pageSize);
+    Page<Event> findOfAuthenticatedUserByEnrollment(String searchQuery, Integer page, Integer pageSize);
 
     Event getById(Long id);
 
