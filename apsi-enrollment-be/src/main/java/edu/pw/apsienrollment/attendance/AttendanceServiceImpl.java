@@ -7,20 +7,16 @@ import edu.pw.apsienrollment.attendance.db.AttendanceStatus;
 import edu.pw.apsienrollment.attendance.exception.AttendanceNotFoundException;
 import edu.pw.apsienrollment.attendance.exception.UserUnauthorizedToCheckAttendanceException;
 import edu.pw.apsienrollment.authentication.AuthenticationService;
-import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
 import edu.pw.apsienrollment.qrcode.QRCodeService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

@@ -1,8 +1,8 @@
 package edu.pw.apsienrollment.event.meeting;
 
+import edu.pw.apsienrollment.attendance.job.AttendanceCheckJobService;
 import edu.pw.apsienrollment.event.api.dto.MeetingRequestDto;
 import edu.pw.apsienrollment.event.db.Event;
-import edu.pw.apsienrollment.event.exception.EventNotFoundException;
 import edu.pw.apsienrollment.event.meeting.exception.MeetingNotFoundException;
 import edu.pw.apsienrollment.event.meeting.exception.PlaceNotMeetingRequirementsException;
 import edu.pw.apsienrollment.event.meeting.exception.SpeakerUnavailableException;
@@ -11,7 +11,7 @@ import edu.pw.apsienrollment.place.db.Place;
 import edu.pw.apsienrollment.user.UserService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +19,18 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 class MeetingServiceImpl implements MeetingService {
     private final MeetingRepository meetingRepository;
     private final UserService userService;
     private final PlaceService placeService;
-
+    private final AttendanceCheckJobService attendanceCheckJobService;
 
     @Override
     public Meeting getById(Long id) {
         return meetingRepository.findById(id).orElseThrow(MeetingNotFoundException::new);
     }
-    
+
     @Override
     public Meeting createMeeting(Event event, MeetingRequestDto dto) {
         Place place = getPlace(event, dto);
@@ -45,7 +46,9 @@ class MeetingServiceImpl implements MeetingService {
                 )
                 .event(event)
                 .build();
-        return meetingRepository.save(meeting);
+        Meeting created = meetingRepository.save(meeting);
+        attendanceCheckJobService.scheduleJob(meeting);
+        return created;
     }
 
     @Override
