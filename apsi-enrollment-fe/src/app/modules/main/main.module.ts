@@ -13,11 +13,12 @@ import {AllPaymentsComponent} from './pages/all-payments/all-payments.component'
 import {MyEventsComponent} from './pages/my-events/my-events.component';
 import {MySpeakerEventsComponent} from './pages/my-speaker-events/my-speaker-events.component';
 import {MyOrganizerEventsComponent} from './pages/my-organizer-events/my-organizer-events.component';
+import { MyAttendancesComponent } from './pages/my-attendances/my-attendances.component';
 
 @NgModule({
   declarations: [
     HomeComponent, MainComponent, AllEventsComponent, MyEventsComponent, MySpeakerEventsComponent, MyOrganizerEventsComponent,
-    AllPaymentsComponent, EventDetailComponent, NewEventComponent],
+    AllPaymentsComponent, EventDetailComponent, NewEventComponent, MyAttendancesComponent],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
 })
 export class MainModule {

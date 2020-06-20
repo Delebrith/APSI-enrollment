@@ -11,6 +11,9 @@ import edu.pw.apsienrollment.event.meeting.Meeting;
 import edu.pw.apsienrollment.qrcode.QRCodeService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -59,5 +62,10 @@ public class AttendanceServiceImpl implements AttendanceService {
                 && !attendance.getMeeting().getEvent().getOrganizer().equals(authenticated)) {
             throw new UserUnauthorizedToCheckAttendanceException();
         }
+    }
+        
+    public Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize) {
+        User authenticatedUser = authenticationService.getAuthenticatedUser();
+        return attendanceRepository.findByUser(authenticatedUser, PageRequest.of(page, pageSize));
     }
 }

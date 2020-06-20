@@ -21,6 +21,7 @@ public class MeetingDto {
     @NotNull LocalDateTime end;
     @NotNull List<UserDto> speakers;
     @NotNull PlaceDto place;
+    @NotNull EventDto event;
 
     public static MeetingDto of(Meeting meeting) {
         return builder()
@@ -30,6 +31,7 @@ public class MeetingDto {
             .end(meeting.getEnd())
             .speakers(meeting.getSpeakers().stream().map(UserDto::of).collect(Collectors.toList()))
             .place(PlaceDto.of(meeting.getPlace()))
+            .event(EventDto.of(meeting.getEvent()))
             .build();
     }
 }
