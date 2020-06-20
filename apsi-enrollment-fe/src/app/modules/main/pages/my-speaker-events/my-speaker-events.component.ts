@@ -1,10 +1,10 @@
-import { EventService } from '../../services/event/event.service';
-import { PageRequest, Page } from 'src/app/core/model/pagination.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ClrDatagridStateInterface } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { BasicEvent } from 'src/app/core/model/event.model';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { EventService } from '../../services/event/event.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
-import { ClrDatagridStateInterface } from '@clr/angular';
 
 @Component({
   selector: 'my-speaker-events',
@@ -22,20 +22,23 @@ export class MySpeakerEventsComponent implements OnInit {
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
     return this.eventService.getMyEventsBySpeakerPage(request)
   }
-  
   ngOnInit(): void {}
-  
   onDgRefresh(state: ClrDatagridStateInterface) {
     this.loading = true;
     let searchString: string = null;
 
     if (state.filters) {
-      searchString = state.filters.reduce((prev, next) => `${prev}${next.property}=${next.value},`, '');
+      searchString = state.filters.reduce(
+        (prev, next) => `${prev}${next.property}=${next.value},`, '');
       searchString = searchString.substring(0, searchString.length - 1);
     }
 
-    var request = { pageNumber: state.page.current - 1, pageSize: state.page.size, searchQuery: searchString };
-    var events = this.getEvents(request);
+    const request = { 
+      pageNumber: state.page.current - 1,
+      pageSize: state.page.size,
+      searchQuery: searchString,
+    };
+    const events = this.getEvents(request);
 
     events.subscribe((page) => {
         this.events = page.items;
