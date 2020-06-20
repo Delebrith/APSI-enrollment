@@ -1,0 +1,26 @@
+<clr-datagrid (clrDgRefresh)="onDgRefresh($event)" [clrDgLoading]="loading">
+    <clr-dg-column [clrDgField]="'name'">{{ 'events.name' | translate }}</clr-dg-column>
+    <clr-dg-column [clrDgField]="'description'">{{ 'events.description' | translate }}</clr-dg-column>
+    <clr-dg-column>{{ 'events.dates' | translate }}</clr-dg-column>
+    <clr-dg-column>{{ 'events.attendanceStatus' | translate }}</clr-dg-column>
+  
+    <clr-dg-placeholder>{{ 'events.weCouldNotFindEvents' | translate }}</clr-dg-placeholder>
+  
+    <clr-dg-row *ngFor="let attendance of attendances">
+      <clr-dg-cell>{{ attendance.meeting.event.name }}</clr-dg-cell>
+      <clr-dg-cell>{{ attendance.meeting.description }}</clr-dg-cell>
+      <clr-dg-cell>{{ attendance.meeting.start | date: 'dd-MM-yyyy' }} - {{ attendance.meeting.end | date: 'dd-MM-yyyy' }}</clr-dg-cell>
+      <clr-dg-cell>{{ 'attendanceStatus' + attendance.status | translate }}</clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgTotalItems]="totalAttendances">
+        <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">{{
+          'events.eventsPerPage' | translate
+        }}</clr-dg-page-size>
+        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} {{ 'events.of' | translate }} {{ totalAttendances }}
+        {{ 'events.totalMeetings' | translate }}
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+  <app-event-detail></app-event-detail>
+  

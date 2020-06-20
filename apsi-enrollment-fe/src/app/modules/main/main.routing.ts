@@ -6,6 +6,7 @@ import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { AllPaymentsComponent } from './pages/all-payments/all-payments.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NewEventComponent } from './pages/new-event/new-event.component';
+import { MyAttendancesComponent } from './pages/my-attendances/my-attendances.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'all-payments',
         component: AllPaymentsComponent,
+      },
+      {
+        path: 'my-attendances',
+        component: MyAttendancesComponent,
       },
       {
         path: '**',

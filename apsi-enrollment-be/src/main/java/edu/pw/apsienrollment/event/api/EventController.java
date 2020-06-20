@@ -1,11 +1,13 @@
 package edu.pw.apsienrollment.event.api;
 
+import edu.pw.apsienrollment.common.api.dto.PageRequestDTO;
 import edu.pw.apsienrollment.common.api.dto.SearchRequestDTO;
 import edu.pw.apsienrollment.event.EventService;
 import edu.pw.apsienrollment.event.api.dto.AllowedToCreateDto;
 import edu.pw.apsienrollment.event.api.dto.EventDto;
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
 import edu.pw.apsienrollment.event.api.dto.EventWithMeetingsDto;
+import edu.pw.apsienrollment.event.api.dto.MeetingDto;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
 import io.swagger.annotations.ApiOperation;
@@ -131,5 +133,5 @@ public class EventController {
         return ResponseEntity.ok(eventService.findOfAuthenticatedUserByOrganizer(searchQuery, page, size)
                 .map(EventDto::of));
     }
-
+    
 }
