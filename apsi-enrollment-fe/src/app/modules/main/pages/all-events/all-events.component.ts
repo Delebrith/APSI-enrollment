@@ -1,18 +1,49 @@
-import { EventsComponent } from '../events/events.component';
 import { EventService } from '../../services/event/event.service';
 import { PageRequest, Page } from 'src/app/core/model/pagination.model';
 import { Observable } from 'rxjs';
 import { BasicEvent } from 'src/app/core/model/event.model';
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ClrDatagridStateInterface } from '@clr/angular';
+import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
-  templateUrl: '../events/events.component.html',
-  styleUrls: ['../events/events.component.scss'],
+  templateUrl: './all-events.component.html',
+  styleUrls: ['./all-events.component.scss'],
 })
-export class AllEventsComponent extends EventsComponent {
-  constructor(eventService: EventService) {super(eventService)}
+export class AllEventsComponent implements OnInit {
+  @ViewChild(EventDetailComponent) modal: EventDetailComponent;
+  events: BasicEvent[];
+  totalEvents: number;
+  loading = true;
+
+  constructor(private eventService: EventService) {}
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
     return this.eventService.getEventsPage(request)
+  }
+  
+  ngOnInit(): void {}
+  
+  onDgRefresh(state: ClrDatagridStateInterface) {
+    this.loading = true;
+    let searchString: string = null;
+
+    if (state.filters) {
+      searchString = state.filters.reduce((prev, next) => `${prev}${next.property}=${next.value},`, '');
+      searchString = searchString.substring(0, searchString.length - 1);
+    }
+
+    var request = { pageNumber: state.page.current - 1, pageSize: state.page.size, searchQuery: searchString };
+    var events = this.getEvents(request);
+
+    events.subscribe((page) => {
+        this.events = page.items;
+        this.totalEvents = page.totalElements;
+        this.loading = false;
+      });
+  }
+
+  onShowEventDetails(eventId: number) {
+    this.modal.open(eventId);
   }
 }
