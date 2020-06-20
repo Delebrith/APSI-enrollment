@@ -6,4 +6,8 @@ import edu.pw.apsienrollment.user.db.User;
 
 public interface AttendanceService {
     Attendance putIntoAttendanceList(Meeting meeting, User user);
+
+    byte[] getQrCode(Long attendanceId);
+
+    void markAsPresent(Long id, String token);
 }
