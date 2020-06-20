@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BasicEvent } from 'src/app/core/model/event.model';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
-import roboto from 'src/app/shared/Roboto-Light-normal.js';
+import * as opns from 'src/app/shared/OpenSans-normal.js';
 import { EventService } from '../../services/event/event.service';
 
 
@@ -40,28 +40,16 @@ export class EnrollmentsPdfComponent implements OnInit {
   }
 
   private preparePDF() {
-      // const data = this.htmlData.nativeElement;
       const doc = new jsPDF('landscape');
-      doc.addFileToVFS('Roboto-Light-normal.ttf', roboto());
-      doc.addFont('Roboto-Light-normal.ttf', 'Roboto-Light', 'normal');
-      doc.setFont('Roboto-Light', 'normal');
-      autoTable(doc, { html: '#pdfData' });
-
-      // const handleElement = {
-      //   '#editor': () => {
-      //     return true;
-      //   }
-      // };
-      // doc.fromHTML(data.innerHTML, 10, 10, {
-      //   width: 300,
-      //   autoSize: true,
-      //   elementHandlers: handleElement,
-      //   table_font_size: 11,
-      // });
-      // doc.setFontSize(11);
-
+      opns;
+      autoTable(doc, {
+        html: '#pdfData',
+        styles: {
+          font: 'OpenSans',
+          fontStyle: 'normal',
+        }
+      });
       doc.save(`${this.fileName}.pdf`);
-      // set button as done
   }
 
   private getEvents(): Observable<Page<BasicEvent>> {
