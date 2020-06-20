@@ -32,6 +32,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
 
     private static final String confirmURLScheme = "enrollment/%d/confirm";
+    private static final Integer qrCodeImageSize = 640;
 
     @Override
     public Enrollment signUp(Long eventId) {
@@ -72,7 +73,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public byte[] generateQRCode(Long enrollmentId) {
         return qrcodeService.generateQRCode(
-            String.format(confirmURLScheme, enrollmentId), 640, 640);
+            String.format(confirmURLScheme, enrollmentId), qrCodeImageSize, qrCodeImageSize);
     }
 
     private boolean isEventFull(Event event) {
