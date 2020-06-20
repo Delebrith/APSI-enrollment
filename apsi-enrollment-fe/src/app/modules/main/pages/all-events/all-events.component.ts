@@ -1,9 +1,9 @@
-import { EventService } from '../../services/event/event.service';
-import { PageRequest, Page } from 'src/app/core/model/pagination.model';
-import { Observable } from 'rxjs';
-import { BasicEvent } from 'src/app/core/model/event.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
+import { Observable } from 'rxjs';
+import { BasicEvent } from 'src/app/core/model/event.model';
+import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { EventService } from '../../services/event/event.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
@@ -19,22 +19,25 @@ export class AllEventsComponent implements OnInit {
   constructor(private eventService: EventService) {}
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
-    return this.eventService.getEventsPage(request)
+    return this.eventService.getEventsPage(request);
   }
-  
   ngOnInit(): void {}
-  
   onDgRefresh(state: ClrDatagridStateInterface) {
     this.loading = true;
     let searchString: string = null;
 
     if (state.filters) {
-      searchString = state.filters.reduce((prev, next) => `${prev}${next.property}=${next.value},`, '');
+      searchString = state.filters.reduce(
+        (prev, next) => `${prev}${next.property}=${next.value},`, '');
       searchString = searchString.substring(0, searchString.length - 1);
     }
 
-    var request = { pageNumber: state.page.current - 1, pageSize: state.page.size, searchQuery: searchString };
-    var events = this.getEvents(request);
+    const request = {
+      pageNumber: state.page.current - 1,
+      pageSize: state.page.size,
+      searchQuery: searchString,
+    };
+    const events = this.getEvents(request);
 
     events.subscribe((page) => {
         this.events = page.items;
