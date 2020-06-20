@@ -5,9 +5,8 @@ import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BasicEvent } from 'src/app/core/model/event.model';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import roboto from 'src/app/shared/Roboto-Light-normal.js';
 import { EventService } from '../../services/event/event.service';
-
-// import 'jspdf-autotable';
 
 
 @Component({
@@ -43,6 +42,9 @@ export class EnrollmentsPdfComponent implements OnInit {
   private preparePDF() {
       // const data = this.htmlData.nativeElement;
       const doc = new jsPDF('landscape');
+      doc.addFileToVFS('Roboto-Light-normal.ttf', roboto());
+      doc.addFont('Roboto-Light-normal.ttf', 'Roboto-Light', 'normal');
+      doc.setFont('Roboto-Light', 'normal');
       autoTable(doc, { html: '#pdfData' });
 
       // const handleElement = {
