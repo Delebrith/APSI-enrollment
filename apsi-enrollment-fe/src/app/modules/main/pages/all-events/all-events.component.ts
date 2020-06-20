@@ -21,7 +21,9 @@ export class AllEventsComponent implements OnInit {
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
     return this.eventService.getEventsPage(request);
   }
+
   ngOnInit(): void {}
+
   onDgRefresh(state: ClrDatagridStateInterface) {
     this.loading = true;
     let searchString: string = null;
