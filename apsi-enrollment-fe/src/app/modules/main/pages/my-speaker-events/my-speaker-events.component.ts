@@ -20,7 +20,7 @@ export class MySpeakerEventsComponent implements OnInit {
   constructor(private eventService: EventService) {}
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
-    return this.eventService.getMyEventsBySpeakerPage(request)
+    return this.eventService.getMyEventsBySpeakerPage(request);
   }
   ngOnInit(): void {}
   onDgRefresh(state: ClrDatagridStateInterface) {

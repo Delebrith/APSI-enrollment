@@ -11,11 +11,12 @@ import {
 import { Router } from '@angular/router';
 import { combineLatest, Subject, timer } from 'rxjs';
 import { debounce, filter, map, switchAll, takeUntil } from 'rxjs/operators';
-import { APIError } from 'src/app/core/model/api-error.model';
+import { APIError, APIErrorMessageType } from 'src/app/core/model/api-error.model';
 import { CurrentUserService } from '../../../../core/auth/current-user.service';
 import { EventRequest, EventType, MeetingRequest } from '../../../../core/model/event.model';
 import { Place } from '../../../../core/model/place.model';
 import { User } from '../../../../core/model/user.model';
+import { AlertService } from '../../services/alert/alert.service';
 import { EventService } from '../../services/event/event.service';
 import { PaymentService } from '../../services/payment/payment.service';
 import { PlaceService } from '../../services/place/place.service';
@@ -79,11 +80,12 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private eventService: EventService,
-    private placeService: PlaceService,
-    private userService: UserService,
     private currentUserService: CurrentUserService,
     private paymentService: PaymentService,
+    private eventService: EventService,
+    private placeService: PlaceService,
+    private alertService: AlertService,
+    private userService: UserService,
     private router: Router
   ) {
     this.subscriptions$ = new Subject<void>();
@@ -220,6 +222,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       },
       (error: APIError) => {
         this.createError = error;
+        this.alertService.showError(error);
       }
     );
   }

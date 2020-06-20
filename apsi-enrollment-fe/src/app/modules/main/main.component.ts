@@ -15,7 +15,7 @@ export class MainComponent implements OnInit {
     this.currentUser$ = currentUserService.currentUser$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   onLogout() {
     this.authService.signOut().subscribe();
