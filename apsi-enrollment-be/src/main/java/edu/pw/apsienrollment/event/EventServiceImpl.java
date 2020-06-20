@@ -46,7 +46,7 @@ class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Page<Event> findOfAuthenticatedUser(Integer page, Integer pageSize) {
+    public Page<Event> findOfAuthenticatedUserBySpeaker(Integer page, Integer pageSize) {
         User user = authenticationService.getAuthenticatedUser();
         return eventRepository.findAll(
                 new EventSpecification(Collections.emptyList()).toSpecificationWithSpeaker(user),
@@ -54,10 +54,26 @@ class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Page<Event> findOfAuthenticatedUser(String searchQuery, Integer page, Integer pageSize) {
+    public Page<Event> findOfAuthenticatedUserBySpeaker(String searchQuery, Integer page, Integer pageSize) {
         User user = authenticationService.getAuthenticatedUser();
         return eventRepository.findAll(
                 new EventSpecification(SearchQueryParser.parse(searchQuery)).toSpecificationWithSpeaker(user),
+                PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Event> findOfAuthenticatedUserByOrganizer(Integer page, Integer pageSize) {
+        User user = authenticationService.getAuthenticatedUser();
+        return eventRepository.findAll(
+                new EventSpecification(Collections.emptyList()).toSpecificationWithOrganizer(user),
+                PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Event> findOfAuthenticatedUserByOrganizer(String searchQuery, Integer page, Integer pageSize) {
+        User user = authenticationService.getAuthenticatedUser();
+        return eventRepository.findAll(
+                new EventSpecification(SearchQueryParser.parse(searchQuery)).toSpecificationWithOrganizer(user),
                 PageRequest.of(page, pageSize));
     }
 

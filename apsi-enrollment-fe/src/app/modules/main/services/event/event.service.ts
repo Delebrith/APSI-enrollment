@@ -25,12 +25,20 @@ export class EventService {
     return this._getEventsPage({pageNumber, pageSize, searchQuery}, this.eventBaseUrl);
   }
   
-  getMyEventsPage({
+  getMyEventsBySpeakerPage({
     pageNumber,
     pageSize,
     searchQuery,
   }: PageRequest): Observable<Page<BasicEvent>> {
-    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my`);
+    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-speaker`);
+  }
+  
+  getMyEventsByOrganizerPage({
+    pageNumber,
+    pageSize,
+    searchQuery,
+  }: PageRequest): Observable<Page<BasicEvent>> {
+    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-organizer`);
   }
 
   _getEventsPage({
