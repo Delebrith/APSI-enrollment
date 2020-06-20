@@ -41,6 +41,14 @@ export class EventService {
     return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-organizer`);
   }
 
+  getMyEnrolledEventsPage({
+    pageNumber,
+    pageSize,
+    searchQuery,
+  }: PageSearchRequest): Observable<Page<BasicEvent>> {
+    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-enrolled`);
+  }
+
   _getEventsPage({
     pageNumber,
     pageSize,

@@ -1,24 +1,30 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { ClrDatagridStateInterface } from '@clr/angular';
-import { BasicEvent } from 'src/app/core/model/event.model';
 import { EventService } from '../../services/event/event.service';
-import {EventDetailComponent} from '../event-detail/event-detail.component';
+import { PageRequest, Page } from 'src/app/core/model/pagination.model';
 import { Observable } from 'rxjs';
-import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { BasicEvent } from 'src/app/core/model/event.model';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { EventDetailComponent } from '../event-detail/event-detail.component';
+import { ClrDatagridStateInterface } from '@clr/angular';
 
-
-export abstract class EventsComponent implements OnInit {
+@Component({
+  selector: 'my-enrolled-events',
+  templateUrl: './my-enrolled-events.component.html',
+  styleUrls: ['./my-enrolled-events.component.scss'],
+})
+export class MyEnrolledEventsComponent implements OnInit {
   @ViewChild(EventDetailComponent) modal: EventDetailComponent;
   events: BasicEvent[];
   totalEvents: number;
   loading = true;
 
-  constructor(protected eventService: EventService) {}
+  constructor(private eventService: EventService) {}
 
+  getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
+    return this.eventService.getMyEnrolledEventsPage(request)
+  }
+  
   ngOnInit(): void {}
-
-  abstract getEvents(request: PageRequest): Observable<Page<BasicEvent>>;
-
+  
   onDgRefresh(state: ClrDatagridStateInterface) {
     this.loading = true;
     let searchString: string = null;

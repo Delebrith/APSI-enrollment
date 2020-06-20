@@ -1,0 +1,27 @@
+<clr-datagrid (clrDgRefresh)="onDgRefresh($event)" [clrDgLoading]="loading">
+  <clr-dg-column [clrDgField]="'name'">{{ 'events.name' | translate }}</clr-dg-column>
+  <clr-dg-column [clrDgField]="'description'">{{ 'events.description' | translate }}</clr-dg-column>
+  <clr-dg-column>{{ 'events.eventType' | translate }}</clr-dg-column>
+  <clr-dg-column>{{ 'events.dates' | translate }}</clr-dg-column>
+
+  <clr-dg-placeholder>{{ 'events.weCouldNotFindEvents' | translate }}</clr-dg-placeholder>
+
+  <clr-dg-row *ngFor="let event of events">
+    <clr-dg-cell>
+      <a href="javascript:void(0);" (click)="onShowEventDetails(event.id)">{{ event.name }}</a>
+    </clr-dg-cell>
+    <clr-dg-cell>{{ event.description }}</clr-dg-cell>
+    <clr-dg-cell>{{ 'eventTypes.' + event.eventType | translate }}</clr-dg-cell>
+    <clr-dg-cell>{{ event.start | date: 'dd-MM-yyyy' }} - {{ event.end | date: 'dd-MM-yyyy' }}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgTotalItems]="totalEvents">
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">{{
+        'events.eventsPerPage' | translate
+      }}</clr-dg-page-size>
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} {{ 'events.of' | translate }} {{ totalEvents }}
+      {{ 'events.totalEvents' | translate }}
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+<app-event-detail></app-event-detail>
