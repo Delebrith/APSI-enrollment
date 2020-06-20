@@ -33,6 +33,8 @@
                   file="db/changelog/data/enrollment.csv"/>
         <loadData tableName="PAYMENT"
                   file="db/changelog/data/payment.csv"/>
+        <loadData tableName="ATTENDANCE"
+                  file="db/changelog/data/attendance.csv"/>
     </changeSet>
 
 </databaseChangeLog>
