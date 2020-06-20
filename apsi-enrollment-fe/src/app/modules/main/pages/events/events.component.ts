@@ -5,11 +5,8 @@ import { EventService } from '../../services/event/event.service';
 import {EventDetailComponent} from '../event-detail/event-detail.component';
 import { Observable } from 'rxjs';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
-/*
-@Component({
-  templateUrl: '../events/events.component.html',
-  styleUrls: ['../events/events.component.scss'],
-})*/
+
+
 export abstract class EventsComponent implements OnInit {
   @ViewChild(EventDetailComponent) modal: EventDetailComponent;
   events: BasicEvent[];

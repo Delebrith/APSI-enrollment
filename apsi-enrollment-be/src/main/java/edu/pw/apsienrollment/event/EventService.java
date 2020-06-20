@@ -14,8 +14,11 @@ public interface EventService {
     Page<Event> findAll(Integer page, Integer pageSize);
     Page<Event> findAll(String searchQuery, Integer page, Integer pageSize);
 
-    Page<Event> findOfAuthenticatedUser(Integer page, Integer pageSize);
-    Page<Event> findOfAuthenticatedUser(String searchQuery, Integer page, Integer pageSize);
+    Page<Event> findOfAuthenticatedUserBySpeaker(Integer page, Integer pageSize);
+    Page<Event> findOfAuthenticatedUserBySpeaker(String searchQuery, Integer page, Integer pageSize);
+
+    Page<Event> findOfAuthenticatedUserByOrganizer(Integer page, Integer pageSize);
+    Page<Event> findOfAuthenticatedUserByOrganizer(String searchQuery, Integer page, Integer pageSize);
 
     Event getById(Long id);
 
