@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { Event } from 'src/app/core/model/event.model';
+import { Payment } from 'src/app/core/model/payment.model';
 import { EventService } from '../../services/event/event.service';
 import { PaymentService } from '../../services/payment/payment.service';
 
@@ -41,20 +42,30 @@ export class EventDetailComponent implements OnInit {
   onRegister() {
     this.eventService
       .signUp(this.event.id)
-      .pipe(
-        tap((enrollment) => {
-          this.enrollmentStatus = enrollment.status;
-        }),
-        switchMap((enrollment) => this.paymentService.create(enrollment))
-      )
+      .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
       .subscribe(
-        (payment) => {
-          window.location.href = payment.redirectUrl;
-        },
+        (payment) => this.redirectPayment(payment),
         (error) => {
           console.error(error);
           // TODO: use API error to display error message alert
         }
       );
+  }
+
+  onPayNow() {
+    this.eventService
+      .getEnrollment(this.event.id)
+      .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
+      .subscribe(
+        (payment) => this.redirectPayment(payment),
+        (error) => {
+          console.error(error);
+          // TODO: use API error to display error message alert
+        }
+      );
+  }
+
+  redirectPayment(payment: Payment) {
+    window.location.href = payment.redirectUrl;
   }
 }
