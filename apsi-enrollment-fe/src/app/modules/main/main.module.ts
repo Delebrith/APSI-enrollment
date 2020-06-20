@@ -3,24 +3,26 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CoreModule} from 'src/app/core/core.module';
 import {SharedModule} from 'src/app/shared/shared.module';
+import {EnrollmentsPdfComponent} from './components/enrollments-pdf/enrollments-pdf.component';
 import {MainComponent} from './main.component';
 import {MainRoutingModule} from './main.routing';
 import {AllEventsComponent} from './pages/all-events/all-events.component';
+import {AllPaymentsComponent} from './pages/all-payments/all-payments.component';
 import {EventDetailComponent} from './pages/event-detail/event-detail.component';
 import {HomeComponent} from './pages/home/home.component';
-import {NewEventComponent} from './pages/new-event/new-event.component';
-import {AllPaymentsComponent} from './pages/all-payments/all-payments.component';
+import {MyAttendancesComponent} from './pages/my-attendances/my-attendances.component';
+import {MyEnrolledEventsComponent} from './pages/my-enrolled-events/my-enrolled-events.component';
 import {MyEventsComponent} from './pages/my-events/my-events.component';
-import {MySpeakerEventsComponent} from './pages/my-speaker-events/my-speaker-events.component';
 import {MyOrganizerEventsComponent} from './pages/my-organizer-events/my-organizer-events.component';
-import { MyAttendancesComponent } from './pages/my-attendances/my-attendances.component';
-import { MyEnrolledEventsComponent } from './pages/my-enrolled-events/my-enrolled-events.component';
+import {MySpeakerEventsComponent} from './pages/my-speaker-events/my-speaker-events.component';
+import {NewEventComponent} from './pages/new-event/new-event.component';
 
 @NgModule({
   declarations: [
     HomeComponent, MainComponent, AllEventsComponent, MyEventsComponent,
     MySpeakerEventsComponent, MyOrganizerEventsComponent, MyEnrolledEventsComponent,
-    AllPaymentsComponent, EventDetailComponent, NewEventComponent, MyAttendancesComponent],
+    AllPaymentsComponent, EventDetailComponent, NewEventComponent, MyAttendancesComponent,
+    EnrollmentsPdfComponent],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
 })
 export class MainModule {

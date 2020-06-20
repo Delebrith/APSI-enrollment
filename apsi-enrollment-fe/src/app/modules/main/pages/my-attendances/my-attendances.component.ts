@@ -1,44 +1,47 @@
-import { OnInit, ViewChild, Component } from '@angular/core';
-import { EventDetailComponent } from '../event-detail/event-detail.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ClrDatagridStateInterface } from '@clr/angular';
 import { Attendance } from 'src/app/core/model/attendance.model';
 import { AttendanceService } from '../../services/attendance/attendance.service';
-import { ClrDatagridStateInterface } from '@clr/angular';
+import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
     templateUrl: './my-attendances.component.html',
     styleUrls: ['./my-attendances.component.scss'],
   })
 export class MyAttendancesComponent implements OnInit {
-    @ViewChild(EventDetailComponent) modal: EventDetailComponent;
-    attendances: Attendance[];
-    totalAttendances: number;
-    loading = true;
-  
-    constructor(private attendanceService: AttendanceService) {}
-  
-    ngOnInit(): void {}
-  
-    onDgRefresh(state: ClrDatagridStateInterface) {
-      this.loading = true;
-      let searchString: string = null;
-  
-      if (state.filters) {
-        searchString = state.filters.reduce((prev, next) => `${prev}${next.property}=${next.value},`, '');
-        searchString = searchString.substring(0, searchString.length - 1);
-      }
-  
-      var request = { pageNumber: state.page.current - 1, pageSize: state.page.size, searchQuery: searchString };
-      var events = this.attendanceService.getMyAttendancePage(request);
-  
-      events.subscribe((page) => {
-          this.attendances = page.items;
-          this.totalAttendances = page.totalElements;
-          this.loading = false;
-        });
+  @ViewChild(EventDetailComponent) modal: EventDetailComponent;
+  attendances: Attendance[];
+  totalAttendances: number;
+  loading = true;
+
+  constructor(private attendanceService: AttendanceService) {}
+  ngOnInit(): void {}
+
+  onDgRefresh(state: ClrDatagridStateInterface) {
+    this.loading = true;
+    let searchString: string = null;
+
+    if (state.filters) {
+      searchString = state.filters.reduce(
+        (prev, next) => `${prev}${next.property}=${next.value},`, '');
+      searchString = searchString.substring(0, searchString.length - 1);
     }
-  
-    onShowEventDetails(eventId: number) {
-      this.modal.open(eventId);
-    }
+
+    const request = {
+      pageNumber: state.page.current - 1,
+      pageSize: state.page.size,
+      searchQuery: searchString,
+    };
+    const events = this.attendanceService.getMyAttendancePage(request);
+
+    events.subscribe((page) => {
+        this.attendances = page.items;
+        this.totalAttendances = page.totalElements;
+        this.loading = false;
+      });
   }
-  
+
+  onShowEventDetails(eventId: number) {
+    this.modal.open(eventId);
+  }
+}

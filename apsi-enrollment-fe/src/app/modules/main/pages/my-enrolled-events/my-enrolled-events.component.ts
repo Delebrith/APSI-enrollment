@@ -1,10 +1,10 @@
-import { EventService } from '../../services/event/event.service';
-import { PageRequest, Page } from 'src/app/core/model/pagination.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ClrDatagridStateInterface } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { BasicEvent } from 'src/app/core/model/event.model';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { EventService } from '../../services/event/event.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
-import { ClrDatagridStateInterface } from '@clr/angular';
 
 @Component({
   selector: 'my-enrolled-events',
@@ -17,14 +17,14 @@ export class MyEnrolledEventsComponent implements OnInit {
   totalEvents: number;
   loading = true;
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService) { }
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
-    return this.eventService.getMyEnrolledEventsPage(request)
+    return this.eventService.getMyEnrolledEventsPage(request);
   }
-  
-  ngOnInit(): void {}
-  
+
+  ngOnInit() { }
+
   onDgRefresh(state: ClrDatagridStateInterface) {
     this.loading = true;
     let searchString: string = null;
@@ -34,14 +34,18 @@ export class MyEnrolledEventsComponent implements OnInit {
       searchString = searchString.substring(0, searchString.length - 1);
     }
 
-    var request = { pageNumber: state.page.current - 1, pageSize: state.page.size, searchQuery: searchString };
-    var events = this.getEvents(request);
+    const request = {
+      pageNumber: state.page.current - 1,
+      pageSize: state.page.size,
+      searchQuery: searchString,
+    };
+    const events = this.getEvents(request);
 
     events.subscribe((page) => {
-        this.events = page.items;
-        this.totalEvents = page.totalElements;
-        this.loading = false;
-      });
+      this.events = page.items;
+      this.totalEvents = page.totalElements;
+      this.loading = false;
+    });
   }
 
   onShowEventDetails(eventId: number) {
