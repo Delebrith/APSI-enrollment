@@ -23,6 +23,8 @@ export class CheckAttendanceComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.subscriptions$ = new Subject<void>();
 
+    this.meetingId = this.route.snapshot.params.meetingId;
+
     this.route.queryParams
       .pipe(
         takeUntil(this.subscriptions$),
@@ -36,7 +38,7 @@ export class CheckAttendanceComponent implements OnInit, OnDestroy {
           }
         }),
         switchMap(({ code }) => {
-          const fullConfirmationURL = environment.apiBaseUrl + '/' + code;
+          const fullConfirmationURL = `${environment.apiBaseUrl}/${code}&meetingId=${this.meetingId}`;
           return this.http.post(fullConfirmationURL, {});
         })
       )
@@ -51,9 +53,6 @@ export class CheckAttendanceComponent implements OnInit, OnDestroy {
           this.loadingScanner = false;
         }
       );
-
-    this.route.params.pipe(takeUntil(this.subscriptions$)).subscribe((params) => (this.meetingId = params.meetingId));
-
     this.loadingScanner = false;
   }
 
