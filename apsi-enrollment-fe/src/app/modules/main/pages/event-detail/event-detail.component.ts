@@ -3,6 +3,7 @@ import { switchMap } from 'rxjs/operators';
 import { EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { Event } from 'src/app/core/model/event.model';
 import { Payment } from 'src/app/core/model/payment.model';
+import { AlertService } from '../../services/alert/alert.service';
 import { EventService } from '../../services/event/event.service';
 import { PaymentService } from '../../services/payment/payment.service';
 
@@ -19,8 +20,15 @@ export class EventDetailComponent implements OnInit {
   enrollmentStatusEnum = EnrollmentStatus;
   enrollmentStatus: EnrollmentStatus;
 
-  constructor(private eventService: EventService, private paymentService: PaymentService) {
-    this.paymentService.getCurrency().subscribe((currency) => (this.currency = currency));
+  constructor(
+    private eventService: EventService,
+    private paymentService: PaymentService,
+    private alertService: AlertService
+  ) {
+    this.paymentService.getCurrency().subscribe(
+      (currency) => (this.currency = currency),
+      (error) => this.alertService.showError(error)
+    );
   }
 
   ngOnInit() {}
@@ -31,12 +39,15 @@ export class EventDetailComponent implements OnInit {
     this.eventService
       .getEventById(eventId)
       .pipe()
-      .subscribe((event) => {
-        this.event = event;
-      });
-    this.eventService.getEnrollmentStatus(eventId).subscribe((enrollmentStatus) => {
-      this.enrollmentStatus = enrollmentStatus;
-    });
+      .subscribe(
+        (event) => (this.event = event),
+        (error) => this.alertService.showError(error)
+      );
+
+    this.eventService.getEnrollmentStatus(eventId).subscribe(
+      (enrollmentStatus) => (this.enrollmentStatus = enrollmentStatus),
+      (error) => this.alertService.showError(error)
+    );
   }
 
   onRegister() {
@@ -45,10 +56,7 @@ export class EventDetailComponent implements OnInit {
       .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
       .subscribe(
         (payment) => this.redirectPayment(payment),
-        (error) => {
-          console.error(error);
-          // TODO: use API error to display error message alert
-        }
+        (error) => this.alertService.showError(error)
       );
   }
 
@@ -58,10 +66,7 @@ export class EventDetailComponent implements OnInit {
       .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
       .subscribe(
         (payment) => this.redirectPayment(payment),
-        (error) => {
-          console.error(error);
-          // TODO: use API error to display error message alert
-        }
+        (error) => this.alertService.showError(error)
       );
   }
 
