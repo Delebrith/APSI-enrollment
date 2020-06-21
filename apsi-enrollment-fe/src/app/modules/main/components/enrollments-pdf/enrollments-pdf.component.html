@@ -21,10 +21,10 @@
           <td>{{ event.id }}</td>
           <td>{{ event.name }}</td>
           <td>{{ event.description }}</td>
-          <td>{{ event.eventType }}</td>
+          <td>{{ 'eventTypes.' + event.eventType | translate }}</td>
           <td>{{ event.attendeesLimit }}</td>
-          <td>{{ event.start }}</td>
-          <td>{{ event.end }}</td>
+          <td>{{ event.start | date: 'hh:mm dd-MM-yyyy' }}</td>
+          <td>{{ event.end | date: 'hh:mm dd-MM-yyyy' }}</td>
           <td>{{ event.organizer.username }}</td>
         </tr>
       </tbody>
