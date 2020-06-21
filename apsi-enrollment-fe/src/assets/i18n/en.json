@@ -124,7 +124,8 @@
     "status": "Status",
     "cannotGetQRCode": "cannot get QR code",
     "yourQRCode": "Your QR Code",
-    "viewQRCode": "View QR Code"
+    "viewQRCode": "View QR Code",
+    "speakers": "Meeting Speakers"
   },
   "attendanceList": {
     "title": "Attendance list",
