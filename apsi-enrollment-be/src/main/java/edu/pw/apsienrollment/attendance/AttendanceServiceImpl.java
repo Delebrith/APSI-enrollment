@@ -57,24 +57,16 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void markAsPresent(Long id, String token, Long meetingId) {
         Attendance attendance = attendanceRepository.findByIdAndTokenAndMeeting_Id(id, token, meetingId)
                 .orElseThrow(() -> new AttendanceNotFoundException(
-                        "Attendance not found",
-                        ImmutableMap.of("id", id, "token", token, "meetingId", meetingId)));
-        checkIfUserIsOrganizerOrSpeaker(attendance);
+                        "Attendance not found", ImmutableMap.of("id", id, "token", token)));
+        checkIfUserIsOrganizerOrSpeaker(attendance.getMeeting());
         attendance.setAttendanceStatus(AttendanceStatus.PRESENT);
         attendanceRepository.save(attendance);
     }
 
-    private void checkIfUserIsOrganizerOrSpeaker(Attendance attendance) {
+    private void checkIfUserIsOrganizerOrSpeaker(Meeting meeting) {
         User authenticated = authenticationService.getAuthenticatedUser();
-        if (!attendance.getMeeting().getSpeakers().contains(authenticated)
-                && !attendance.getMeeting().getEvent().getOrganizer().equals(authenticated)) {
-            throw new UserUnauthorizedToCheckAttendanceException();
-        }
-    }
-
-    private void checkIfUserIsOrganizer(Event event) {
-        User authenticated = authenticationService.getAuthenticatedUser();
-        if (!event.getOrganizer().equals(authenticated)) {
+        if (!meeting.getSpeakers().contains(authenticated)
+                && !meeting.getEvent().getOrganizer().equals(authenticated)) {
             throw new UserUnauthorizedToCheckAttendanceException();
         }
     }
@@ -85,11 +77,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public Map<Long, List<Attendance>> getAttendanceList(Event event) {
-        checkIfUserIsOrganizer(event);
-        return meetingService.getMeetings(event).stream()
-                .collect(Collectors.toMap(
-                        meeting -> meeting.getId(),
-                        meeting -> attendanceRepository.findByMeetingOrderByUserSurname(meeting)));
+    public List<Attendance> getAttendanceList(Meeting meeting) {
+        checkIfUserIsOrganizerOrSpeaker(meeting);
+        return attendanceRepository.findByMeetingOrderByUserSurname(meeting);
     }
+
 }
