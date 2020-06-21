@@ -1,18 +1,17 @@
-import { User } from './user.model';
 import { Meeting } from './event.model';
+import { User } from './user.model';
 
 
 export enum AttendaceStatus {
-    UNCHECKED = 'UNCHECKED',
-    PRESENT = 'UNCHECKED',
-    ABSENT = 'ABSENT',
+  UNCHECKED = 'UNCHECKED',
+  PRESENT = 'PRESENT',
+  ABSENT = 'ABSENT',
 }
 
 
 export interface Attendance {
-    id: number;
-    meeting: Meeting;
-    user: User;
-    status: AttendaceStatus;
-  }
-  
+  id: number;
+  meeting: Meeting;
+  user: User;
+  status: AttendaceStatus;
+}
