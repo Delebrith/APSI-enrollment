@@ -1,5 +1,7 @@
 package edu.pw.apsienrollment.event;
 
+import edu.pw.apsienrollment.attendance.AttendanceService;
+import edu.pw.apsienrollment.attendance.db.Attendance;
 import edu.pw.apsienrollment.authentication.AuthenticationService;
 import edu.pw.apsienrollment.common.db.SearchQueryParser;
 import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
@@ -19,10 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +31,7 @@ class EventServiceImpl implements EventService {
     private final AuthenticationService authenticationService;
     private final MeetingService meetingService;
     private final EventRepository eventRepository;
+    private final AttendanceService attendanceService;
 
     @Override
     public Page<Event> findAll(Integer page, Integer pageSize) {
@@ -135,6 +135,15 @@ class EventServiceImpl implements EventService {
                 .collect(Collectors.toMap(
                         type -> type,
                         type -> type.getAuthorizedUserRoles()));
+    }
+
+    @Override
+    public Map<Long, List<Attendance>> getAttendanceList(Event event) {
+        User user = authenticationService.getAuthenticatedUser();
+        return meetingService.getMeetings(event).stream()
+                .collect(Collectors.toMap(
+                        meeting -> meeting.getId(),
+                        attendanceService::getAttendanceList));
     }
 
 }

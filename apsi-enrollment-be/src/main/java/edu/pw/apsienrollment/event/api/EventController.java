@@ -3,11 +3,7 @@ package edu.pw.apsienrollment.event.api;
 import edu.pw.apsienrollment.common.api.dto.PageRequestDTO;
 import edu.pw.apsienrollment.common.api.dto.SearchRequestDTO;
 import edu.pw.apsienrollment.event.EventService;
-import edu.pw.apsienrollment.event.api.dto.AllowedToCreateDto;
-import edu.pw.apsienrollment.event.api.dto.EventDto;
-import edu.pw.apsienrollment.event.api.dto.EventRequestDto;
-import edu.pw.apsienrollment.event.api.dto.EventWithMeetingsDto;
-import edu.pw.apsienrollment.event.api.dto.MeetingDto;
+import edu.pw.apsienrollment.event.api.dto.*;
 import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
 import io.swagger.annotations.ApiOperation;
@@ -155,6 +151,17 @@ public class EventController {
     private ResponseEntity<Iterable<EventDto>> searchMyByEnrollment(String searchQuery, Integer page, Integer size) {
         return ResponseEntity.ok(eventService.findOfAuthenticatedUserByEnrollment(searchQuery, page, size)
                 .map(EventDto::of));
+    }
+
+    @ApiOperation(value = "Get attendance lists", nickname = "get attendance lists", notes="",
+            authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided"),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("{id}/attendance-list")
+    ResponseEntity<AttendanceListDto> getAttendanceLists(@PathVariable("id") Long id) {
+        Event event = eventService.getById(id);
+        return ResponseEntity.ok(AttendanceListDto.of(eventService.getAttendanceList(event)));
     }
     
 }

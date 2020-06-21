@@ -125,5 +125,13 @@
     "cannotGetQRCode": "cannot get QR code",
     "yourQRCode": "Your QR Code",
     "viewQRCode": "View QR Code"
+  },
+  "attendanceList": {
+    "title": "Attendance list",
+    "attendanceStatus": "Attendance status",
+    "userId": "User id",
+    "userSurname": "Surname",
+    "userName": "Name",
+    "empty": "Attendance list is empty"
   }
 }
