@@ -18,6 +18,7 @@ import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { MyOrganizerEventsComponent } from './pages/my-organizer-events/my-organizer-events.component';
 import { MySpeakerEventsComponent } from './pages/my-speaker-events/my-speaker-events.component';
 import { NewEventComponent } from './pages/new-event/new-event.component';
+import { QrCodeModalComponent } from './components/qr-code-modal/qr-code-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { NewEventComponent } from './pages/new-event/new-event.component';
     MyAttendancesComponent,
     EnrollmentsPdfComponent,
     AttendancePdfComponent,
+    QrCodeModalComponent,
   ],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
 })
