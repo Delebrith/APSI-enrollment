@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import { ApplicationRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Observable, of } from 'rxjs';
@@ -11,14 +11,17 @@ import { AttendanceService } from '../../services/attendance/attendance.service'
 @Component({
   selector: 'app-attendance-list-pdf',
   templateUrl: './attendance-list-pdf.component.html',
-  styleUrls: ['./attendance-list-pdf.component.scss']
+  styleUrls: ['./attendance-list-pdf.component.scss'],
 })
 export class AttendanceListPdfComponent implements OnInit {
   @Input() meetingId: number;
   attendance?: Attendance[] = null;
+  pdfDataId: string;
   readonly fileName: string = 'attendance-list';
 
-  constructor(private attendanceService: AttendanceService, private appRef: ApplicationRef) {}
+  constructor(private attendanceService: AttendanceService, private appRef: ApplicationRef) {
+    this.pdfDataId = 'pdfData' + Math.random().toString(36).substring(7);
+  }
 
   ngOnInit() {}
 
@@ -32,14 +35,17 @@ export class AttendanceListPdfComponent implements OnInit {
   }
 
   private prepareData(): Observable<Attendance[]> {
-    return this.attendance === null ? this.attendanceService.getAttendanceListForMeeting(this.meetingId) : of(this.attendance);
+    return this.attendance === null
+      ? this.attendanceService.getAttendanceListForMeeting(this.meetingId)
+      : of(this.attendance);
   }
 
   private preparePDF() {
     const doc = new jsPDF('landscape');
+    // tslint:disable-next-line: no-unused-expression
     opns;
     autoTable(doc, {
-      html: '#pdfData',
+      html: `#${this.pdfDataId}`,
       styles: {
         font: 'OpenSans',
         fontStyle: 'normal',
