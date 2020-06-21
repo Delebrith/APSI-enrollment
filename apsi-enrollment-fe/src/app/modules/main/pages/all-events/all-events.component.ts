@@ -37,9 +37,7 @@ export class AllEventsComponent implements OnInit {
       pageSize: state.page.size,
       searchQuery: searchString,
     };
-    const events = this.getEvents(request);
-
-    events.subscribe((page) => {
+    this.getEvents(request).subscribe((page) => {
         this.events = page.items;
         this.totalEvents = page.totalElements;
         this.loading = false;

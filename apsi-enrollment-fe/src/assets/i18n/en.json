@@ -48,6 +48,7 @@
     "MEETING": "Meeting"
   },
   "event": {
+    "id": "Id",
     "details": "Event details",
     "name": "Name",
     "description": "Description",
@@ -111,5 +112,10 @@
     "UNCHECKED": "Unchecked",
     "PRESENT": "Present",
     "ABSENT": "Absent"
+  },
+  "attendance": {
+    "id": "Attendance Id",
+    "status": "Status",
+    "speakers": "Meeting Speakers"
   }
 }
