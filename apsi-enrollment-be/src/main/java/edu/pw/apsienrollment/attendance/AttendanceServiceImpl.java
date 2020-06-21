@@ -7,7 +7,9 @@ import edu.pw.apsienrollment.attendance.db.AttendanceStatus;
 import edu.pw.apsienrollment.attendance.exception.AttendanceNotFoundException;
 import edu.pw.apsienrollment.attendance.exception.UserUnauthorizedToCheckAttendanceException;
 import edu.pw.apsienrollment.authentication.AuthenticationService;
+import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.meeting.Meeting;
+import edu.pw.apsienrollment.event.meeting.MeetingService;
 import edu.pw.apsienrollment.qrcode.QRCodeService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final QRCodeService qrcodeService;
     private final AuthenticationService authenticationService;
+    private final MeetingService meetingService;
 
     private static final String confirmURLScheme = "attendance/%d/mark-as-present?token=%s";
     private static final Integer qrCodeImageSize = 640;
@@ -67,9 +72,9 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
     }
 
-    private void checkIfUserIsOrganizer(Meeting meeting) {
+    private void checkIfUserIsOrganizer(Event event) {
         User authenticated = authenticationService.getAuthenticatedUser();
-        if (!meeting.getEvent().getOrganizer().equals(authenticated)) {
+        if (!event.getOrganizer().equals(authenticated)) {
             throw new UserUnauthorizedToCheckAttendanceException();
         }
     }
@@ -80,8 +85,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> getAttendanceList(Meeting meeting) {
-        checkIfUserIsOrganizer(meeting);
-        return attendanceRepository.findByMeetingOrderByUserSurname(meeting);
+    public Map<Long, List<Attendance>> getAttendanceList(Event event) {
+        checkIfUserIsOrganizer(event);
+        return meetingService.getMeetings(event).stream()
+                .collect(Collectors.toMap(
+                        meeting -> meeting.getId(),
+                        meeting -> attendanceRepository.findByMeetingOrderByUserSurname(meeting)));
     }
 }
