@@ -11,7 +11,7 @@ public interface AttendanceService {
 
     byte[] getQrCode(Long attendanceId);
 
-    void markAsPresent(Long id, String token);
+    void markAsPresent(Long id, String token, Long meetingId);
 
     Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize);
 }
