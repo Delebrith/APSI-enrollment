@@ -7,6 +7,7 @@ import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/mo
 import { Page, PageSearchRequest } from 'src/app/core/model/pagination.model';
 import { UserRole } from 'src/app/core/model/user.model';
 import { environment } from 'src/environments/environment';
+import {Attendance} from '../../../../core/model/attendance.model';
 
 @Injectable({
   providedIn: 'root',
@@ -75,15 +76,15 @@ export class EventService {
 
   getEventById(eventId: number): Observable<Event> {
     return this.http.get<any>(`${this.eventBaseUrl}/${eventId}`).pipe(
-      tap(console.log),
       map(({ event, meetings }) => {
-        const { id, name, description, eventType, attendeesLimit, cost } = event;
+        const { id, name, description, eventType, attendeesLimit, organizer, cost } = event;
         return {
           id,
           name,
           description,
           eventType,
           attendeesLimit,
+          organizer,
           meetings,
           cost,
         } as Event;
@@ -126,5 +127,13 @@ export class EventService {
       eventId,
     };
     return this.http.post(`${this.enrollmentBaseUrl}`, postBody).pipe(map((response) => response as Enrollment));
+  }
+
+  getAttendanceList(eventId: number): Observable<{ number: Attendance[]}> {
+    return this.http
+      .get<any>(`${this.eventBaseUrl}/${eventId}/attendance-list`)
+      .pipe(
+        map(({ attendanceList }) => attendanceList as { number: Attendance[] } ),
+      );
   }
 }

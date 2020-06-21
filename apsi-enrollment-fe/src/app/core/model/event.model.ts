@@ -46,11 +46,13 @@ export interface Event {
   description: string;
   eventType: EventType;
   attendeesLimit: number;
+  organizer: User;
   cost: number;
   meetings: Meeting[];
 }
 
 export interface Meeting {
+  id: number;
   description: string;
   start: Date;
   end: Date;
