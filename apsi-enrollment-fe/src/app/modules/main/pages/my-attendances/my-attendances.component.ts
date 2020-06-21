@@ -32,9 +32,7 @@ export class MyAttendancesComponent implements OnInit {
       pageSize: state.page.size,
       searchQuery: searchString,
     };
-    const events = this.attendanceService.getMyAttendancePage(request);
-
-    events.subscribe((page) => {
+    this.attendanceService.getMyAttendancePage(request).subscribe((page) => {
         this.attendances = page.items;
         this.totalAttendances = page.totalElements;
         this.loading = false;
