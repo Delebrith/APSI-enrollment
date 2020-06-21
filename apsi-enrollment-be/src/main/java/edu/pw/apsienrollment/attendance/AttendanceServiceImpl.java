@@ -79,7 +79,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public List<Attendance> getAttendanceList(Meeting meeting) {
         checkIfUserIsOrganizerOrSpeaker(meeting);
-        return attendanceRepository.findByMeetingOrderByUserSurname(meeting);
+        return attendanceRepository.findByMeetingOrderByUser_Surname(meeting);
     }
 
 }
