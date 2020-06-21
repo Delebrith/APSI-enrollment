@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CoreModule} from 'src/app/core/core.module';
 import {SharedModule} from 'src/app/shared/shared.module';
+import { AttendancePdfComponent } from './components/attendance-pdf/attendance-pdf.component';
 import {EnrollmentsPdfComponent} from './components/enrollments-pdf/enrollments-pdf.component';
 import {MainComponent} from './main.component';
 import {MainRoutingModule} from './main.routing';
@@ -22,7 +23,7 @@ import {NewEventComponent} from './pages/new-event/new-event.component';
     HomeComponent, MainComponent, AllEventsComponent, MyEventsComponent,
     MySpeakerEventsComponent, MyOrganizerEventsComponent, MyEnrolledEventsComponent,
     AllPaymentsComponent, EventDetailComponent, NewEventComponent, MyAttendancesComponent,
-    EnrollmentsPdfComponent],
+    EnrollmentsPdfComponent, AttendancePdfComponent],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
 })
 export class MainModule {

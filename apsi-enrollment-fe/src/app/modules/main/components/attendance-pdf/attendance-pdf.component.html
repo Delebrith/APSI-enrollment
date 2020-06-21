@@ -1,0 +1,33 @@
+<div>
+  <button class="btn btn-primary" type="button" (click)="onDownloadPDF()">
+    Download
+  </button>
+  <div id="htmlData" #htmlData style="visibility: hidden;">
+    <table id="pdfData">
+        <thead class="table">
+          <tr>
+            <th>id</th>
+            <th>status</th>
+            <th>meeting speakers</th>
+            <th>place</th>
+            <th>start</th>
+            <th>end</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let atten of attendance">
+            <td>{{ atten.id }}</td>
+            <td>{{ atten.status }}</td>
+            <td>
+              <p *ngFor="let speaker of atten.meeting.speakers">
+                {{speaker.name}}&nbsp;{{speaker.surname}}<br />
+              </p>
+            </td>
+            <td>{{ atten.meeting.place.name }}</td>
+            <td>{{ atten.meeting.start }}</td>
+            <td>{{ atten.meeting.end }}</td>
+          </tr> 
+        </tbody>
+    </table>
+  </div>
+</div>
