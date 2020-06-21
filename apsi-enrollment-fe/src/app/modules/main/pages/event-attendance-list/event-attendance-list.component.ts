@@ -29,7 +29,7 @@ export class EventAttendanceListComponent implements OnInit {
       .subscribe((event) => {
         this.event = event;
       });
-    this.attendanceService.getAttendanceList(eventId).subscribe((attendanceList) => {
+    this.attendanceService.getAttendanceListForEvent(eventId).subscribe((attendanceList) => {
       this.attendanceList = attendanceList;
     });
   }
