@@ -39,6 +39,7 @@ export class EventDetailComponent implements OnInit {
 
   open(eventId: number) {
     this.show = true;
+    this.isLoading = false;
 
     this.eventService
       .getEventById(eventId)
@@ -59,7 +60,12 @@ export class EventDetailComponent implements OnInit {
     this.eventService
       .signUp(this.event.id)
       .pipe(
-        tap((enrollment) => (this.enrollmentStatus = enrollment.status)),
+        tap((enrollment) => {
+          this.enrollmentStatus = enrollment.status;
+          if (enrollment.event.cost === 0) {
+            this.isLoading = false;
+          }
+        }),
         filter((enrollment) => enrollment.event.cost !== 0),
         switchMap((enrollment) => this.paymentService.create(enrollment))
       )
