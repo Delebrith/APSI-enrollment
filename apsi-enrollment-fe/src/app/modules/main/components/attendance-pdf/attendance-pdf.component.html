@@ -17,7 +17,7 @@
       <tbody>
         <tr *ngFor="let atten of attendance">
           <td>{{ atten.id }}</td>
-          <td>{{ atten.status }}</td>
+          <td>{{ 'attendanceStatus.' + atten.status | translate }}</td>
           <td>
             <p *ngFor="let speaker of atten.meeting.speakers">{{ speaker.name }}&nbsp;{{ speaker.surname }}<br /></p>
           </td>
