@@ -2,6 +2,8 @@ package edu.pw.apsienrollment.event.meeting;
 
 import edu.pw.apsienrollment.event.api.dto.MeetingRequestDto;
 import edu.pw.apsienrollment.event.db.Event;
+import edu.pw.apsienrollment.event.exception.EventNotFoundException;
+import edu.pw.apsienrollment.event.meeting.exception.MeetingNotFoundException;
 import edu.pw.apsienrollment.event.meeting.exception.PlaceNotMeetingRequirementsException;
 import edu.pw.apsienrollment.event.meeting.exception.SpeakerUnavailableException;
 import edu.pw.apsienrollment.place.PlaceService;
@@ -21,6 +23,12 @@ class MeetingServiceImpl implements MeetingService {
     private final MeetingRepository meetingRepository;
     private final UserService userService;
     private final PlaceService placeService;
+
+
+    @Override
+    public Meeting getById(Long id) {
+        return meetingRepository.findById(id).orElseThrow(MeetingNotFoundException::new);
+    }
     
     @Override
     public Meeting createMeeting(Event event, MeetingRequestDto dto) {

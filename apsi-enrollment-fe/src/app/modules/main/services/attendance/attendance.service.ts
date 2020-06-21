@@ -51,13 +51,8 @@ export class AttendanceService {
       .pipe(map((bytes) => this.imageEncode(bytes)));
   }
 
-  private imageEncode(arrayBuffer) {
-    const u8 = new Uint8Array(arrayBuffer);
-    const b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer), (p, c) => p + String.fromCharCode(c), ''));
-    const mimetype = 'image/png';
-    return 'data:' + mimetype + ';base64,' + b64encoded;
-  }
-  getAttendanceList(eventId: number): Observable<{ number: Attendance[]}> {
+
+  getAttendanceListForEvent(eventId: number): Observable<{ number: Attendance[]}> {
     return this.http
       .get<any>(`${this.attendanceBaseUrl}/event/${eventId}`)
       .pipe(
@@ -65,4 +60,19 @@ export class AttendanceService {
       );
   }
 
+
+  getAttendanceListForMeeting(meetingId: number): Observable<Attendance[]> {
+    return this.http
+      .get<any>(`${this.attendanceBaseUrl}/meeting/${meetingId}`)
+      .pipe(
+        map( ({attendanceList}) => attendanceList as Attendance[] ),
+      );
+  }
+
+  private imageEncode(arrayBuffer) {
+    const u8 = new Uint8Array(arrayBuffer);
+    const b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer), (p, c) => p + String.fromCharCode(c), ''));
+    const mimetype = 'image/png';
+    return 'data:' + mimetype + ';base64,' + b64encoded;
+  }
 }
