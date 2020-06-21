@@ -12,6 +12,7 @@ public class AttendanceCheckJobDetailFactory {
         return JobBuilder.newJob(AttendanceCheckJob.class)
                 .withIdentity(meeting.getId().toString())
                 .setJobData(jobDataMap)
+                .requestRecovery(true)
                 .storeDurably()
                 .withDescription("Attendance check job")
                 .build();
