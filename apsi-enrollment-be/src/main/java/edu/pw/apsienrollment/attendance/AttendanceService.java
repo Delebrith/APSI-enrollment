@@ -19,5 +19,5 @@ public interface AttendanceService {
 
     Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize);
 
-    Map<Long, List<Attendance>> getAttendanceList(Event event);
+    List<Attendance> getAttendanceList(Meeting meeting);
 }

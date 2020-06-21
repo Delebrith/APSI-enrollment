@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 
 @Value
 @Builder
-public class AttendanceListDto {
+public class AttendanceListForEventDto {
     Map<Long, List<AttendanceDto>> attendanceList;
 
-    public static AttendanceListDto of(@NonNull Map<Long, List<Attendance>> attendanceList) {
-        return AttendanceListDto.builder()
+    public static AttendanceListForEventDto of(@NonNull Map<Long, List<Attendance>> attendanceList) {
+        return AttendanceListForEventDto.builder()
                 .attendanceList(attendanceList.entrySet().stream()
                         .map(entry -> {
                             List<AttendanceDto> attendanceDtos = entry.getValue().stream()
