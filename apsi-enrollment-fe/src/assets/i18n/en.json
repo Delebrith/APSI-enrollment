@@ -2,6 +2,9 @@
   "global": {
     "appName": "APSI Enrollment"
   },
+  "misc": {
+    "downloadPDF": "Download PDF"
+  },
   "login": {
     "welcomeTo": "Welcome to",
     "loginHint": "Use your username to sign in",
@@ -18,7 +21,7 @@
     "home": "Home",
     "allEvents": "All Events",
     "myEvents": "My Events",
-    "newEvent": "New Events",
+    "newEvent": "Create Event",
     "allPayments": "My Payments",
     "myAttendances": "My Attendances"
   },

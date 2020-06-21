@@ -3,11 +3,12 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { BasicEvent } from 'src/app/core/model/event.model';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { AlertService } from '../../services/alert/alert.service';
 import { EventService } from '../../services/event/event.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
-  selector: 'my-enrolled-events',
+  selector: 'app-my-enrolled-events',
   templateUrl: './my-enrolled-events.component.html',
   styleUrls: ['./my-enrolled-events.component.scss'],
 })
@@ -17,13 +18,13 @@ export class MyEnrolledEventsComponent implements OnInit {
   totalEvents: number;
   loading = true;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private alertService: AlertService) {}
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
     return this.eventService.getMyEnrolledEventsPage(request);
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   onDgRefresh(state: ClrDatagridStateInterface) {
     this.loading = true;
@@ -39,11 +40,19 @@ export class MyEnrolledEventsComponent implements OnInit {
       pageSize: state.page.size,
       searchQuery: searchString,
     };
-    this.getEvents(request).subscribe((page) => {
-      this.events = page.items;
-      this.totalEvents = page.totalElements;
-      this.loading = false;
-    });
+    this.getEvents(request).subscribe(
+      (page) => {
+        this.events = page.items;
+        this.totalEvents = page.totalElements;
+        this.loading = false;
+      },
+      (error) => {
+        this.alertService.showError(error);
+        this.events = [];
+        this.totalEvents = 0;
+        this.loading = false;
+      }
+    );
   }
 
   onShowEventDetails(eventId: number) {

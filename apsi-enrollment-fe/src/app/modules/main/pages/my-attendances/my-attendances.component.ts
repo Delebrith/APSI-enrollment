@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { Attendance } from 'src/app/core/model/attendance.model';
+import { AlertService } from '../../services/alert/alert.service';
 import { AttendanceService } from '../../services/attendance/attendance.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 
@@ -14,7 +15,7 @@ export class MyAttendancesComponent implements OnInit {
   totalAttendances: number;
   loading = true;
 
-  constructor(private attendanceService: AttendanceService) {}
+  constructor(private attendanceService: AttendanceService, private alertService: AlertService) {}
   ngOnInit(): void {}
 
   onDgRefresh(state: ClrDatagridStateInterface) {
@@ -22,8 +23,7 @@ export class MyAttendancesComponent implements OnInit {
     let searchString: string = null;
 
     if (state.filters) {
-      searchString = state.filters.reduce(
-        (prev, next) => `${prev}${next.property}=${next.value},`, '');
+      searchString = state.filters.reduce((prev, next) => `${prev}${next.property}=${next.value},`, '');
       searchString = searchString.substring(0, searchString.length - 1);
     }
 
@@ -32,11 +32,19 @@ export class MyAttendancesComponent implements OnInit {
       pageSize: state.page.size,
       searchQuery: searchString,
     };
-    this.attendanceService.getMyAttendancePage(request).subscribe((page) => {
+    this.attendanceService.getMyAttendancePage(request).subscribe(
+      (page) => {
         this.attendances = page.items;
         this.totalAttendances = page.totalElements;
         this.loading = false;
-      });
+      },
+      (error) => {
+        this.alertService.showError(error);
+        this.attendances = [];
+        this.totalAttendances = 0;
+        this.loading = false;
+      }
+    );
   }
 
   onShowEventDetails(eventId: number) {
