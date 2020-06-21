@@ -9,17 +9,21 @@
   <clr-dg-row *ngFor="let attendance of attendances">
     <clr-dg-cell>{{ attendance.meeting.event.name }}</clr-dg-cell>
     <clr-dg-cell>{{ attendance.meeting.description }}</clr-dg-cell>
-    <clr-dg-cell>{{ attendance.meeting.start | date: 'dd-MM-yyyy' }} - {{ attendance.meeting.end | date: 'dd-MM-yyyy' }}</clr-dg-cell>
+    <clr-dg-cell
+      >{{ attendance.meeting.start | date: 'dd-MM-yyyy' }} -
+      {{ attendance.meeting.end | date: 'dd-MM-yyyy' }}</clr-dg-cell
+    >
     <clr-dg-cell>{{ 'attendanceStatus.' + attendance.status | translate }}</clr-dg-cell>
   </clr-dg-row>
   <clr-dg-footer>
     <clr-dg-pagination #pagination [clrDgTotalItems]="totalAttendances">
-      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">{{
-        'events.eventsPerPage' | translate
-      }}</clr-dg-page-size>
-      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} {{ 'events.of' | translate }} {{ totalAttendances }}
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">
+        {{ 'events.eventsPerPage' | translate }}
+      </clr-dg-page-size>
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} {{ 'events.of' | translate }}
+      {{ totalAttendances }}
       {{ 'events.totalMeetings' | translate }}
     </clr-dg-pagination>
   </clr-dg-footer>
 </clr-datagrid>
-<attendance-pdf></attendance-pdf>
+<app-attendance-pdf></app-attendance-pdf>
