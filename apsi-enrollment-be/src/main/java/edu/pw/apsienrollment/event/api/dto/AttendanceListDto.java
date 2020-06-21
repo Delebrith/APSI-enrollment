@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,14 +19,12 @@ public class AttendanceListDto {
     public static AttendanceListDto of(@NonNull Map<Long, List<Attendance>> attendanceList) {
         return AttendanceListDto.builder()
                 .attendanceList(attendanceList.entrySet().stream()
-                        .map(entry -> Map.entry(
-                                entry.getKey(),
-                                entry.getValue()
-                                        .stream()
-                                        .map(AttendanceDto::of)
-                                        .collect(Collectors.toList()))
-                        )
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
+                        .map(entry -> {
+                            List<AttendanceDto> attendanceDtos = entry.getValue().stream()
+                                    .map(AttendanceDto::of).collect(Collectors.toList());
+                            return new HashMap.SimpleEntry<Long, List<AttendanceDto>>(entry.getKey(), attendanceDtos);
+                        })
+                        .collect(Collectors.toMap(HashMap.SimpleEntry::getKey, HashMap.SimpleEntry::getValue)))
                 .build();
     }
 }
