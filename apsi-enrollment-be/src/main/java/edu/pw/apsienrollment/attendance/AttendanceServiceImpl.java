@@ -47,10 +47,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void markAsPresent(Long id, String token) {
-        Attendance attendance = attendanceRepository.findByIdAndToken(id, token)
+    public void markAsPresent(Long id, String token, Long meetingId) {
+        Attendance attendance = attendanceRepository.findByIdAndTokenAndMeeting_Id(id, token, meetingId)
                 .orElseThrow(() -> new AttendanceNotFoundException(
-                        "Attendance not found", ImmutableMap.of("id", id, "token", token)));
+                        "Attendance not found",
+                        ImmutableMap.of("id", id, "token", token, "meetingId", meetingId)));
         checkIfUserIsOrganizerOrSpeaker(attendance);
         attendance.setAttendanceStatus(AttendanceStatus.PRESENT);
         attendanceRepository.save(attendance);

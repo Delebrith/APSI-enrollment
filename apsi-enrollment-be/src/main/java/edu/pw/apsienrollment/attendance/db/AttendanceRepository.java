@@ -9,7 +9,7 @@ import java.util.Optional;
 import edu.pw.apsienrollment.user.db.User;
 
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
-    Optional<Attendance> findByIdAndToken(Long id, String token);
+    Optional<Attendance> findByIdAndTokenAndMeeting_Id(Long id, String token, Long meetingId);
 
     Page<Attendance> findByUser(User user, Pageable pageable);
 }
