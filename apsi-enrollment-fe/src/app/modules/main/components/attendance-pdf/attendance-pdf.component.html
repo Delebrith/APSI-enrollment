@@ -22,8 +22,8 @@
             <p *ngFor="let speaker of atten.meeting.speakers">{{ speaker.name }}&nbsp;{{ speaker.surname }}<br /></p>
           </td>
           <td>{{ atten.meeting.place.name }}</td>
-          <td>{{ atten.meeting.start }}</td>
-          <td>{{ atten.meeting.end }}</td>
+          <td>{{ atten.meeting.start | date: 'hh:mm dd-MM-yyyy' }}</td>
+          <td>{{ atten.meeting.end | date: 'hh:mm dd-MM-yyyy' }}</td>
         </tr>
       </tbody>
     </table>
