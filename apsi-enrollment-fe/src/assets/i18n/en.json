@@ -3,7 +3,8 @@
     "appName": "APSI Enrollment"
   },
   "misc": {
-    "downloadPDF": "Download PDF"
+    "downloadPDF": "Download PDF",
+    "loading": "Loading..."
   },
   "login": {
     "welcomeTo": "Welcome to",
