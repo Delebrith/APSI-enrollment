@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AttendanceServiceImpl implements AttendanceService {
@@ -64,9 +66,22 @@ public class AttendanceServiceImpl implements AttendanceService {
             throw new UserUnauthorizedToCheckAttendanceException();
         }
     }
+
+    private void checkIfUserIsOrganizer(Meeting meeting) {
+        User authenticated = authenticationService.getAuthenticatedUser();
+        if (!meeting.getEvent().getOrganizer().equals(authenticated)) {
+            throw new UserUnauthorizedToCheckAttendanceException();
+        }
+    }
         
     public Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize) {
         User authenticatedUser = authenticationService.getAuthenticatedUser();
         return attendanceRepository.findByUser(authenticatedUser, PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public List<Attendance> getAttendanceList(Meeting meeting) {
+        checkIfUserIsOrganizer(meeting);
+        return attendanceRepository.findByMeetingOrderByUserSurname(meeting);
     }
 }

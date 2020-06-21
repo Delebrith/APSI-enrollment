@@ -6,6 +6,8 @@ import edu.pw.apsienrollment.attendance.db.Attendance;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 import edu.pw.apsienrollment.user.db.User;
 
+import java.util.List;
+
 public interface AttendanceService {
     Attendance putIntoAttendanceList(Meeting meeting, User user);
 
@@ -14,4 +16,6 @@ public interface AttendanceService {
     void markAsPresent(Long id, String token, Long meetingId);
 
     Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize);
+
+    List<Attendance> getAttendanceList(Meeting meeting);
 }

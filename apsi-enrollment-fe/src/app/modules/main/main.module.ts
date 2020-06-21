@@ -18,6 +18,7 @@ import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { MyOrganizerEventsComponent } from './pages/my-organizer-events/my-organizer-events.component';
 import { MySpeakerEventsComponent } from './pages/my-speaker-events/my-speaker-events.component';
 import { NewEventComponent } from './pages/new-event/new-event.component';
+import { EventAttendanceListComponent } from './pages/event-attendance-list/event-attendance-list.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { NewEventComponent } from './pages/new-event/new-event.component';
     EnrollmentsPdfComponent,
     AttendancePdfComponent,
     QrCodeModalComponent,
+    EventAttendanceListComponent
   ],
   imports: [CommonModule, MainRoutingModule, CoreModule, SharedModule, ReactiveFormsModule],
+  providers: [EventGuard]
 })
 export class MainModule {}

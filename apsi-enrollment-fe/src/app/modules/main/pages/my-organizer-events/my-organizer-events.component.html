@@ -8,7 +8,7 @@
 
   <clr-dg-row *ngFor="let event of events">
     <clr-dg-cell>
-      <a href="javascript:void(0);" (click)="onShowEventDetails(event.id)">{{ event.name }}</a>
+        <a routerLink="/main/event/{{event.id}}">{{ event.name }}</a>
     </clr-dg-cell>
     <clr-dg-cell>{{ event.description }}</clr-dg-cell>
     <clr-dg-cell>{{ 'eventTypes.' + event.eventType | translate }}</clr-dg-cell>
