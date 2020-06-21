@@ -3,23 +3,22 @@ import * as jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { BasicEvent } from 'src/app/core/model/event.model';
+import { Attendance } from 'src/app/core/model/attendance.model';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
 import * as opns from 'src/app/shared/OpenSans-normal.js';
-import { EventService } from '../../services/event/event.service';
+import { AttendanceService } from '../../services/attendance/attendance.service';
 
 
 @Component({
-  selector: 'enrollments-pdf',
-  templateUrl: './enrollments-pdf.component.html',
-  styleUrls: ['./enrollments-pdf.component.scss']
+  selector: 'attendance-pdf',
+  templateUrl: './attendance-pdf.component.html',
+  styleUrls: ['./attendance-pdf.component.scss']
 })
-export class EnrollmentsPdfComponent implements OnInit {
+export class AttendancePdfComponent implements OnInit {
 
-  events?: BasicEvent[] = null;
-  readonly fileName: string = 'my-enrollments';
-
-  constructor(private eventService: EventService, private appRef: ApplicationRef) { }
+  attendance?: Attendance[] = null;
+  readonly fileName: string = 'my-attendance';
+  constructor(private attendanceService: AttendanceService, private appRef: ApplicationRef) { }
 
   ngOnInit() {}
 
@@ -27,14 +26,14 @@ export class EnrollmentsPdfComponent implements OnInit {
     const data = this.prepareData();
     data.pipe(
       tap(console.log),
-      tap((events) => this.events = events),
+      tap((attendance) => this.attendance = attendance),
       tap(() => this.appRef.tick()),
     ).subscribe(() => this.preparePDF());
   }
 
-  private prepareData(): Observable<BasicEvent[]> {
-    const events = (this.events === null) ? this.getEvents().pipe(map((page) => page.items)) : of(this.events);
-    return events;
+  private prepareData(): Observable<Attendance[]> {
+    const attendance = (this.attendance === null) ? this.getAttendance().pipe(map((page) => page.items)) : of(this.attendance);
+    return attendance;
   }
 
   private preparePDF() {
@@ -50,8 +49,8 @@ export class EnrollmentsPdfComponent implements OnInit {
       doc.save(`${this.fileName}.pdf`);
   }
 
-  private getEvents(): Observable<Page<BasicEvent>> {
-    return this.eventService.getMyEnrolledEventsPage({
+  private getAttendance(): Observable<Page<Attendance>> {
+    return this.attendanceService.getMyAttendancePage({
       pageNumber: 0,
       pageSize: 10000,
     });

@@ -5,9 +5,9 @@ import { AttendanceService } from '../../services/attendance/attendance.service'
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
-    templateUrl: './my-attendances.component.html',
-    styleUrls: ['./my-attendances.component.scss'],
-  })
+  templateUrl: './my-attendances.component.html',
+  styleUrls: ['./my-attendances.component.scss'],
+})
 export class MyAttendancesComponent implements OnInit {
   @ViewChild(EventDetailComponent) modal: EventDetailComponent;
   attendances: Attendance[];
