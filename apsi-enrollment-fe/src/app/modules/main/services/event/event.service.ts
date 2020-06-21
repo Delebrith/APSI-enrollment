@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap, find } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page, PageSearchRequest } from 'src/app/core/model/pagination.model';
@@ -17,43 +17,26 @@ export class EventService {
 
   constructor(private http: HttpClient) {}
 
-  getEventsPage({
-    pageNumber,
-    pageSize,
-    searchQuery,
-  }: PageSearchRequest): Observable<Page<BasicEvent>> {
-    return this._getEventsPage({pageNumber, pageSize, searchQuery}, this.eventBaseUrl);
-  }
-  
-  getMyEventsBySpeakerPage({
-    pageNumber,
-    pageSize,
-    searchQuery,
-  }: PageSearchRequest): Observable<Page<BasicEvent>> {
-    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-speaker`);
-  }
-  
-  getMyEventsByOrganizerPage({
-    pageNumber,
-    pageSize,
-    searchQuery,
-  }: PageSearchRequest): Observable<Page<BasicEvent>> {
-    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-organizer`);
+  getEventsPage(request: PageSearchRequest): Observable<Page<BasicEvent>> {
+    return this.localGetEventsPage(request, this.eventBaseUrl);
   }
 
-  getMyEnrolledEventsPage({
-    pageNumber,
-    pageSize,
-    searchQuery,
-  }: PageSearchRequest): Observable<Page<BasicEvent>> {
-    return this._getEventsPage({pageNumber, pageSize, searchQuery}, `${this.eventBaseUrl}/my-enrolled`);
+  getMyEventsBySpeakerPage(request: PageSearchRequest): Observable<Page<BasicEvent>> {
+    return this.localGetEventsPage(request, `${this.eventBaseUrl}/my-speaker`);
   }
 
-  _getEventsPage({
-    pageNumber,
-    pageSize,
-    searchQuery,
-  }: PageSearchRequest, address: string): Observable<Page<BasicEvent>> {
+  getMyEventsByOrganizerPage(request: PageSearchRequest): Observable<Page<BasicEvent>> {
+    return this.localGetEventsPage(request, `${this.eventBaseUrl}/my-organizer`);
+  }
+
+  getMyEnrolledEventsPage(request: PageSearchRequest): Observable<Page<BasicEvent>> {
+    return this.localGetEventsPage(request, `${this.eventBaseUrl}/my-enrolled`);
+  }
+
+  private localGetEventsPage(
+    { pageNumber, pageSize, searchQuery }: PageSearchRequest,
+    address: string
+  ): Observable<Page<BasicEvent>> {
     const params = {
       page: null,
       size: null,
@@ -102,7 +85,7 @@ export class EventService {
           eventType,
           attendeesLimit,
           meetings,
-          cost
+          cost,
         } as Event;
       })
     );
@@ -126,24 +109,15 @@ export class EventService {
     return this.http.post(`${this.eventBaseUrl}`, postBody).pipe(map((response) => response as BasicEvent));
   }
 
-  getEnrollment(eventId: number) : Observable<Enrollment> {
-    return this.http.get<any>(`${this.enrollmentBaseUrl}/my-enrollments`).pipe(
-      map((enrollments: Enrollment[]) => enrollments.find((e) => e.event.id === eventId))
-    );
+  getEnrollment(eventId: number): Observable<Enrollment> {
+    return this.http
+      .get<any>(`${this.enrollmentBaseUrl}/my-enrollments`)
+      .pipe(map((enrollments: Enrollment[]) => enrollments.find((e) => e.event.id === eventId)));
   }
 
   getEnrollmentStatus(eventId: number): Observable<EnrollmentStatus> {
     return this.getEnrollment(eventId).pipe(
       map((enrollment: Enrollment) => enrollment?.status ?? EnrollmentStatus.NOT_ENROLLED)
-    )
-    return this.http.get<any>(`${this.enrollmentBaseUrl}/my-enrollments`).pipe(
-      map((enrollments: Enrollment[]) => enrollments.filter((e) => e.event.id === eventId)),
-      map((enrollments: Enrollment[]) => {
-        if (enrollments.length === 0) {
-          return EnrollmentStatus.NOT_ENROLLED;
-        }
-        return enrollments[0].status;
-      })
     );
   }
 
