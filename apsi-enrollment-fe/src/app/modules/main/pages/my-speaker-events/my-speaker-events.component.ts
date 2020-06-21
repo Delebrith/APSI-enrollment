@@ -33,14 +33,12 @@ export class MySpeakerEventsComponent implements OnInit {
       searchString = searchString.substring(0, searchString.length - 1);
     }
 
-    const request = { 
+    const request = {
       pageNumber: state.page.current - 1,
       pageSize: state.page.size,
       searchQuery: searchString,
     };
-    const events = this.getEvents(request);
-
-    events.subscribe((page) => {
+    this.getEvents(request).subscribe((page) => {
         this.events = page.items;
         this.totalEvents = page.totalElements;
         this.loading = false;

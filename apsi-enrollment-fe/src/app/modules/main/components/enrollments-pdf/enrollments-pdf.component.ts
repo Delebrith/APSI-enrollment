@@ -24,8 +24,7 @@ export class EnrollmentsPdfComponent implements OnInit {
   ngOnInit() {}
 
   onDownloadPDF() {
-    const data = this.prepareData();
-    data.pipe(
+    this.prepareData().pipe(
       tap(console.log),
       tap((events) => this.events = events),
       tap(() => this.appRef.tick()),
@@ -33,8 +32,7 @@ export class EnrollmentsPdfComponent implements OnInit {
   }
 
   private prepareData(): Observable<BasicEvent[]> {
-    const events = (this.events === null) ? this.getEvents().pipe(map((page) => page.items)) : of(this.events);
-    return events;
+    return (this.events === null) ? this.getEvents().pipe(map((page) => page.items)) : of(this.events);
   }
 
   private preparePDF() {

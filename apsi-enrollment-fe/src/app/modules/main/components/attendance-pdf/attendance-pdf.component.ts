@@ -23,8 +23,7 @@ export class AttendancePdfComponent implements OnInit {
   ngOnInit() {}
 
   onDownloadPDF() {
-    const data = this.prepareData();
-    data.pipe(
+    this.prepareData().pipe(
       tap(console.log),
       tap((attendance) => this.attendance = attendance),
       tap(() => this.appRef.tick()),
@@ -32,8 +31,7 @@ export class AttendancePdfComponent implements OnInit {
   }
 
   private prepareData(): Observable<Attendance[]> {
-    const attendance = (this.attendance === null) ? this.getAttendance().pipe(map((page) => page.items)) : of(this.attendance);
-    return attendance;
+    return (this.attendance === null) ? this.getAttendance().pipe(map((page) => page.items)) : of(this.attendance);
   }
 
   private preparePDF() {
