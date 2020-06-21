@@ -32,7 +32,7 @@ const routes: Routes = [
         component: AllPaymentsComponent,
       },
       {
-        path: 'check-attendance',
+        path: 'check-attendance/:meetingId',
         component: CheckAttendanceComponent,
       },
       {

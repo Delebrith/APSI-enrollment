@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { APIError } from 'src/app/core/model/api-error.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './check-attendance.component.html',
@@ -9,17 +12,48 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CheckAttendanceComponent implements OnInit, OnDestroy {
   private subscriptions$: Subject<void>;
-  code: string;
   loadingScanner: boolean;
+  meetingId: number;
+  attendanceId: number;
+  code: string;
 
-  constructor(private route: ActivatedRoute) {
+  scanSuccess: boolean;
+  scanError: string;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.subscriptions$ = new Subject<void>();
 
-    this.route.queryParams.pipe(takeUntil(this.subscriptions$)).subscribe((params) => {
-      if (params.code != null) {
-        this.code = params.code;
-      }
-    });
+    this.route.queryParams
+      .pipe(
+        takeUntil(this.subscriptions$),
+        filter((params) => params.code != null),
+        tap(() => (this.loadingScanner = true)),
+        tap(({ code }) => {
+          this.code = code;
+          const splitURL = (code as string).split('/');
+          if (splitURL.length > 2) {
+            this.attendanceId = Number.parseInt(splitURL[1], 10);
+          }
+        }),
+        switchMap(({ code }) => {
+          const fullConfirmationURL = environment.apiBaseUrl + '/' + code;
+          return this.http.post(fullConfirmationURL, {});
+        })
+      )
+      .subscribe(
+        () => {
+          this.scanSuccess = true;
+          this.loadingScanner = false;
+        },
+        (error: APIError) => {
+          this.scanSuccess = false;
+          this.scanError = error.message;
+          this.loadingScanner = false;
+        }
+      );
+
+    this.route.params.pipe(takeUntil(this.subscriptions$)).subscribe((params) => (this.meetingId = params.meetingId));
+
     this.loadingScanner = false;
   }
 
