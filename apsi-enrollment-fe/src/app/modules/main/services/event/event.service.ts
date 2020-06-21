@@ -128,12 +128,4 @@ export class EventService {
     };
     return this.http.post(`${this.enrollmentBaseUrl}`, postBody).pipe(map((response) => response as Enrollment));
   }
-
-  getAttendanceList(eventId: number): Observable<{ number: Attendance[]}> {
-    return this.http
-      .get<any>(`${this.eventBaseUrl}/${eventId}/attendance-list`)
-      .pipe(
-        map(({ attendanceList }) => attendanceList as { number: Attendance[] } ),
-      );
-  }
 }

@@ -1,5 +1,6 @@
 package edu.pw.apsienrollment.attendance;
 
+import edu.pw.apsienrollment.event.db.Event;
 import org.springframework.data.domain.Page;
 
 import edu.pw.apsienrollment.attendance.db.Attendance;
@@ -7,6 +8,7 @@ import edu.pw.apsienrollment.event.meeting.Meeting;
 import edu.pw.apsienrollment.user.db.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AttendanceService {
     Attendance putIntoAttendanceList(Meeting meeting, User user);
@@ -17,5 +19,5 @@ public interface AttendanceService {
 
     Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize);
 
-    List<Attendance> getAttendanceList(Meeting meeting);
+    Map<Long, List<Attendance>> getAttendanceList(Event event);
 }
