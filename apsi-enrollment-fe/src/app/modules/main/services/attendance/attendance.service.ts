@@ -57,4 +57,12 @@ export class AttendanceService {
     const mimetype = 'image/png';
     return 'data:' + mimetype + ';base64,' + b64encoded;
   }
+  getAttendanceList(eventId: number): Observable<{ number: Attendance[]}> {
+    return this.http
+      .get<any>(`${this.attendanceBaseUrl}/event/${eventId}`)
+      .pipe(
+        map(({ attendanceList }) => attendanceList as { number: Attendance[] } ),
+      );
+  }
+
 }
