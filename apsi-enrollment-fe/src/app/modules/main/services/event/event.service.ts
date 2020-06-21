@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Enrollment, EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { BasicEvent, Event, EventRequest, MeetingRequest } from 'src/app/core/model/event.model';
 import { Page, PageSearchRequest } from 'src/app/core/model/pagination.model';
 import { UserRole } from 'src/app/core/model/user.model';
 import { environment } from 'src/environments/environment';
-import {Attendance} from '../../../../core/model/attendance.model';
 
 @Injectable({
   providedIn: 'root',

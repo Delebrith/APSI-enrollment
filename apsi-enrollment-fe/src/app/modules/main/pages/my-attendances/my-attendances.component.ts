@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { Attendance } from 'src/app/core/model/attendance.model';
+import { QrCodeModalComponent } from '../../components/qr-code-modal/qr-code-modal.component';
 import { AlertService } from '../../services/alert/alert.service';
 import { AttendanceService } from '../../services/attendance/attendance.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
-import { QrCodeModalComponent } from '../../components/qr-code-modal/qr-code-modal.component';
 
 @Component({
   templateUrl: './my-attendances.component.html',
