@@ -125,7 +125,8 @@
     "cannotGetQRCode": "cannot get QR code",
     "yourQRCode": "Your QR Code",
     "viewQRCode": "View QR Code",
-    "speakers": "Meeting Speakers"
+    "speakers": "Meeting Speakers",
+    "checkAttendance": "Check attendance"
   },
   "attendanceList": {
     "title": "Attendance list",

@@ -91,6 +91,9 @@
           </div>
           <br />
           <h3>Attendance list</h3>
+          <button class="btn btn-primary" [routerLink]="['/main', 'check-attendance', meeting.id]">
+            {{ 'attendance.checkAttendance' | translate }}
+          </button>
           <clr-datagrid>
             <clr-dg-column>{{ 'attendanceList.userId' | translate }}</clr-dg-column>
             <clr-dg-column>{{ 'attendanceList.userSurname' | translate }}</clr-dg-column>
