@@ -36,6 +36,7 @@ export class AttendancePdfComponent implements OnInit {
 
   private preparePDF() {
     const doc = new jsPDF('landscape');
+    // tslint:disable-next-line: no-unused-expression
     opns;
     autoTable(doc, {
       html: '#pdfData',
