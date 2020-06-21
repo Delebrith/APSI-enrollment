@@ -4,7 +4,8 @@
   },
   "misc": {
     "downloadPDF": "Download PDF",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "close": "Close"
   },
   "login": {
     "welcomeTo": "Welcome to",
@@ -120,6 +121,9 @@
   "attendance": {
     "id": "Attendance Id",
     "status": "Status",
-    "speakers": "Meeting Speakers"
+    "speakers": "Meeting Speakers",
+    "cannotGetQRCode": "cannot get QR code",
+    "yourQRCode": "Your QR Code",
+    "viewQRCode": "View QR Code"
   }
 }

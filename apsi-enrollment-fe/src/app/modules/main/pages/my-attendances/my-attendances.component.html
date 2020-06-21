@@ -3,6 +3,7 @@
   <clr-dg-column [clrDgField]="'description'">{{ 'events.description' | translate }}</clr-dg-column>
   <clr-dg-column>{{ 'events.dates' | translate }}</clr-dg-column>
   <clr-dg-column>{{ 'events.attendanceStatus' | translate }}</clr-dg-column>
+  <clr-dg-column>{{ 'events.actions' | translate }}</clr-dg-column>
 
   <clr-dg-placeholder>{{ 'events.weCouldNotFindEvents' | translate }}</clr-dg-placeholder>
 
@@ -14,6 +15,11 @@
       {{ attendance.meeting.end | date: 'dd-MM-yyyy' }}</clr-dg-cell
     >
     <clr-dg-cell>{{ 'attendanceStatus.' + attendance.status | translate }}</clr-dg-cell>
+    <clr-dg-cell>
+      <a href="javascript:void(0);" (click)="onOpenQRCode(attendance.id)">
+        {{ 'attendance.viewQRCode' | translate }}
+      </a>
+    </clr-dg-cell>
   </clr-dg-row>
   <clr-dg-footer>
     <clr-dg-pagination #pagination [clrDgTotalItems]="totalAttendances">
@@ -27,3 +33,5 @@
   </clr-dg-footer>
 </clr-datagrid>
 <app-attendance-pdf></app-attendance-pdf>
+<app-event-detail></app-event-detail>
+<app-qr-code-modal></app-qr-code-modal>
