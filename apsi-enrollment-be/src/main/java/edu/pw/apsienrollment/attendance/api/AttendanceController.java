@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.pw.apsienrollment.event.EventService;
+import edu.pw.apsienrollment.event.api.dto.AttendanceListDto;
+import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.attendance.AttendanceService;
 import edu.pw.apsienrollment.attendance.api.dto.AttendanceDto;
 import edu.pw.apsienrollment.common.api.dto.PageRequestDTO;
@@ -27,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 @Validated
 public class AttendanceController {
     private final AttendanceService attendanceService;
+    private final EventService eventService;
+    private final EventService meetingService;
     
     @ApiOperation(value = "Get list of attendance of the authenticated user",
         nickname = "get list of my attendance", notes="", authorizations = {@Authorization(value = "JWT")})
@@ -65,4 +70,14 @@ public class AttendanceController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Get attendance lists", nickname = "get attendance lists", notes="",
+            authorizations = {@Authorization(value = "JWT")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "If valid credentials were provided"),
+            @ApiResponse(code = 400, message = "If invalid data was provided")})
+    @GetMapping("event/{id}")
+    ResponseEntity<AttendanceListDto> getAttendanceLists(@PathVariable("id") Long id) {
+        Event event = eventService.getById(id);
+        return ResponseEntity.ok(AttendanceListDto.of(attendanceService.getAttendanceList(event)));
+    }
 }
