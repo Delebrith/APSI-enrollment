@@ -9,7 +9,7 @@ import * as opns from 'src/app/shared/OpenSans-normal.js';
 import { EventService } from '../../services/event/event.service';
 
 @Component({
-  selector: 'enrollments-pdf',
+  selector: 'app-enrollments-pdf',
   templateUrl: './enrollments-pdf.component.html',
   styleUrls: ['./enrollments-pdf.component.scss'],
 })
