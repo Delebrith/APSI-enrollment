@@ -59,8 +59,9 @@ public class AttendanceController {
             @ApiResponse(code = 400, message = "If invalid data was provided")})
     @PostMapping("{id}/mark-as-present")
     ResponseEntity<Void> markAsPresent(@PathVariable Long id,
-                                       @RequestParam String token) {
-        attendanceService.markAsPresent(id, token);
+                                       @RequestParam String token,
+                                       @RequestParam Long meetingId) {
+        attendanceService.markAsPresent(id, token, meetingId);
         return ResponseEntity.ok().build();
     }
 
