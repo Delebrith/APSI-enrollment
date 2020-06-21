@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {EventGuard} from './guards/event-attendance-list.guard';
+import { EventGuard } from './guards/event-attendance-list.guard';
 import { MainComponent } from './main.component';
 import { AllEventsComponent } from './pages/all-events/all-events.component';
 import { AllPaymentsComponent } from './pages/all-payments/all-payments.component';
-import {EventAttendanceListComponent} from './pages/event-attendance-list/event-attendance-list.component';
+import { EventAttendanceListComponent } from './pages/event-attendance-list/event-attendance-list.component';
 import { MyAttendancesComponent } from './pages/my-attendances/my-attendances.component';
 import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { NewEventComponent } from './pages/new-event/new-event.component';
