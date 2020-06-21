@@ -105,6 +105,7 @@
                 <clr-icon *ngSwitchCase="attendanceStatus.UNCHECKED" shape="unknown-status"></clr-icon>
                 <clr-icon *ngSwitchCase="attendanceStatus.ABSENT" shape="times"></clr-icon>
                 <clr-icon *ngSwitchCase="attendanceStatus.PRESENT" shape="check"></clr-icon>
+                {{ 'attendanceStatus.' + attendance.status | translate }}
               </clr-dg-cell>
             </clr-dg-row>
           </clr-datagrid>

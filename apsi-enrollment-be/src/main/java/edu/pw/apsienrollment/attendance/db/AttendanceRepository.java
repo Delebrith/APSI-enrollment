@@ -17,6 +17,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     Page<Attendance> findByUser(User user, Pageable pageable);
 
-    @Query("select a from ATTENDANCE a where a.meeting = :meeting order by a.user.surname, a.user.name")
     List<Attendance> findByMeetingOrderByUserSurname(@Param("meeting") Meeting meeting);
 }
