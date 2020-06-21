@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { EnrollmentStatus } from 'src/app/core/model/enrollment.model';
 import { Event } from 'src/app/core/model/event.model';
 import { Payment } from 'src/app/core/model/payment.model';
@@ -20,6 +20,8 @@ export class EventDetailComponent implements OnInit {
   enrollmentStatusEnum = EnrollmentStatus;
   enrollmentStatus: EnrollmentStatus;
 
+  isLoading: boolean;
+
   constructor(
     private eventService: EventService,
     private paymentService: PaymentService,
@@ -29,6 +31,8 @@ export class EventDetailComponent implements OnInit {
       (currency) => (this.currency = currency),
       (error) => this.alertService.showError(error)
     );
+
+    this.isLoading = false;
   }
 
   ngOnInit() {}
@@ -51,22 +55,34 @@ export class EventDetailComponent implements OnInit {
   }
 
   onRegister() {
+    this.isLoading = true;
     this.eventService
       .signUp(this.event.id)
-      .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
+      .pipe(
+        tap((enrollment) => (this.enrollmentStatus = enrollment.status)),
+        filter((enrollment) => enrollment.event.cost !== 0),
+        switchMap((enrollment) => this.paymentService.create(enrollment))
+      )
       .subscribe(
         (payment) => this.redirectPayment(payment),
-        (error) => this.alertService.showError(error)
+        (error) => {
+          this.alertService.showError(error);
+          this.isLoading = false;
+        }
       );
   }
 
   onPayNow() {
+    this.isLoading = true;
     this.eventService
       .getEnrollment(this.event.id)
       .pipe(switchMap((enrollment) => this.paymentService.create(enrollment)))
       .subscribe(
         (payment) => this.redirectPayment(payment),
-        (error) => this.alertService.showError(error)
+        (error) => {
+          this.alertService.showError(error);
+          this.isLoading = false;
+        }
       );
   }
 

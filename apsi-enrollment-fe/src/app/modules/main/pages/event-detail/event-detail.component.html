@@ -119,22 +119,32 @@
           </clr-accordion>
         </div>
         <div class="button-container">
-          <ng-container [ngSwitch]="enrollmentStatus">
-            <button *ngSwitchCase="enrollmentStatusEnum.NOT_ENROLLED" class="btn btn-primary" (click)="onRegister()">
-              {{ 'event.register' | translate }}
-            </button>
-            <div class="button-row" *ngSwitchCase="enrollmentStatusEnum.PENDING">
-              <button class="btn btn-primary" (click)="onPayNow()">
-                {{ 'event.payNow' | translate }}
+          <ng-container *ngIf="!isLoading; else loading">
+            <ng-container [ngSwitch]="enrollmentStatus">
+              <button *ngSwitchCase="enrollmentStatusEnum.NOT_ENROLLED" class="btn btn-primary" (click)="onRegister()">
+                {{ 'event.register' | translate }}
               </button>
-              <button class="btn btn-warning">
-                {{ 'event.pending' | translate }}
+              <div class="button-row" *ngSwitchCase="enrollmentStatusEnum.PENDING">
+                <button class="btn btn-primary" (click)="onPayNow()">
+                  {{ 'event.payNow' | translate }}
+                </button>
+                <button class="btn btn-warning">
+                  {{ 'event.pending' | translate }}
+                </button>
+              </div>
+              <button *ngSwitchCase="enrollmentStatusEnum.ENROLLED" class="btn btn-success">
+                {{ 'event.alreadyRegistered' | translate }}
               </button>
-            </div>
-            <button *ngSwitchCase="enrollmentStatusEnum.ENROLLED" class="btn btn-success">
-              {{ 'event.alreadyRegistered' | translate }}
-            </button>
+            </ng-container>
           </ng-container>
+          <ng-template #loading>
+            <span class="spinner spinner-inline">
+              {{ 'misc.loading' | translate }}
+            </span>
+            <span>
+              {{ 'misc.loading' | translate }}
+            </span>
+          </ng-template>
         </div>
       </div>
     </ng-template>
