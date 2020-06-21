@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Page, PageRequest } from 'src/app/core/model/pagination.model'
-import { Payment } from 'src/app/core/model/payment.model'
-
+import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { Payment } from 'src/app/core/model/payment.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +14,11 @@ export class PaymentService {
 
   constructor(private http: HttpClient) {}
 
-  getPaymentPage({pageNumber, pageSize}: PageRequest): Observable<Page<Payment>> {
+  getPaymentPage({ pageNumber, pageSize }: PageRequest): Observable<Page<Payment>> {
     const params = {
       page: null,
       size: null,
-    }
+    };
     if (pageNumber != null) {
       params.page = pageNumber;
     } else {
@@ -32,7 +31,7 @@ export class PaymentService {
     }
 
     return this.http
-      .get<any>(this.paymentsUrls, {params})
+      .get<any>(this.paymentsUrls, { params })
       .pipe(
         map(({ content, number: retrievedPageNumber, totalPages, size, totalElements }) => {
           return {

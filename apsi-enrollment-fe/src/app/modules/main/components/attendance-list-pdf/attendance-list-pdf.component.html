@@ -3,22 +3,22 @@
     Download
   </button>
   <div id="htmlData" #htmlData style="display: none;">
-    <table id="pdfData">
+    <table [id]="pdfDataId">
       <thead class="table">
-      <tr>
-        <th>{{ 'attendanceList.userId' | translate }}</th>
-        <th>{{ 'attendanceList.userSurname' | translate }}</th>
-        <th>{{ 'attendanceList.userName' | translate }}</th>
-        <th>{{ 'attendanceList.attendanceStatus' | translate }}</th>
-      </tr>
+        <tr>
+          <th>{{ 'attendanceList.userId' | translate }}</th>
+          <th>{{ 'attendanceList.userSurname' | translate }}</th>
+          <th>{{ 'attendanceList.userName' | translate }}</th>
+          <th>{{ 'attendanceList.attendanceStatus' | translate }}</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let atten of attendance">
-        <td>{{ atten.user.id }}</td>
-        <td>{{ atten.user.surname }}</td>
-        <td>{{ atten.user.name }}</td>
-        <td>{{ 'attendanceStatus.' + atten.status | translate }}</td>
-      </tr>
+        <tr *ngFor="let atten of attendance">
+          <td>{{ atten.user.id }}</td>
+          <td>{{ atten.user.surname }}</td>
+          <td>{{ atten.user.name }}</td>
+          <td>{{ 'attendanceStatus.' + atten.status | translate }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
