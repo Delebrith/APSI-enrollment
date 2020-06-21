@@ -5,9 +5,40 @@
       <span class="spinner"></span>
     </div>
   </div>
-  <div *ngIf="!isAndroid">
-    {{ 'scan.androidRequiredMessage' | translate }}
+  <div *ngIf="!isAndroid" class="alert alert-danger">
+    <div class="alert-items">
+      <div class="alert-item static">
+        <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+        </div>
+        {{ 'scan.androidRequiredMessage' | translate }}
+      </div>
+    </div>
   </div>
-
-  {{ code }}
+  <div>
+    <div *ngIf="scanSuccess">
+      <div class="alert alert-success">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            Attendance confirmed (Attendance ID: {{ attendanceId }})
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!scanSuccess">
+      <div class="alert alert-danger">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            {{ scanError }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -122,7 +122,6 @@
   "attendance": {
     "id": "Attendance Id",
     "status": "Status",
-    "speakers": "Meeting Speakers",
     "cannotGetQRCode": "cannot get QR code",
     "yourQRCode": "Your QR Code",
     "viewQRCode": "View QR Code"
@@ -134,5 +133,8 @@
     "userSurname": "Surname",
     "userName": "Name",
     "empty": "Attendance list is empty"
+  },
+  "scan": {
+    "androidRequiredMessage": "Android device is required for attendance checking."
   }
 }
