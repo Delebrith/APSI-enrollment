@@ -1,0 +1,31 @@
+<clr-modal [(clrModalOpen)]="show">
+  <div class="modal-title">
+    {{ 'attendance.yourQRCode' | translate }}
+  </div>
+  <div class="modal-body">
+    <div *ngIf="!imageSource; else elseBlock">
+      <span class="spinner"></span>
+    </div>
+    <ng-template #elseBlock>
+      <img *ngIf="!error" [src]="imageSource" class="qr-code" />
+      <div *ngIf="error" class="alert alert-danger">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            <span class="alert-text">
+              {{ 'attendance.cannotGetQRCode' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button class="btn btn-primary" (click)="onClose()">
+          {{ 'misc.close' | translate }}
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</clr-modal>
