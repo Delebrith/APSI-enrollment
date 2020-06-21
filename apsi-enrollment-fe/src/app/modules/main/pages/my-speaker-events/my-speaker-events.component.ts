@@ -3,11 +3,12 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { BasicEvent } from 'src/app/core/model/event.model';
 import { Page, PageRequest } from 'src/app/core/model/pagination.model';
+import { AlertService } from '../../services/alert/alert.service';
 import { EventService } from '../../services/event/event.service';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
-  selector: 'my-speaker-events',
+  selector: 'app-my-speaker-events',
   templateUrl: './my-speaker-events.component.html',
   styleUrls: ['./my-speaker-events.component.scss'],
 })
@@ -17,7 +18,7 @@ export class MySpeakerEventsComponent implements OnInit {
   totalEvents: number;
   loading = true;
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService, private alertService: AlertService) {}
 
   getEvents(request: PageRequest): Observable<Page<BasicEvent>> {
     return this.eventService.getMyEventsBySpeakerPage(request);
@@ -28,8 +29,7 @@ export class MySpeakerEventsComponent implements OnInit {
     let searchString: string = null;
 
     if (state.filters) {
-      searchString = state.filters.reduce(
-        (prev, next) => `${prev}${next.property}=${next.value},`, '');
+      searchString = state.filters.reduce((prev, next) => `${prev}${next.property}=${next.value},`, '');
       searchString = searchString.substring(0, searchString.length - 1);
     }
 
@@ -38,11 +38,19 @@ export class MySpeakerEventsComponent implements OnInit {
       pageSize: state.page.size,
       searchQuery: searchString,
     };
-    this.getEvents(request).subscribe((page) => {
+    this.getEvents(request).subscribe(
+      (page) => {
         this.events = page.items;
         this.totalEvents = page.totalElements;
         this.loading = false;
-      });
+      },
+      (error) => {
+        this.alertService.showError(error);
+        this.events = [];
+        this.totalEvents = 0;
+        this.loading = false;
+      }
+    );
   }
 
   onShowEventDetails(eventId: number) {

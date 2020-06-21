@@ -1,33 +1,31 @@
 <div>
   <button class="btn btn-primary" type="button" (click)="onDownloadPDF()">
-    Download
+    {{ 'misc.downloadPDF' | translate }}
   </button>
-  <div id="htmlData" #htmlData style="visibility: hidden;">
+  <div id="htmlData" #htmlData style="display: none;">
     <table id="pdfData">
-        <thead class="table">
-          <tr>
-            <th>{{ 'attendance.id' | translate }}</th>
-            <th>{{ 'attendance.status' | translate }}</th>
-            <th>{{ 'attendance.speakers' | translate }}</th>
-            <th>{{ 'event.place' | translate }}</th>
-            <th>{{ 'event.startTime' | translate }}</th>
-            <th>{{ 'event.endTime' | translate }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let atten of attendance">
-            <td>{{ atten.id }}</td>
-            <td>{{ atten.status }}</td>
-            <td>
-              <p *ngFor="let speaker of atten.meeting.speakers">
-                {{speaker.name}}&nbsp;{{speaker.surname}}<br />
-              </p>
-            </td>
-            <td>{{ atten.meeting.place.name }}</td>
-            <td>{{ atten.meeting.start }}</td>
-            <td>{{ atten.meeting.end }}</td>
-          </tr> 
-        </tbody>
+      <thead class="table">
+        <tr>
+          <th>{{ 'attendance.id' | translate }}</th>
+          <th>{{ 'attendance.status' | translate }}</th>
+          <th>{{ 'attendance.speakers' | translate }}</th>
+          <th>{{ 'event.place' | translate }}</th>
+          <th>{{ 'event.startTime' | translate }}</th>
+          <th>{{ 'event.endTime' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let atten of attendance">
+          <td>{{ atten.id }}</td>
+          <td>{{ atten.status }}</td>
+          <td>
+            <p *ngFor="let speaker of atten.meeting.speakers">{{ speaker.name }}&nbsp;{{ speaker.surname }}<br /></p>
+          </td>
+          <td>{{ atten.meeting.place.name }}</td>
+          <td>{{ atten.meeting.start }}</td>
+          <td>{{ atten.meeting.end }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
