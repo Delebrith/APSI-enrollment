@@ -41,7 +41,8 @@
     "myEnrolledEvents": "Events I am enrolled in",
     "mySpeakerEvents": "Events I speak at",
     "myOrganizerEvents": "Events I organize",
-    "attendanceStatus": "Attendance status"
+    "attendanceStatus": "Attendance status",
+    "actions": "Actions"
   },
   "eventTypes": {
     "LECTURE": "Lecture",
