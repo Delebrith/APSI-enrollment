@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { CurrentUserService } from '../../../core/auth/current-user.service';
 import { EventService } from '../services/event/event.service';
 
@@ -18,8 +18,10 @@ export class EventGuard implements CanActivate {
     const currentUser$ = this.currentUserService.currentUser$;
     return combineLatest([event$, currentUser$]).pipe(
       map(([event, currentUser]) => {
-        return event.organizer.id === currentUser.id;
-      })
+        return event.organizer.id === currentUser.id ||
+          event.meetings.reduce((prev, next) => ([...prev, ...next.speakers]), []).some(speaker => speaker.id === currentUser.id)
+      }),
+      take(1),
     );
   }
 }

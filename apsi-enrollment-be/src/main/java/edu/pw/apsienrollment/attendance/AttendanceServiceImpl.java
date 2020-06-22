@@ -7,15 +7,20 @@ import edu.pw.apsienrollment.attendance.db.AttendanceStatus;
 import edu.pw.apsienrollment.attendance.exception.AttendanceNotFoundException;
 import edu.pw.apsienrollment.attendance.exception.UserUnauthorizedToCheckAttendanceException;
 import edu.pw.apsienrollment.authentication.AuthenticationService;
+import edu.pw.apsienrollment.event.db.Event;
 import edu.pw.apsienrollment.event.meeting.Meeting;
+import edu.pw.apsienrollment.event.meeting.MeetingService;
 import edu.pw.apsienrollment.qrcode.QRCodeService;
 import edu.pw.apsienrollment.user.db.User;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +28,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final QRCodeService qrcodeService;
     private final AuthenticationService authenticationService;
+    private final MeetingService meetingService;
 
     private static final String confirmURLScheme = "attendance/%d/mark-as-present?token=%s";
     private static final Integer qrCodeImageSize = 640;
@@ -64,16 +70,35 @@ public class AttendanceServiceImpl implements AttendanceService {
             throw new UserUnauthorizedToCheckAttendanceException();
         }
     }
-        
+
+    private void checkIfUserIsOrganizerOrSpeaker(Event event) {
+        User authenticated = authenticationService.getAuthenticatedUser();
+        if (meetingService.getMeetings(event).stream()
+                .flatMap(meeting -> meeting.getSpeakers().stream())
+                .noneMatch(speaker -> speaker.equals(authenticated))
+                && !event.getOrganizer().equals(authenticated)) {
+            throw new UserUnauthorizedToCheckAttendanceException();
+        }
+    }
+
     public Page<Attendance> getMeetingsOfAuthorizedUser(Integer page, Integer pageSize) {
         User authenticatedUser = authenticationService.getAuthenticatedUser();
         return attendanceRepository.findByUser(authenticatedUser, PageRequest.of(page, pageSize));
     }
 
     @Override
-    public List<Attendance> getAttendanceList(Meeting meeting) {
+    public List<Attendance> getAttendanceListForMeeting(Meeting meeting) {
         checkIfUserIsOrganizerOrSpeaker(meeting);
         return attendanceRepository.findByMeetingOrderByUser_Surname(meeting);
+    }
+
+    @Override
+    public Map<Long, List<Attendance>> getAttendanceListForEvent(Event event) {
+        checkIfUserIsOrganizerOrSpeaker(event);
+        return meetingService.getMeetings(event).stream()
+                .collect(Collectors.toMap(
+                        meeting -> meeting.getId(),
+                        meeting -> attendanceRepository.findByMeetingOrderByUser_Surname(meeting)));
     }
 
 }
