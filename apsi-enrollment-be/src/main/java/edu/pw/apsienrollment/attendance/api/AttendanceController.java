@@ -3,7 +3,6 @@ package edu.pw.apsienrollment.attendance.api;
 import javax.validation.Valid;
 
 import edu.pw.apsienrollment.attendance.api.dto.AttendanceListForMeetingDto;
-import edu.pw.apsienrollment.attendance.db.Attendance;
 import edu.pw.apsienrollment.event.meeting.Meeting;
 import edu.pw.apsienrollment.event.meeting.MeetingService;
 import org.springframework.http.MediaType;
@@ -27,10 +26,6 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("attendance")
@@ -86,7 +81,7 @@ public class AttendanceController {
     @GetMapping("meeting/{id}")
     ResponseEntity<AttendanceListForMeetingDto> getAttendanceListForMeeting(@PathVariable("id") Long id) {
         Meeting meeting = meetingService.getById(id);
-        return ResponseEntity.ok(AttendanceListForMeetingDto.of(attendanceService.getAttendanceList(meeting)));
+        return ResponseEntity.ok(AttendanceListForMeetingDto.of(attendanceService.getAttendanceListForMeeting(meeting)));
     }
 
     @ApiOperation(value = "Get attendance lists for event", nickname = "get attendance lists for event", notes="",
@@ -97,10 +92,6 @@ public class AttendanceController {
     @GetMapping("event/{id}")
     ResponseEntity<AttendanceListForEventDto> getAttendanceListForEvent(@PathVariable("id") Long id) {
         Event event = eventService.getById(id);
-        Map<Long, List<Attendance>> attendanceList = meetingService.getMeetings(event).stream()
-                .collect(Collectors.toMap(
-                        meeting -> meeting.getId(),
-                        meeting -> attendanceService.getAttendanceList(meeting)));
-        return ResponseEntity.ok(AttendanceListForEventDto.of(attendanceList));
+        return ResponseEntity.ok(AttendanceListForEventDto.of(attendanceService.getAttendanceListForEvent(event)));
     }
 }
